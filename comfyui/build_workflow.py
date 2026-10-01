@@ -199,26 +199,29 @@ prev1 = add("PreviewImage", (1360, 90), inputs=[("images", "IMAGE")], size=(380,
 link(prev_dec, 0, prev1, "images")
 
 # ------------------------------------------------------ Z image Upscale mode
-group("Z image Upscale mode", 1340, 520, 420, 360)
-up_model = add("UpscaleModelLoader", (1360, 580), widgets=["RealESRGAN_x4plus.safetensors"],
+group("Z image Upscale mode", 1340, 520, 420, 400)
+up_model = add("UpscaleModelLoader", (1360, 670), widgets=["RealESRGAN_x4plus.safetensors"],
                outputs=[("UPSCALE_MODEL", "UPSCALE_MODEL")], size=(380, 60),
                models=[model("RealESRGAN_x4plus.safetensors", f"{HF_ESRGAN}/RealESRGAN_x4plus.safetensors", "upscale_models")])
-up_img = add("ImageUpscaleWithModel", (1360, 660), inputs=[("upscale_model", "UPSCALE_MODEL"), ("image", "IMAGE")],
+up_img = add("ImageUpscaleWithModel", (1360, 750), inputs=[("upscale_model", "UPSCALE_MODEL"), ("image", "IMAGE")],
              outputs=IMG, size=(380, 50))
-up_scale = add("ImageScaleBy", (1360, 740), widgets=["lanczos", 0.5], inputs=[("image", "IMAGE")], outputs=IMG,
+up_scale = add("ImageScaleBy", (1360, 820), widgets=["lanczos", 0.5], inputs=[("image", "IMAGE")], outputs=IMG,
                size=(380, 80), title="x4 -> x2")
+norm = add("ImageScaleToTotalPixels", (1360, 580), widgets=["lanczos", 1, 1], inputs=[("image", "IMAGE")],
+            outputs=IMG, size=(380, 80), title="Normalizare la 1 MP")
+link(k_dec, 0, norm, "image")
 link(up_model, 0, up_img, "upscale_model")
-link(k_dec, 0, up_img, "image")
+link(norm, 0, up_img, "image")
 link(up_img, 0, up_scale, "image")
 
 # ------------------------------------------------- Z IMAGE SAMPLER REFINER
 group("Z IMAGE SAMPLER REFINER", 1340, 920, 420, 520)
 z_enc = add("VAEEncode", (1360, 980), inputs=[("pixels", "IMAGE"), ("vae", "VAE")],
             outputs=[("LATENT", "LATENT")], size=(380, 50))
-z_ks = add("KSampler", (1360, 1050), widgets=[seed(), "randomize", 8, 1, "res_multistep", "simple", 0.3],
+z_ks = add("KSampler", (1360, 1050), widgets=[seed(), "randomize", 5, 1, "dpmpp_2m_sde", "beta", 0.33],
            inputs=[("model", "MODEL"), ("positive", "CONDITIONING"), ("negative", "CONDITIONING"),
                    ("latent_image", "LATENT")],
-           outputs=[("LATENT", "LATENT")], size=(380, 270), title="Rafinare piele (denoise 0.30)")
+           outputs=[("LATENT", "LATENT")], size=(380, 270), title="Rafinare piele (denoise 0.33)")
 z_dec = add("VAEDecode", (1360, 1340), inputs=[("samples", "LATENT"), ("vae", "VAE")], outputs=IMG,
             size=(380, 50))
 link(up_scale, 0, z_enc, "pixels")
@@ -333,7 +336,6 @@ workflow = {
 }
 
 if __name__ == "__main__":
-    random.seed(7)
     with open("realism_krea2_nova.json", "w") as f:
         json.dump(workflow, f, indent=1)
     print(f"{len(nodes)} nodes, {len(links)} links, {len(groups)} groups")

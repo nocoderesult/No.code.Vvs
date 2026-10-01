@@ -1,6 +1,6 @@
 {
- "last_node_id": 44,
- "last_link_id": 58,
+ "last_node_id": 45,
+ "last_link_id": 59,
  "nodes": [
   {
    "id": 1,
@@ -510,9 +510,9 @@
      "name": "MODEL",
      "type": "MODEL",
      "links": [
-      30,
-      38,
-      45
+      31,
+      39,
+      46
      ],
      "slot_index": 0
     }
@@ -545,8 +545,8 @@
      "type": "CLIP",
      "links": [
       8,
-      39,
-      46
+      40,
+      47
      ],
      "slot_index": 0
     }
@@ -587,10 +587,10 @@
      "name": "VAE",
      "type": "VAE",
      "links": [
-      29,
-      35,
-      40,
-      47
+      30,
+      36,
+      41,
+      48
      ],
      "slot_index": 0
     }
@@ -644,9 +644,9 @@
      "type": "CONDITIONING",
      "links": [
       10,
-      31,
-      41,
-      48
+      32,
+      42,
+      49
      ],
      "slot_index": 0
     }
@@ -685,9 +685,9 @@
      "name": "CONDITIONING",
      "type": "CONDITIONING",
      "links": [
-      32,
-      42,
-      49
+      33,
+      43,
+      50
      ],
      "slot_index": 0
     }
@@ -923,7 +923,7 @@
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
-      26
+      25
      ],
      "slot_index": 0
     }
@@ -1007,7 +1007,7 @@
    "type": "UpscaleModelLoader",
    "pos": [
     1360,
-    580
+    670
    ],
    "size": [
     380,
@@ -1022,7 +1022,7 @@
      "name": "UPSCALE_MODEL",
      "type": "UPSCALE_MODEL",
      "links": [
-      25
+      26
      ],
      "slot_index": 0
     }
@@ -1046,7 +1046,7 @@
    "type": "ImageUpscaleWithModel",
    "pos": [
     1360,
-    660
+    750
    ],
    "size": [
     380,
@@ -1059,44 +1059,8 @@
     {
      "name": "upscale_model",
      "type": "UPSCALE_MODEL",
-     "link": 25
-    },
-    {
-     "name": "image",
-     "type": "IMAGE",
      "link": 26
-    }
-   ],
-   "outputs": [
-    {
-     "name": "IMAGE",
-     "type": "IMAGE",
-     "links": [
-      27
-     ],
-     "slot_index": 0
-    }
-   ],
-   "properties": {
-    "Node name for S&R": "ImageUpscaleWithModel"
-   },
-   "widgets_values": []
-  },
-  {
-   "id": 28,
-   "type": "ImageScaleBy",
-   "pos": [
-    1360,
-    740
-   ],
-   "size": [
-    380,
-    80
-   ],
-   "flags": {},
-   "order": 28,
-   "mode": 0,
-   "inputs": [
+    },
     {
      "name": "image",
      "type": "IMAGE",
@@ -1114,6 +1078,42 @@
     }
    ],
    "properties": {
+    "Node name for S&R": "ImageUpscaleWithModel"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 28,
+   "type": "ImageScaleBy",
+   "pos": [
+    1360,
+    820
+   ],
+   "size": [
+    380,
+    80
+   ],
+   "flags": {},
+   "order": 28,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 28
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      29
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
     "Node name for S&R": "ImageScaleBy"
    },
    "widgets_values": [
@@ -1124,6 +1124,47 @@
   },
   {
    "id": 29,
+   "type": "ImageScaleToTotalPixels",
+   "pos": [
+    1360,
+    580
+   ],
+   "size": [
+    380,
+    80
+   ],
+   "flags": {},
+   "order": 29,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 25
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      27
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ImageScaleToTotalPixels"
+   },
+   "widgets_values": [
+    "lanczos",
+    1,
+    1
+   ],
+   "title": "Normalizare la 1 MP"
+  },
+  {
+   "id": 30,
    "type": "VAEEncode",
    "pos": [
     1360,
@@ -1134,69 +1175,18 @@
     50
    ],
    "flags": {},
-   "order": 29,
+   "order": 30,
    "mode": 0,
    "inputs": [
     {
      "name": "pixels",
      "type": "IMAGE",
-     "link": 28
+     "link": 29
     },
     {
      "name": "vae",
      "type": "VAE",
-     "link": 29
-    }
-   ],
-   "outputs": [
-    {
-     "name": "LATENT",
-     "type": "LATENT",
-     "links": [
-      33
-     ],
-     "slot_index": 0
-    }
-   ],
-   "properties": {
-    "Node name for S&R": "VAEEncode"
-   },
-   "widgets_values": []
-  },
-  {
-   "id": 30,
-   "type": "KSampler",
-   "pos": [
-    1360,
-    1050
-   ],
-   "size": [
-    380,
-    270
-   ],
-   "flags": {},
-   "order": 30,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "model",
-     "type": "MODEL",
      "link": 30
-    },
-    {
-     "name": "positive",
-     "type": "CONDITIONING",
-     "link": 31
-    },
-    {
-     "name": "negative",
-     "type": "CONDITIONING",
-     "link": 32
-    },
-    {
-     "name": "latent_image",
-     "type": "LATENT",
-     "link": 33
     }
    ],
    "outputs": [
@@ -1210,21 +1200,72 @@
     }
    ],
    "properties": {
+    "Node name for S&R": "VAEEncode"
+   },
+   "widgets_values": []
+  },
+  {
+   "id": 31,
+   "type": "KSampler",
+   "pos": [
+    1360,
+    1050
+   ],
+   "size": [
+    380,
+    270
+   ],
+   "flags": {},
+   "order": 31,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "model",
+     "type": "MODEL",
+     "link": 31
+    },
+    {
+     "name": "positive",
+     "type": "CONDITIONING",
+     "link": 32
+    },
+    {
+     "name": "negative",
+     "type": "CONDITIONING",
+     "link": 33
+    },
+    {
+     "name": "latent_image",
+     "type": "LATENT",
+     "link": 34
+    }
+   ],
+   "outputs": [
+    {
+     "name": "LATENT",
+     "type": "LATENT",
+     "links": [
+      35
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
     "Node name for S&R": "KSampler"
    },
    "widgets_values": [
     52989313126444,
     "randomize",
-    8,
+    5,
     1,
-    "res_multistep",
-    "simple",
-    0.3
+    "dpmpp_2m_sde",
+    "beta",
+    0.33
    ],
-   "title": "Rafinare piele (denoise 0.30)"
+   "title": "Rafinare piele (denoise 0.33)"
   },
   {
-   "id": 31,
+   "id": 32,
    "type": "VAEDecode",
    "pos": [
     1360,
@@ -1235,18 +1276,18 @@
     50
    ],
    "flags": {},
-   "order": 31,
+   "order": 32,
    "mode": 0,
    "inputs": [
     {
      "name": "samples",
      "type": "LATENT",
-     "link": 34
+     "link": 35
     },
     {
      "name": "vae",
      "type": "VAE",
-     "link": 35
+     "link": 36
     }
    ],
    "outputs": [
@@ -1254,7 +1295,7 @@
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
-      36
+      37
      ],
      "slot_index": 0
     }
@@ -1265,7 +1306,7 @@
    "widgets_values": []
   },
   {
-   "id": 32,
+   "id": 33,
    "type": "UltralyticsDetectorProvider",
    "pos": [
     1820,
@@ -1276,7 +1317,7 @@
     80
    ],
    "flags": {},
-   "order": 32,
+   "order": 33,
    "mode": 0,
    "inputs": [],
    "outputs": [
@@ -1284,7 +1325,7 @@
      "name": "BBOX_DETECTOR",
      "type": "BBOX_DETECTOR",
      "links": [
-      43
+      44
      ],
      "slot_index": 0
     },
@@ -1304,7 +1345,7 @@
    "title": "Detector fata"
   },
   {
-   "id": 33,
+   "id": 34,
    "type": "SAMLoader",
    "pos": [
     1820,
@@ -1315,7 +1356,7 @@
     80
    ],
    "flags": {},
-   "order": 33,
+   "order": 34,
    "mode": 0,
    "inputs": [],
    "outputs": [
@@ -1323,8 +1364,8 @@
      "name": "SAM_MODEL",
      "type": "SAM_MODEL",
      "links": [
-      44,
-      51
+      45,
+      52
      ],
      "slot_index": 0
     }
@@ -1338,7 +1379,7 @@
    ]
   },
   {
-   "id": 34,
+   "id": 35,
    "type": "FaceDetailer",
    "pos": [
     1820,
@@ -1349,48 +1390,48 @@
     720
    ],
    "flags": {},
-   "order": 34,
+   "order": 35,
    "mode": 0,
    "inputs": [
     {
      "name": "image",
      "type": "IMAGE",
-     "link": 36
+     "link": 37
     },
     {
      "name": "model",
      "type": "MODEL",
-     "link": 38
+     "link": 39
     },
     {
      "name": "clip",
      "type": "CLIP",
-     "link": 39
+     "link": 40
     },
     {
      "name": "vae",
      "type": "VAE",
-     "link": 40
+     "link": 41
     },
     {
      "name": "positive",
      "type": "CONDITIONING",
-     "link": 41
+     "link": 42
     },
     {
      "name": "negative",
      "type": "CONDITIONING",
-     "link": 42
+     "link": 43
     },
     {
      "name": "bbox_detector",
      "type": "BBOX_DETECTOR",
-     "link": 43
+     "link": 44
     },
     {
      "name": "sam_model_opt",
      "type": "SAM_MODEL",
-     "link": 44
+     "link": 45
     },
     {
      "name": "segm_detector_opt",
@@ -1413,7 +1454,7 @@
      "name": "image",
      "type": "IMAGE",
      "links": [
-      37
+      38
      ],
      "slot_index": 0
     },
@@ -1485,7 +1526,7 @@
    "title": "FaceDetailer (fata)"
   },
   {
-   "id": 35,
+   "id": 36,
    "type": "UltralyticsDetectorProvider",
    "pos": [
     2300,
@@ -1496,7 +1537,7 @@
     80
    ],
    "flags": {},
-   "order": 35,
+   "order": 36,
    "mode": 0,
    "inputs": [],
    "outputs": [
@@ -1504,7 +1545,7 @@
      "name": "BBOX_DETECTOR",
      "type": "BBOX_DETECTOR",
      "links": [
-      50
+      51
      ],
      "slot_index": 0
     },
@@ -1524,7 +1565,7 @@
    "title": "Detector maini"
   },
   {
-   "id": 36,
+   "id": 37,
    "type": "FaceDetailer",
    "pos": [
     2300,
@@ -1535,48 +1576,48 @@
     720
    ],
    "flags": {},
-   "order": 36,
+   "order": 37,
    "mode": 0,
    "inputs": [
     {
      "name": "image",
      "type": "IMAGE",
-     "link": 37
+     "link": 38
     },
     {
      "name": "model",
      "type": "MODEL",
-     "link": 45
+     "link": 46
     },
     {
      "name": "clip",
      "type": "CLIP",
-     "link": 46
+     "link": 47
     },
     {
      "name": "vae",
      "type": "VAE",
-     "link": 47
+     "link": 48
     },
     {
      "name": "positive",
      "type": "CONDITIONING",
-     "link": 48
+     "link": 49
     },
     {
      "name": "negative",
      "type": "CONDITIONING",
-     "link": 49
+     "link": 50
     },
     {
      "name": "bbox_detector",
      "type": "BBOX_DETECTOR",
-     "link": 50
+     "link": 51
     },
     {
      "name": "sam_model_opt",
      "type": "SAM_MODEL",
-     "link": 51
+     "link": 52
     },
     {
      "name": "segm_detector_opt",
@@ -1599,8 +1640,8 @@
      "name": "image",
      "type": "IMAGE",
      "links": [
-      52,
-      53
+      53,
+      54
      ],
      "slot_index": 0
     },
@@ -1672,7 +1713,7 @@
    "title": "Detailer maini"
   },
   {
-   "id": 37,
+   "id": 38,
    "type": "PreviewImage",
    "pos": [
     2780,
@@ -1683,13 +1724,13 @@
     440
    ],
    "flags": {},
-   "order": 37,
+   "order": 38,
    "mode": 0,
    "inputs": [
     {
      "name": "images",
      "type": "IMAGE",
-     "link": 52
+     "link": 53
     }
    ],
    "outputs": [],
@@ -1699,7 +1740,7 @@
    "widgets_values": []
   },
   {
-   "id": 38,
+   "id": 39,
    "type": "ProPostVignette",
    "pos": [
     2780,
@@ -1708,47 +1749,6 @@
    "size": [
     380,
     110
-   ],
-   "flags": {},
-   "order": 38,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "image",
-     "type": "IMAGE",
-     "link": 53
-    }
-   ],
-   "outputs": [
-    {
-     "name": "IMAGE",
-     "type": "IMAGE",
-     "links": [
-      54
-     ],
-     "slot_index": 0
-    }
-   ],
-   "properties": {
-    "Node name for S&R": "ProPostVignette"
-   },
-   "widgets_values": [
-    0.15,
-    0.5,
-    0.5
-   ],
-   "title": "Lentila: vigneta"
-  },
-  {
-   "id": 39,
-   "type": "ProPostFilmGrain",
-   "pos": [
-    2780,
-    710
-   ],
-   "size": [
-    380,
-    330
    ],
    "flags": {},
    "order": 39,
@@ -1766,6 +1766,47 @@
      "type": "IMAGE",
      "links": [
       55
+     ],
+     "slot_index": 0
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "ProPostVignette"
+   },
+   "widgets_values": [
+    0.15,
+    0.5,
+    0.5
+   ],
+   "title": "Lentila: vigneta"
+  },
+  {
+   "id": 40,
+   "type": "ProPostFilmGrain",
+   "pos": [
+    2780,
+    710
+   ],
+   "size": [
+    380,
+    330
+   ],
+   "flags": {},
+   "order": 40,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "image",
+     "type": "IMAGE",
+     "link": 55
+    }
+   ],
+   "outputs": [
+    {
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      56
      ],
      "slot_index": 0
     }
@@ -1789,7 +1830,7 @@
    "title": "Granulatie senzor"
   },
   {
-   "id": 40,
+   "id": 41,
    "type": "ProPostRadialBlur",
    "pos": [
     3240,
@@ -1800,13 +1841,13 @@
     170
    ],
    "flags": {},
-   "order": 40,
+   "order": 41,
    "mode": 0,
    "inputs": [
     {
      "name": "image",
      "type": "IMAGE",
-     "link": 55
+     "link": 56
     }
    ],
    "outputs": [
@@ -1814,7 +1855,7 @@
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
-      56
+      57
      ],
      "slot_index": 0
     }
@@ -1832,7 +1873,7 @@
    "title": "Margini usor moi (lentila telefon)"
   },
   {
-   "id": 41,
+   "id": 42,
    "type": "ImageSharpen",
    "pos": [
     3240,
@@ -1843,13 +1884,13 @@
     110
    ],
    "flags": {},
-   "order": 41,
+   "order": 42,
    "mode": 0,
    "inputs": [
     {
      "name": "image",
      "type": "IMAGE",
-     "link": 56
+     "link": 57
     }
    ],
    "outputs": [
@@ -1857,8 +1898,8 @@
      "name": "IMAGE",
      "type": "IMAGE",
      "links": [
-      57,
-      58
+      58,
+      59
      ],
      "slot_index": 0
     }
@@ -1874,7 +1915,7 @@
    "title": "Claritate finala"
   },
   {
-   "id": 42,
+   "id": 43,
    "type": "Note",
    "pos": [
     3240,
@@ -1885,7 +1926,7 @@
     120
    ],
    "flags": {},
-   "order": 42,
+   "order": 43,
    "mode": 0,
    "inputs": [],
    "outputs": [],
@@ -1897,41 +1938,11 @@
    ]
   },
   {
-   "id": 43,
+   "id": 44,
    "type": "SaveImage",
    "pos": [
     3700,
     20
-   ],
-   "size": [
-    380,
-    440
-   ],
-   "flags": {},
-   "order": 43,
-   "mode": 0,
-   "inputs": [
-    {
-     "name": "images",
-     "type": "IMAGE",
-     "link": 57
-    }
-   ],
-   "outputs": [],
-   "properties": {
-    "Node name for S&R": "SaveImage"
-   },
-   "widgets_values": [
-    "personaj/img"
-   ],
-   "title": "Salvare (promptul si setarile raman in PNG)"
-  },
-  {
-   "id": 44,
-   "type": "PreviewImage",
-   "pos": [
-    3700,
-    580
    ],
    "size": [
     380,
@@ -1945,6 +1956,36 @@
      "name": "images",
      "type": "IMAGE",
      "link": 58
+    }
+   ],
+   "outputs": [],
+   "properties": {
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "personaj/img"
+   ],
+   "title": "Salvare (promptul si setarile raman in PNG)"
+  },
+  {
+   "id": 45,
+   "type": "PreviewImage",
+   "pos": [
+    3700,
+    580
+   ],
+   "size": [
+    380,
+    440
+   ],
+   "flags": {},
+   "order": 45,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "images",
+     "type": "IMAGE",
+     "link": 59
     }
    ],
    "outputs": [],
@@ -2149,6 +2190,14 @@
   ],
   [
    25,
+   23,
+   0,
+   29,
+   0,
+   "IMAGE"
+  ],
+  [
+   26,
    26,
    0,
    27,
@@ -2156,15 +2205,15 @@
    "UPSCALE_MODEL"
   ],
   [
-   26,
-   23,
+   27,
+   29,
    0,
    27,
    1,
    "IMAGE"
   ],
   [
-   27,
+   28,
    27,
    0,
    28,
@@ -2172,208 +2221,200 @@
    "IMAGE"
   ],
   [
-   28,
+   29,
    28,
    0,
-   29,
+   30,
    0,
    "IMAGE"
   ],
   [
-   29,
+   30,
    16,
    0,
-   29,
+   30,
    1,
    "VAE"
   ],
   [
-   30,
+   31,
    14,
    0,
-   30,
+   31,
    0,
    "MODEL"
   ],
   [
-   31,
+   32,
    17,
    0,
-   30,
+   31,
    1,
-   "CONDITIONING"
-  ],
-  [
-   32,
-   18,
-   0,
-   30,
-   2,
    "CONDITIONING"
   ],
   [
    33,
-   29,
+   18,
    0,
+   31,
+   2,
+   "CONDITIONING"
+  ],
+  [
+   34,
    30,
+   0,
+   31,
    3,
    "LATENT"
   ],
   [
-   34,
-   30,
-   0,
+   35,
    31,
+   0,
+   32,
    0,
    "LATENT"
   ],
   [
-   35,
+   36,
    16,
    0,
-   31,
+   32,
    1,
    "VAE"
   ],
   [
-   36,
-   31,
-   0,
-   34,
-   0,
-   "IMAGE"
-  ],
-  [
    37,
-   34,
+   32,
    0,
-   36,
+   35,
    0,
    "IMAGE"
   ],
   [
    38,
-   14,
-   0,
-   34,
-   1,
-   "MODEL"
-  ],
-  [
-   39,
-   15,
-   0,
-   34,
-   2,
-   "CLIP"
-  ],
-  [
-   40,
-   16,
-   0,
-   34,
-   3,
-   "VAE"
-  ],
-  [
-   41,
-   17,
-   0,
-   34,
-   4,
-   "CONDITIONING"
-  ],
-  [
-   42,
-   18,
-   0,
-   34,
-   5,
-   "CONDITIONING"
-  ],
-  [
-   43,
-   32,
-   0,
-   34,
-   6,
-   "BBOX_DETECTOR"
-  ],
-  [
-   44,
-   33,
-   0,
-   34,
-   7,
-   "SAM_MODEL"
-  ],
-  [
-   45,
-   14,
-   0,
-   36,
-   1,
-   "MODEL"
-  ],
-  [
-   46,
-   15,
-   0,
-   36,
-   2,
-   "CLIP"
-  ],
-  [
-   47,
-   16,
-   0,
-   36,
-   3,
-   "VAE"
-  ],
-  [
-   48,
-   17,
-   0,
-   36,
-   4,
-   "CONDITIONING"
-  ],
-  [
-   49,
-   18,
-   0,
-   36,
-   5,
-   "CONDITIONING"
-  ],
-  [
-   50,
    35,
-   0,
-   36,
-   6,
-   "BBOX_DETECTOR"
-  ],
-  [
-   51,
-   33,
-   0,
-   36,
-   7,
-   "SAM_MODEL"
-  ],
-  [
-   52,
-   36,
    0,
    37,
    0,
    "IMAGE"
   ],
   [
-   53,
+   39,
+   14,
+   0,
+   35,
+   1,
+   "MODEL"
+  ],
+  [
+   40,
+   15,
+   0,
+   35,
+   2,
+   "CLIP"
+  ],
+  [
+   41,
+   16,
+   0,
+   35,
+   3,
+   "VAE"
+  ],
+  [
+   42,
+   17,
+   0,
+   35,
+   4,
+   "CONDITIONING"
+  ],
+  [
+   43,
+   18,
+   0,
+   35,
+   5,
+   "CONDITIONING"
+  ],
+  [
+   44,
+   33,
+   0,
+   35,
+   6,
+   "BBOX_DETECTOR"
+  ],
+  [
+   45,
+   34,
+   0,
+   35,
+   7,
+   "SAM_MODEL"
+  ],
+  [
+   46,
+   14,
+   0,
+   37,
+   1,
+   "MODEL"
+  ],
+  [
+   47,
+   15,
+   0,
+   37,
+   2,
+   "CLIP"
+  ],
+  [
+   48,
+   16,
+   0,
+   37,
+   3,
+   "VAE"
+  ],
+  [
+   49,
+   17,
+   0,
+   37,
+   4,
+   "CONDITIONING"
+  ],
+  [
+   50,
+   18,
+   0,
+   37,
+   5,
+   "CONDITIONING"
+  ],
+  [
+   51,
    36,
+   0,
+   37,
+   6,
+   "BBOX_DETECTOR"
+  ],
+  [
+   52,
+   34,
+   0,
+   37,
+   7,
+   "SAM_MODEL"
+  ],
+  [
+   53,
+   37,
    0,
    38,
    0,
@@ -2381,7 +2422,7 @@
   ],
   [
    54,
-   38,
+   37,
    0,
    39,
    0,
@@ -2407,15 +2448,23 @@
    57,
    41,
    0,
-   43,
+   42,
    0,
    "IMAGE"
   ],
   [
    58,
-   41,
+   42,
    0,
    44,
+   0,
+   "IMAGE"
+  ],
+  [
+   59,
+   42,
+   0,
+   45,
    0,
    "IMAGE"
   ]
@@ -2545,7 +2594,7 @@
     1340,
     520,
     420,
-    360
+    400
    ],
    "color": "#3f789e",
    "font_size": 24,
