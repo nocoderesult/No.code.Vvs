@@ -1,46 +1,58 @@
-# Attraction offers
+# Attraction offers (Stage I - Get cash)
 
-Job: turn a stranger into a customer and, ideally, recover the cost of acquiring them on the spot. A good attraction offer is easy to say yes to, gets the customer a first result fast, and naturally sets up the upsell.
+Job: turn attention into customers fast and cheaply - open the door, not get rich. People can't judge a stranger's value, but they understand price instantly, so free / $1 / steep discount removes doubt (free = 100% off; it's one lever at different intensities). The real goals: get contact info, get *some* transaction, create momentum, earn the right to make the next offer. A strong attraction offer feels like a steal and needs no explaining - "it would be stupid not to try this". Free gets the most demand; discounts get fewer leads but higher show-up rates (use discounts where no-shows are costly - doctors, dentists, lawyers).
 
-## Tactics
+The book's five attraction offers:
 
-### 1. Win Your Money Back
-The customer pays up front and gets the money back (fully or as credit toward a bigger purchase) if they meet clear conditions - conditions that are exactly the behaviors that make them succeed (show up, complete the steps, send materials on time).
-- Why it works: low perceived risk for them; the business keeps the cash from those who don't follow through, and those who do get results and become the best upsell candidates.
-- Best: give the "money back" as **credit toward the next offer** - it becomes the upsell.
-- Pitfalls: vague criteria; criteria the customer can't control; criteria unrelated to success.
-- AI/automation example: "Plătești 300 € pentru pachetul de start. Dacă ne trimiți materialele în 48h și postezi toate cele 10 clipuri în 30 de zile, primești 300 € credit la abonamentul lunar."
+## 1. Win Your Money Back
+"Do X, within Y time, following Z rules, and you get it free."
+- Customer pays up front; if they meet the criteria they get the money back as cash **or store credit** (credit attracts the same number of customers - prefer it; if you advertise "free", add an unconditional satisfaction guarantee).
+- Criteria can be **actions** (attend all calls, post progress, log daily), **results** (hit a number), or **both**. Good criteria: (1) easy to track, (2) make the customer get the result - copy what your best customers do, (3) advertise the business (post, tag, review, refer).
+- Make check-in meetings mandatory criteria - every meeting is a chance to make the next offer.
+- **Apply the won credit to something bigger / longer**, spread over time (e.g. 600 credit on a 12-month plan = 50 off per month), not as free months - people who pay nothing drop off. (See Rollover Upsell.)
+- Make everyone a winner privately: mid-program, offer to roll their deposit into the long-term program whether or not they hit the goal; at the end, treat "losers" the same way.
+- Only run it if your refund rate is under ~5% and you can handle ~10% claiming money back. Real profit comes from people who succeed and buy the next thing, not from people who fail.
+- Best for things people start and quit (fitness, skills, starting a business, routines).
+- AI/automation example: "Plătești 400 € pentru Pachetul Start. Dacă ne trimiți materialele în 48h, participi la cele 3 call-uri și postezi toate cele 12 clipuri în 30 de zile, primești 400 € credit la abonamentul de 6 luni."
 
-### 2. Giveaways
-Run a contest for one big prize; everyone enters with contact info. One person wins; everyone else gets offered a discounted version as a "consolation" offer.
-- Why it works: huge lead volume cheaply; the discount offer converts a slice of all entrants.
-- Pitfalls: prize unrelated to the paid offer (attracts the wrong people); unclear legal terms for the contest.
-- Example: "Câștigă un personaj AI complet pentru brandul tău + 1 lună de conținut. Toți participanții primesc -40% la pachetul de start, 72 de ore."
+## 2. Giveaways
+"Many enter... many win."
+- Pick a **grand prize** = the thing you want everyone to buy; state its money value (it becomes the price anchor).
+- Pick the **promotional offer** everyone else gets (partial "scholarship", voucher, credit) - the core offer with a discount or bonus.
+- Ask for contact info + permission to follow up, eligibility questions ("de ce să te alegem pe tine?" - this gives you the arguments for the sale) and qualifying actions (attend, post, join group). More effort to enter = fewer but more qualified leads.
+- Deadline 3-7 days, daily countdown updates on every channel with benefits and social proof. Limit by time and/or number of entries (as many as you can call within 7 days).
+- Announce the winner publicly, then privately contact everyone else: they qualified for the promotional offer; book a call; claim deadline ~7 days; urgency to enter, to claim and to use.
+- Rule of thumb: discount the core offer by 10-30% of gross margin; present it against the grand-prize value.
+- Two prizes: whoever refers the winner also wins - more referrals, better-quality entrants.
+- Have downsells ready (same % off another product). For recurring businesses, apply the discount over the longest term they'll agree to, then auto-bill normal rates.
+- If nobody bites, the prize wasn't grand enough. Legal: public official rules, a real winner, clear qualifications.
 
-### 3. Decoy Offer
-Advertise a free or very cheap basic option, then present it side-by-side with the premium option. The basic option is real but clearly limited; next to it the premium looks like the obvious choice. Most people who come for the cheap one buy the premium.
-- Why it works: cheap/free gets attention; comparison sells the premium.
-- Pitfalls: decoy so bad it feels like bait-and-switch (keep it genuinely useful); presenting too many options.
-- Example: ad says "5 clipuri AI pentru 49 €"; in the call you show 5 clipuri (49 €) vs. personaj AI propriu + 20 clipuri + automatizare DM (490 €).
+## 3. Decoy Offer
+"Which option do you think gets you the best results?"
+- Advertise a lesser/smaller/simpler version free or cheap (the decoy). When leads come, present it next to a much more valuable **premium** (more features, bonuses, guarantees) and emphasise the premium.
+- Strip the decoy down (fewer components, less personal, **no guarantees**); make the premium as good as possible - the bigger the contrast, the more choose premium.
+- Advertise benefits/outcome, not features.
+- Discounts can be stated 4 ways (% off, amount off, free portion, total package) - test which converts.
+- If possible present premium first; if they ask about the decoy: "Ești aici pentru lucruri gratuite sau pentru rezultate?" Then contrast both and ask which gets them to the goal faster. Get excited about the premium; assumed, calm close.
+- If they take the decoy, optionally surprise them with a cheap premium feature - goodwill for later upsells. Decoy buyers are still customers you can upgrade.
+- Example: reclamă „5 clipuri AI pentru clinica ta - 99 €” → la call: 5 clipuri fără garanție vs. personaj AI propriu + 12 clipuri + automatizare DM + garanție de rezultat - 490 €.
 
-### 4. Buy X Get Y Free
-Instead of a discount, give extra items for free with a purchase. "Free" pulls harder than "%-off", and the customer values the free thing at full price.
-- Pitfalls: free items with high delivery cost; making the main offer look worth less.
-- Example: "Iei 20 de clipuri, primești gratuit 10 imagini cu personajul pentru stories."
+## 4. Buy X Get Y Free
+"Buy one puppy, get two free."
+- Reframe price as free stuff: "buy 1 for 30, get 2 free" beats "3 for 30" or "33% off" - free gets more attention than discounts.
+- Give **more free than paid** (buy 1 get 2 > buy 2 get 1). Free items can differ from paid (more cheap items can beat fewer expensive ones).
+- Raise prices first (for real, at least for a season) so the offer stays profitable - never lie about the price.
+- For services: "Buy 6 months, get 12 free" style versions of the same total price; it brings more customers and cash up front.
+- Only if you can manage the money: budget delivery for the whole prepaid term.
+- For fast cash, offer it to existing recurring customers (cap ~10% of them). Prepaid customers keep buying - keep selling to them. If customers buy only once, make that purchase big.
 
-### 5. Pay Less Now or Pay More Later
-Give two ways in: start now for free/cheap and pay the full price later if they continue (card on file), **or** pay up front now at a lower total price. Both choices are a yes.
-- Why it works: removes the money objection for hesitant buyers while rewarding committed ones; the up-front payers fund acquisition immediately.
-- Pitfalls: the "later" charge must be crystal clear before they start (EU consumer law).
-- Example: "Începi azi gratuit, iar dacă continui după 14 zile plătești 600 €. Sau plătești acum 450 € și economisești 150 €."
+## 5. Pay Less Now or Pay More Later
+"Free, then full price later - or discounted now with bonuses."
+- Pay later: $0 now, card on file, full price charged later unless they cancel - with a **conditional** guarantee (they qualify to cancel only if they did the required things, e.g. attended).
+- Pay now: 20-50% off + bonuses (instead of the guarantee). Offer "pay now" right after they accept "pay later".
+- Promise one clear yes/no, measurable result you can deliver in the timeframe.
+- If too many choose later, sweeten "now"; if too many choose now, do the opposite. If >10% of "later" people cancel: you overpromised, conditions are too low, or price is too high.
+- Works for recurring offers too (lock a lower rate forever if they pay today). In events, hint the next offer early. Best for digital products and short services.
+- Have a next offer ready - this offer pays off fully only with upsells.
 
-### 6. Free Goodwill Offer
-Give something genuinely valuable for free with no strings - a sample, an audit, a first result - then make the paid offer. Reciprocity plus proof.
-- Pitfalls: free thing that takes too much of your time to deliver; free thing that solves the whole problem (nothing left to sell).
-- Example: "Comentează «AI» și îți fac gratuit o imagine cu personajul AI al brandului tău." → DM → call → pachetul de start.
-
-## Choosing
-- No audience, need leads cheaply → Free Goodwill or Giveaway.
-- Have leads, want cash up front → Win Your Money Back or Pay Less Now.
-- Many people asking "cât costă?" and buying cheap → Decoy.
-- Customers already buy but you want bigger first orders → Buy X Get Y Free.
+Note: the book's "Free Goodwill" chapter is not an offer tactic - it is the author asking readers for a review. Don't present it as a sixth attraction offer.
