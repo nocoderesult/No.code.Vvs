@@ -8,7 +8,7 @@ Personaj 100% fictiv, generat cu AI. Nu seamănă intenționat cu nicio persoan�
 
 ## Descrierea fixă (se copiază identic în fiecare prompt — căsuța „Personaj (fix)”)
 ```
-d4ria, a 27-year-old woman with warm olive tan skin, long glossy dark brown hair with subtle chocolate highlights falling past her chest, center part, almond-shaped hazel-brown eyes, defined dark eyebrows, high cheekbones, small straight nose with a slightly rounded tip, full lips, a tiny beauty mark under her left eye, slim athletic hourglass figure, natural skin texture with visible pores
+d4ria, a 27-year-old woman with warm olive sun-kissed skin, long glossy dark brown hair with soft waves and subtle chocolate highlights falling past her chest, center part, slightly upturned feline almond-shaped hazel-brown eyes with heavy lids and long dark lashes, thick defined dark eyebrows, high sculpted cheekbones, defined jawline, small straight nose with a slightly rounded tip, very full naturally plump lips with a defined cupid's bow, a tiny beauty mark under her left eye, slim athletic hourglass figure, natural skin texture with visible pores
 ```
 
 ## Semne care NU se schimbă niciodată

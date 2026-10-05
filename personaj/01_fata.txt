@@ -2,4 +2,4 @@
 # Rulezi de ~10 ori (40 de fețe). Alegi una și îi notezi seed-ul + salvezi imaginea ca daria_ref.png.
 # Personaj (fix): descrierea din CARACTER.md (fără "d4ria," la început până ai LoRA).
 # Scena:
-close-up portrait, head and shoulders, looking straight into the camera with a soft confident half-smile, plain light grey wall behind her, soft even window daylight from the front-left, minimal makeup, hair loose behind the shoulders, sharp focus on the eyes, shot on a smartphone at arm's length, natural colors, real candid photo
+close-up portrait, head and shoulders, looking straight into the camera with a slow sultry gaze, lips slightly parted, chin slightly lowered, plain light grey wall behind her, soft even window daylight from the front-left, soft bronzed makeup, subtle brown smoky eyeliner, glossy nude lips, hair loose behind the shoulders, sharp focus on the eyes, shot on a smartphone at arm's length, natural colors, real candid photo
