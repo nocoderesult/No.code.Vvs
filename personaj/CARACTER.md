@@ -3,19 +3,19 @@
 Personaj 100% fictiv, generat cu AI. Nu seamănă intenționat cu nicio persoană reală.
 
 ## Identitate
-- Nume: **Daria** · vârstă aparentă 27 · nișă: lifestyle & lux (mașini, hoteluri, călătorii, outfit-uri)
+- Nume: **Daria** · vârstă aparentă 25 · nișă: lifestyle & lux (mașini, hoteluri, călătorii, outfit-uri)
 - Cuvânt-declanșator LoRA: **d4ria**
 
 ## Descrierea fixă (se copiază identic în fiecare prompt — căsuța „Personaj (fix)”)
 ```
-d4ria, a 27-year-old woman with warm olive sun-kissed skin, long glossy dark brown hair with soft waves and subtle chocolate highlights falling past her chest, center part, slightly upturned feline almond-shaped hazel-brown eyes with heavy lids and long dark lashes, thick defined dark eyebrows, high sculpted cheekbones, defined jawline, small straight nose with a slightly rounded tip, very full naturally plump lips with a defined cupid's bow, a tiny beauty mark under her left eye, slim athletic hourglass figure, natural skin texture with visible pores
+d4ria, a 25-year-old woman with radiant warm tan skin, a sleek jet-black bob haircut ending at her jawline with a sharp side part, piercing almond-shaped green-hazel eyes, long voluminous dark eyelashes, dark sculpted eyebrows, full dusty-pink lips, high cheekbones with a soft natural glow, small diamond stud earrings, slim athletic hourglass figure, natural skin texture with visible pores
 ```
 
 ## Semne care NU se schimbă niciodată
-alunița sub ochiul stâng · cărarea pe mijloc · ochii căprui-alune · tenul măsliniu
+bob negru-corb până la maxilar cu cărare laterală · ochii verzi-alune · tenul bronzat · cerceii mici cu diamant
 
 ## Ce se poate schimba
-machiaj (natural ↔ smoky de seară), coafură (liber, coadă, coc lejer), haine, loc, lumină.
+machiaj (natural ↔ smoky de seară), coafură (bob drept, bob ondulat, după urechi, ud), haine, loc, lumină.
 
 ## Etape
 1. **Fața** – 40 de portrete (`01_fata.txt`), alegi UNA singură.
