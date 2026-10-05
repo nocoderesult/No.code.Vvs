@@ -1,0 +1,36 @@
+# Pasul 2 — setul de antrenare (30 de imagini) cu ACEEAȘI față.
+# Pornești de la daria_ref.png și folosești un model de EDITARE (Qwen-Image-Edit în ComfyUI, sau Nano Banana).
+# Fiecare rând = o instrucțiune de editare. Începe mereu cu: "Keep the exact same woman, same face, same beauty mark under her left eye."
+# ---- 10 portrete (fața din unghiuri și lumini diferite)
+Keep the exact same woman, same face, same beauty mark under her left eye. Turn her head three-quarters to the left, soft daylight, neutral expression.
+Keep the exact same woman, same face, same beauty mark under her left eye. Turn her head three-quarters to the right, laughing naturally, eyes slightly squinted.
+Keep the exact same woman, same face, same beauty mark under her left eye. Full side profile facing left, hair tucked behind her ear, golden hour light.
+Keep the exact same woman, same face, same beauty mark under her left eye. Looking slightly up at the camera, serious expression, overcast outdoor light.
+Keep the exact same woman, same face, same beauty mark under her left eye. Evening smoky eye makeup, warm restaurant lighting, subtle smile.
+Keep the exact same woman, same face, same beauty mark under her left eye. No makeup, morning bathroom light, hair in a messy bun.
+Keep the exact same woman, same face, same beauty mark under her left eye. Hard direct sunlight with sunglasses pushed up on her head, squinting slightly.
+Keep the exact same woman, same face, same beauty mark under her left eye. Phone flash at night, red lipstick, playful expression.
+Keep the exact same woman, same face, same beauty mark under her left eye. Looking down at her phone, soft side light from a window.
+Keep the exact same woman, same face, same beauty mark under her left eye. Close-up with wet hair after a swim, water droplets on her skin, bright daylight.
+# ---- 10 bust / talie în sus (haine și locuri diferite)
+Keep the exact same woman, same face, same beauty mark under her left eye. Waist-up, white oversized shirt, sitting in a bright cafe holding an espresso cup.
+Keep the exact same woman, same face, same beauty mark under her left eye. Waist-up, black satin slip dress, hotel bar at night, warm bokeh lights.
+Keep the exact same woman, same face, same beauty mark under her left eye. Chest-up, beige knit sweater, cozy living room, soft lamp light.
+Keep the exact same woman, same face, same beauty mark under her left eye. Waist-up, black blazer over a white top, city street, overcast daylight.
+Keep the exact same woman, same face, same beauty mark under her left eye. Waist-up, sporty grey zip-up, gym mirror selfie, fluorescent light.
+Keep the exact same woman, same face, same beauty mark under her left eye. Chest-up, linen beige top, seaside terrace, golden hour.
+Keep the exact same woman, same face, same beauty mark under her left eye. Waist-up, leather jacket, sitting in the driver's seat of a car, daylight through the windshield.
+Keep the exact same woman, same face, same beauty mark under her left eye. Waist-up, emerald green dress, getting ready in front of a hotel mirror.
+Keep the exact same woman, same face, same beauty mark under her left eye. Chest-up, denim jacket, airport lounge, cool natural light.
+Keep the exact same woman, same face, same beauty mark under her left eye. Waist-up, white bathrobe, hotel room by the window, morning light.
+# ---- 10 corp întreg (proporții + stil)
+Keep the exact same woman, same face, same beauty mark under her left eye. Full body, walking on a city sidewalk, beige trench coat, jeans, white sneakers.
+Keep the exact same woman, same face, same beauty mark under her left eye. Full body, black one-piece swimsuit, standing by a hotel pool, bright sun.
+Keep the exact same woman, same face, same beauty mark under her left eye. Full body, fitted black dress and heels, hotel lobby with marble floors.
+Keep the exact same woman, same face, same beauty mark under her left eye. Full body, leaning against a luxury sports car, white top and jeans, golden hour.
+Keep the exact same woman, same face, same beauty mark under her left eye. Full body, gym leggings and sports bra, stretching on a mat, daylight.
+Keep the exact same woman, same face, same beauty mark under her left eye. Full body, summer linen dress, walking on a beach at sunset.
+Keep the exact same woman, same face, same beauty mark under her left eye. Full body, sitting on stairs in front of a building, casual streetwear.
+Keep the exact same woman, same face, same beauty mark under her left eye. Full body mirror selfie in a bright bedroom, crop top and wide-leg trousers.
+Keep the exact same woman, same face, same beauty mark under her left eye. Full body, winter coat and boots, snowy street, overcast light.
+Keep the exact same woman, same face, same beauty mark under her left eye. Full body, getting out of a black car at night, satin dress, street lights.
