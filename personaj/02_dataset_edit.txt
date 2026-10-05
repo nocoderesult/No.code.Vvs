@@ -1,5 +1,5 @@
 # Pasul 2 — setul de antrenare (30 de imagini) cu ACEEAȘI față.
-# Pornești de la daria_ref.png și folosești un model de EDITARE (Qwen-Image-Edit în ComfyUI, sau Nano Banana).
+# Pornești de la daria_ref.png (față) + daria_body_ref.png (corp, pentru pozele de corp întreg) și folosești un model de EDITARE (Qwen-Image-Edit în ComfyUI, sau Nano Banana).
 # Fiecare rând = o instrucțiune de editare. Începe mereu cu: "Keep the exact same woman, same face, same jet-black jaw-length bob with side part, same green-hazel eyes."
 # ---- 10 portrete (fața din unghiuri și lumini diferite)
 Keep the exact same woman, same face, same jet-black jaw-length bob with side part, same green-hazel eyes. Turn her head three-quarters to the left, soft daylight, neutral expression.
