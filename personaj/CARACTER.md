@@ -8,7 +8,7 @@ Personaj 100% fictiv, generat cu AI. Nu seamănă intenționat cu nicio persoan�
 
 ## Descrierea fixă (se copiază identic în fiecare prompt — căsuța „Personaj (fix)”)
 ```
-d4ria, a 25-year-old woman with radiant warm tan skin, a sleek jet-black bob haircut ending at her jawline with a sharp side part, piercing almond-shaped green-hazel eyes, long voluminous dark eyelashes, dark sculpted eyebrows, full dusty-pink lips, high cheekbones with a soft natural glow, small diamond stud earrings, clear smooth neck, athletic hourglass figure with a narrow toned waist, full proportionate bust and rounded hips, toned legs, a tiny fine-line crescent moon tattoo on her inner left wrist, medium almond-shaped nude-pink nails, natural skin texture with visible pores
+d4ria, a 25-year-old woman with radiant warm tan skin, a sleek jet-black bob haircut ending at her jawline with a sharp side part, piercing almond-shaped green-hazel eyes, long voluminous dark eyelashes, dark sculpted eyebrows, full dusty-pink lips, high cheekbones with a soft natural glow, small diamond stud earrings, clear smooth neck, athletic hourglass figure with a narrow toned waist, full proportionate bust and rounded hips, toned legs, medium almond-shaped nude-pink nails, natural skin texture with visible pores
 ```
 
 ## Semne care NU se schimbă niciodată (checklist la fiecare poză)
@@ -17,7 +17,7 @@ d4ria, a 25-year-old woman with radiant warm tan skin, a sleek jet-black bob hai
 - [ ] ten bronzat cald
 - [ ] cercei mici cu diamant
 - [ ] gât curat (fără alunițe/semne)
-- [ ] tatuaj fin semilună pe interiorul încheieturii STÂNGI
+- [ ] FĂRĂ tatuaje (încheieturi și corp curate)
 - [ ] unghii medii migdală, nude-roz
 - [ ] corp clepsidră atletică: talie îngustă tonifiată, bust și șolduri pline proporționale
 
@@ -38,5 +38,5 @@ machiaj (natural ↔ smoky de seară), coafură (bob drept, bob ondulat, după u
 - Înainte de lansare: 9–12 postări gata, ca grila să arate plină din prima zi.
 
 ## Note de consistență
-- Tatuajul: mic și simplu (semilună) ca AI-ul să-l poată repeta; dacă iese greșit într-o poză din set → poza se reface sau se ascunde încheietura.
+- Fără tatuaje: dacă apare vreun tatuaj într-o poză din set, se scoate cu edit („remove the tattoo, keep everything else identical”) sau poza nu intră în set. La generare: „tattoo” în negative prompt.
 - Detaliile nedescrise (alunițe, semne) sunt aleatorii până la LoRA → tot ce contează e descris în fișa de mai sus.
