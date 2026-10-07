@@ -1,0 +1,34 @@
+daria_v2_01|d4ria, a woman, close-up portrait, front view, neutral expression, black tank top, plain grey studio background, soft studio light
+daria_v2_02|d4ria, a woman, close-up portrait, front view, soft smile, black tank top, plain grey studio background, soft studio light
+daria_v2_03|d4ria, a woman, close-up portrait, head turned three-quarters to the left, neutral expression, black tank top, plain grey studio background
+daria_v2_04|d4ria, a woman, close-up portrait, head turned three-quarters to the right, laughing, black tank top, plain grey studio background
+daria_v2_05|d4ria, a woman, close-up portrait, side profile facing left, hair tucked behind ear, black tank top, plain grey studio background
+daria_v2_06|d4ria, a woman, close-up portrait, side profile facing right, calm expression, black tank top, plain grey studio background
+daria_v2_07|d4ria, a woman, close-up portrait from a high angle, looking up at the camera, black tank top, plain grey studio background
+daria_v2_08|d4ria, a woman, close-up portrait from a low angle, chin raised, confident expression, black tank top, plain grey studio background
+daria_v2_09|d4ria, a woman, close-up portrait from behind, looking back over her shoulder, slight smile, black tank top, plain grey studio background
+daria_v2_10|d4ria, a woman, close-up portrait, eyes looking down, shy smile, black tank top, plain grey studio background
+daria_v2_11|d4ria, a woman, close-up portrait, looking off to the side, thoughtful expression, black tank top, plain grey studio background
+daria_v2_12|d4ria, a woman, extreme close-up of her face, looking at the camera, serious expression, plain grey background
+daria_v2_13|d4ria, a woman, full body, standing, front view, black sports bra and black leggings, barefoot, plain light grey studio
+daria_v2_14|d4ria, a woman, full body, standing, three-quarter view, hand on hip, black sports bra and black leggings, barefoot, plain light grey studio
+daria_v2_15|d4ria, a woman, full body, standing, side profile, black sports bra and black leggings, barefoot, plain light grey studio
+daria_v2_16|d4ria, a woman, full body, standing, seen from behind, black sports bra and black leggings, barefoot, plain light grey studio
+daria_v2_17|d4ria, a woman, full body, standing, front view, white tank top and light blue jeans, white sneakers, plain light grey studio
+daria_v2_18|d4ria, a woman, full body, walking toward the camera, white tank top and light blue jeans, white sneakers, plain light grey studio
+daria_v2_19|d4ria, a woman, full body, standing, front view, champagne satin slip dress, barefoot, plain light grey studio
+daria_v2_20|d4ria, a woman, full body, seen from behind, looking over her shoulder, champagne satin slip dress, plain light grey studio
+daria_v2_21|d4ria, a woman, full body, standing, three-quarter view, black one-piece swimsuit, plain light grey studio
+daria_v2_22|d4ria, a woman, medium shot, sitting on a wooden stool, beige blazer, white t-shirt and blue jeans, plain light grey studio
+daria_v2_23|d4ria, a woman, mirror selfie in a bedroom at night, warm lamp light, cream knit sweater, unmade bed, phone photo
+daria_v2_24|d4ria, a woman, bathroom mirror selfie with phone flash, white t-shirt, toiletries on the counter, phone photo
+daria_v2_25|d4ria, a woman, sitting at a cafe table, holding a latte, laughing, beige cardigan, morning window light, people blurred in the background, phone photo
+daria_v2_26|d4ria, a woman, selfie in the driver's seat of a car, sunglasses on her head, white shirt, daylight, phone photo
+daria_v2_27|d4ria, a woman, on a balcony at golden hour, white linen shirt, city rooftops in the background, phone photo
+daria_v2_28|d4ria, a woman, gym mirror selfie, grey athletic set, gym machines and people in the background, fluorescent light, phone photo
+daria_v2_29|d4ria, a woman, walking on a city sidewalk, beige trench coat, overcast day, people and cars blurred behind her, candid phone photo
+daria_v2_30|d4ria, a woman, at a restaurant table at night, black dress, glass of red wine, flash photo, dark background
+daria_v2_31|d4ria, a woman, on the beach at sunset, open white linen shirt over a black swimsuit, wind in her hair, backlight, phone photo
+daria_v2_32|d4ria, a woman, in a kitchen in the morning, silk pajama set, holding a coffee mug, soft window light, phone photo
+daria_v2_33|d4ria, a woman, by a hotel room window in the morning, white hotel robe, backlit, unmade bed, phone photo
+daria_v2_34|d4ria, a woman, at a crowded rooftop bar at night, black satin top, neon and warm light, city lights bokeh, phone photo
