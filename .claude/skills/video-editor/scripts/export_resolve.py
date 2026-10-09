@@ -78,8 +78,8 @@ PASUL 4 – subtitrări și sunet
   (sau trage fișierul .srt direct în Media Pool).
   Subtitrări animate ca în video-ul final: pune captions_alpha.mov pe pista V2, la începutul timeline-ului
   (merge doar dacă timeline-ul e 1080x1920 și nu schimbi tăieturile).
-  Sunet masterizat: pune stems/voice.wav pe A2 și stems/music_ducked.wav pe A3, de la început,
-  și dă mute la A1 (sunetul original).
+  Sunet masterizat: pune stems/voice.wav pe A2 și stems/music_ducked.wav pe A3 (și stems/sfx.wav pe A4,
+  dacă există), toate de la începutul timeline-ului, și dă mute la A1 (sunetul original).
 
 PASUL 5 – export
   Pagina Deliver → Custom Export: MP4, H.264, 1080x1920 (sau 1920x1080), {fps} fps,

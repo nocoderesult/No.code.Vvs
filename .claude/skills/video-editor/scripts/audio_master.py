@@ -6,7 +6,7 @@ de-mud EQ -2 dB @250 Hz -> presence +2 dB @3.5 kHz -> de-esser -> compressor 3:1
 Latency: the chain delays the voice (measured RNNoise +12 ms, afftdn +27 ms, EQ/HPF alone +2 ms), which would
 put the sound behind the picture and the stems behind A1 in Resolve; it is measured by cross-correlating the
 chain output with the input and trimmed off (output keeps the input's exact length).
-Leveling: if the chained voice has LRA > --lra - 1 (quiet and loud passages, e.g. near/far from the phone), an
+Leveling: if the chained voice has LRA > 10 LU (quiet and loud passages, e.g. near/far from the phone), an
 offline gain rider brings 3 s loudness toward the median (+-12 dB, smoothed, held through pauses).
 Loudness: pass 0 measures after the chain and pre-gains + limits so loudnorm can stay LINEAR, then classic
 two-pass loudnorm. If linear mode is still impossible (LRA or true peak out of range), a static gain + 4x

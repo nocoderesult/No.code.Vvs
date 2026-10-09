@@ -38,8 +38,9 @@ Every recipe here was run in the container and measured; the scripts use them. R
 
 Put these filters in front of the trim (render_cuts does this inline):
 
-- **VFR → CFR:** `fps=F` on video, and `aresample=48000:async=1:first_pts=0` on audio.
+- **VFR → CFR:** `fps=F:start_time=0` on video, and `aresample=48000:async=1:first_pts=0` on audio.
   - Also decode every analysis audio with `first_pts=0`, so a late-starting audio track stays aligned with video time.
+  - `start_time=0` matters when the VIDEO starts late (stream-copy trims, screen recordings, some Android files: video start_time 0.2, audio 0.0). Plain `fps=F` starts the video at its first frame, so every segment before it played 200 ms early (measured A−V +213 ms, QC FAIL "video 10.033 s / audio 10.233 s"). With `start_time=0` the first frame is repeated to fill the gap: A−V +1.2 ms, the same as the source. `render_cuts` then asserts that the video and audio stream durations match within one frame.
 - **Rotation:** ffmpeg auto-rotates (the display matrix) in `-vf` and `-filter_complex`. OpenCV auto-rotates too, so face coordinates match.
 - **HDR (HLG or PQ) → SDR:** `zscale=t=linear:npl=203,format=gbrpf32le,zscale=p=bt709,tonemap=tonemap=mobius:param=0.5:desat=0,zscale=t=bt709:m=bt709:r=tv:d=error_diffusion,format=yuv420p`.
   - Mean RGB error against the SDR original: 9.2, versus 27.4 for the common hable/npl=100 recipe (which is also too dark) and 41 for naive conversion.
@@ -67,8 +68,12 @@ Put these filters in front of the trim (render_cuts does this inline):
   |---|---|
   | Same aspect | scale |
   | Wider source with faces in ≥ 25% of samples | track |
+  | Wider source, face taller than 40% of the crop (close-up selfie) | wide: face-track crop scaled so the face is 30% of H, centred at 0.40 H, over the blur fill |
   | Taller source where the crop keeps ≥ 50% (9:16 → 1:1) | track |
   | Otherwise | blur |
+
+- **Wide:** `[fg]sendcmd=…,crop@rf=w=CW:h=SH:x=..,scale=W:BH[fg];[bg][fg]overlay=0:TOP` with `k = 0.30·H / (face_h·SH)` (clamped between W/SW and H/SH), `CW = W/k`, `BH = SH·k`. Measured on a 1280×720 selfie with the face at 51% of the height: upscale 2.67× → 1.56×, face band 624–1085 px, captions under the chin at y 1157 instead of on the forehead.
+- **Zoom cuts:** a kept segment is split at the `zooms` points from `plan_cuts` into several `trim` branches of the same `split` with contiguous frame ranges (no time jump), and every 2nd shot gets the punch crop. Audio stays one `atrim` per segment, so nothing changes for sync.
 
 ## Zoom / punch-in jitter
 
@@ -95,12 +100,16 @@ Jitter here is the standard deviation of the second difference of the zoom centr
   | Input | 7.9 dB | — |
 
   - The `sh.rnnn` model is bundled. Its README states it is not subject to copyright.
+- **Chain latency:** RNNoise delays the voice by 12 ms and afftdn by 27 ms (HPF+EQ alone 2 ms), measured by cross-correlating `cut.wav` with the processed voice. Uncompensated, every output had the sound 12 ms behind the picture and the voice stem 12–27 ms behind A1 in Resolve. `audio_master` measures the lag of its own chain on each file and trims it (`atrim=start=lat,asetpts=PTS-STARTPTS`, then pads to the input length).
+- **Leveling:** when the chained voice has LRA above 10 LU (near/far from the phone), an offline gain rider moves 3 s loudness toward the median (±12 dB, smoothed, held through pauses) before loudness normalization.
 - **Loudness:** pass 0 measures after the chain, then applies `volume=(target−I0)dB` and `alimiter`, then two-pass loudnorm with `linear=true`.
   - Plain two-pass loudnorm fell back to *dynamic* mode on −27 LUFS input.
+  - Pass 0 alone was not enough on speech with big level swings (8 s sections alternating −38 / −12 LUFS): loudnorm still went dynamic and rode the quiet sections unevenly (−30, −24, −26 LUFS short-term), LRA 19.3. If linear mode is impossible after leveling, the script now uses a static gain + 4× oversampled true-peak limiter instead, and says so.
   - Measured: −14.0 LUFS, −1.6 dBTP on the WAV, about −1.7 dBTP after AAC 256k.
 - **Ducking:** use an offline gain curve in numpy from the voice envelope, not `sidechaincompress`.
   - With `sidechaincompress` (threshold 0.02, ratio 4) the music ended up 31 dB under the voice: too deep and hard to predict.
-  - With the curve, `--duck 12` measured −32.0 LUFS for the bed under constant speech and −28.5 LUFS integrated on a clip with pauses (the bed rises in the gaps); the voice sits about 18–22 dB above it.
+  - With the curve, `--duck 12` measured −32.0 LUFS for the bed under constant speech and −28.5 LUFS integrated on a clip with pauses (the bed rises in the gaps); the voice sits about 18–22 dB above it. On a tight-cut reel (voice on 94% of the time) that was −31.5 LUFS, 21 dB under the voice: inaudible on a phone.
+  - So the bed level is now set relative to the voice: `--music-under 15` (dB under the voice while talking) with `--duck 8`. Measured on a 40 s reel: ducked bed −28.8 LUFS = 14.7 LU under the voice.
 - **amix:** always use `normalize=0`, or the voice level drops.
 - **True-peak limiting:** `aresample=192000,alimiter=...,aresample=48000` gives an oversampled, approximately true-peak limiter.
 - **arnndn:** needs 48 kHz input. Don't combine `-ar 48000` with `aresample=16000` in one chain; it silently resamples back and breaks the time axis.
@@ -117,7 +126,7 @@ Jitter here is the standard deviation of the second difference of the zoom centr
   - Line breaks are balanced by DP, which avoids orphan words. Sentence chunks are split evenly ("sfaturi." alone never happens).
 - **Header:** `ScaledBorderAndShadow: yes`, `WrapStyle: 2`, `YCbCr Matrix: TV.709`, PlayRes equal to the canvas.
 - **Hook:** `\fad(0,200)`, with no fade-in, so it is visible on frame 0. The first caption chunk is extended back to t=0.
-- **Burn-in:** `subtitles=filename='/abs/path.ass'`. Escape `:` and `'` in the path (`vcommon.ass_filter_path`).
+- **Burn-in:** `subtitles=filename='/abs/path.ass'`, escaping `\` and `:`. An apostrophe can't be escaped reliably inside a quoted filter argument (two escaping levels): a folder named "Reel lui Ion's" failed with "Option not found". `vcommon.filter_file()` copies any .ass / sendcmd file whose path isn't plain ASCII into the render's temp dir first (render_cuts, export_resolve --alpha, reframe --preview).
 - **Transparent overlay for Resolve:**
   ```
   ffmpeg -f lavfi -i color=c=black@0.0:s=1080x1920:r=30:d=DUR,format=yuva444p -vf subtitles=f.ass:alpha=1 -c:v prores_ks -profile:v 4444 -qscale:v 9 -pix_fmt yuva444p10le -vendor apl0 captions_alpha.mov

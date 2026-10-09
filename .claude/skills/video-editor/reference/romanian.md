@@ -38,6 +38,9 @@ Use `small` only for quick drafts.
 - **Whisper's own habits:**
   - It writes numbers as digits ("5 minute"). That's fine for captions.
   - It often drops fillers on purpose. A filler it dropped leaves a gap between words; if the gap is 0.25–0.3 s or more, `plan_cuts` cuts it automatically.
+- **Hallucinations** (VAD is off, so Whisper "hears" speech in music, ambience and silence): the classic Romanian ones are YouTube outros and subtitle credits — „Vă mulțumim pentru vizionare!”, „Mulțumesc pentru vizionare”, „Abonați-vă”, „Nu uitați să dați like”, „Subtitrare realizată de …”. Measured: a 12 s ambient clip with no speech gave „Să vă mulțumim pentru vizionare!” (5 words in 0.32 s, p 0.74–0.94, two zero-length words, no_speech_prob 0.00 — Whisper's own stats did not catch it). `transcribe.py` screens each segment (speech rate > 6 words/s, ≥ 2 zero-length words, speech energy in < 35% of the span, the phrase list above, Whisper's no_speech/logprob/compression stats): 2+ signals remove it (listed under "removed" in words.txt), 1 signal marks the phrase SUSPECT in phrases.txt. `qc.py` WARNs on captions faster than 6 words/s.
+- **Confident errors:** the low-confidence list only catches words Whisper itself doubts. On real speech turbo also writes plausible wrong words with p > 0.97 ('pogneau' for 'porneau', 'nu pot să o ții minte' for 'țin'). Proofread every kept phrase as a Romanian reader before rendering; fix with `--replace` or a `words.json` edit.
+- **Punctuation:** Whisper often ends a segment without a full stop and capitalises the next segment, or capitalises after a comma ('roșu, După care'). `vcommon.tidy_transcript` adds the full stop at segment ends and lowercases a common word after a comma; the SRT starts a new entry at each sentence.
 - **Clitic tokens:** whisper splits "v-a", "s-a", "n-am", "într-o" into separate tokens ("v" and "-a"). `transcribe.py` merges them back. Check them in captions anyway.
 - **Optional extra precision:** WhisperX alignment has a Romanian model (`gigant/romanian-wav2vec2`). It isn't installed; only consider it if word timing is visibly off.
 
@@ -54,30 +57,34 @@ Use `small` only for quick drafts.
 
 ## Talking to the user (always in Romanian, short, friendly, concrete)
 
-### Intake questions
+### Plan + questions (ONE message, after transcribing and planning the cuts)
 
-Ask once, numbered, with defaults, so a plain "ok" is enough:
+On a phone every round-trip costs minutes, so the plan and the questions go in a single message, with defaults
+marked, and a plain "ok" starts the render. Fill in the real numbers from `phrases.txt`:
 
-> Am primit clipurile (2 fișiere, 3:12 în total) și m-am uitat prin ele. Înainte să încep montajul, confirmă rapid (sau scrie doar „ok” și merg pe variantele marcate):
-> 1. **Platformă / format:** Reels + TikTok + Shorts, vertical 9:16 *(implicit)* · YouTube 16:9 · ambele
-> 2. **Durată țintă:** ~30–45 s *(implicit)* · tot ce e bun, fără limită · altă durată
-> 3. **Mesajul principal / ce vrei să facă omul la final** (salvare, comentariu, link în bio)?
-> 4. **Subtitrări:** cuvânt cu cuvânt, galben pe cuvântul activ *(implicit)* · cu cutie colorată · un cuvânt mare pe ecran · simple
-> 5. **Muzică:** fără *(implicit; pui sunet trending direct în aplicație)* · am o piesă (trimite fișierul)
-> 6. **Text de hook sus în primele secunde?** propun eu *(implicit)* · am eu textul
+> Am primit clipurile (2 fișiere, 3:12 în total) și le-am ascultat pe tot. **Planul meu:**
+> încep direct cu „…” (cel mai puternic moment), apoi pașii 1–3, și închei cu „…”. Tai pauzele și „ăăă”-urile: din 3:12 rămân ~41 s. Hook sus în primele 3 s: **„3 GREȘELI LA MONTAJ”**. Sunetul îl curăț și îl aduc la -14 LUFS.
+>
+> Scrie **„ok”** și pornesc, sau schimbă doar ce vrei (răspunde cu numărul):
+> 1. **Format:** Reels + TikTok + Shorts, vertical 9:16 *(implicit)* · YouTube 16:9 · ambele
+> 2. **Durată:** ~41 s, ca mai sus *(implicit)* · mai scurt (~30 s) · tot ce e bun
+> 3. **Subtitrări:** cuvânt cu cuvânt, galben pe cuvântul activ *(implicit)* · cu cutie colorată · un cuvânt mare · simple · fără
+> 4. **Muzică:** fără *(implicit; pui sunet trending direct în aplicație)* · am o piesă (trimite fișierul)
+> 5. **Text de final pe ecran (CTA):** fără *(implicit)* · „SALVEAZĂ-L PENTRU MAI TÂRZIU” · „URMĂREȘTE PENTRU PARTEA 2” · scrie-l tu
+> 6. **Poze/clipuri de inserat (B-roll)?** Ar merge bine la: 0:08 (aplicația pe ecran), 0:19 (rezultatul), 0:31 (…). Trimite-le dacă le ai; altfel rămâne doar fața ta *(implicit)*
+> 7. **Copertă:** fac eu una din cel mai bun cadru, cu titlul hook-ului *(implicit)* · fără
+> 8. **Pachet pentru DaVinci Resolve** (ca să mai lucrezi tu pe montaj): nu *(implicit)* · da
 
-### Plan message
-
-Brief, before rendering:
-
-> **Planul meu:** încep direct cu fraza „…” (cel mai puternic moment), apoi pașii 1–3 și închei cu îndemnul „…”. Tai pauzele și „ăăă”-urile (din 3:12 rămân ~41 s), reîncadrez vertical pe fața ta, subtitrări galbene cuvânt cu cuvânt, hook sus: „3 GREȘELI LA MONTAJ”. Sunetul îl curăț și îl aduc la -14 LUFS. Pornesc?
+If the user already said "fă tu tot" / "cum crezi tu", skip the questions: send the plan as a statement and start.
+For **ambele**, say that the 16:9 version keeps more (e.g. "~2:30, fără tăieturi agresive") and render both.
 
 ### Delivery message
 
 > **Gata!** Video-ul final: 41 s, 1080×1920, sunet -14 LUFS, subtitrări verificate (diacritice ok).
 > Ce am făcut: … (3–5 puncte)
-> Atașat: final.mp4 · final.srt · davinci.zip (montajul pentru DaVinci Resolve + instrucțiuni)
+> Atașat: final.mp4 (12 MB) · cover_9x16.jpg · final.srt · davinci.zip (montajul pentru DaVinci Resolve + instrucțiuni, 9 MB)
 > Vrei modificări? Spune-mi ce schimb (ex.: „scoate partea cu…”, „hook-ul altfel”, „subtitrări mai mici”).
+> Vrei și textul pentru postare (descriere + hashtag-uri)? *(if yes: caption-writer skill)*
 
 ### Recording tips for next time
 

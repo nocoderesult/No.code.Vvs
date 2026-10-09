@@ -15,10 +15,10 @@ Researched in October 2026.
 - **Frame 0 must already be doing something:**
   - The face is already talking, or the result or B-roll is on screen.
   - The hook text (3–7 words) is visible from frame 0. `captions.py --hook` does this: no fade-in, and it stays clear of the face.
-  - Something visual changes by about 1.5 s: a punch-in, B-roll or a text pop.
+  - Something visual changes by about 1.5 s: a punch-in, B-roll or a text pop. `plan_cuts` puts the first zoom cut of the opening segment at 1.2–2.0 s, so this happens even in one long take.
 - **Hook metric on Shorts:** "Viewed vs swiped away". About 70% is OK; 75–80% or more is strong. [3P] Since March 2025 a Shorts view counts on any start or replay.
 - **Instagram signals:** watch time, likes per reach and sends per reach (Mosseri, January 2025). Never upload a file with a TikTok watermark; Instagram downranks visible watermarks from other apps. [3P]
-- **Make it loop.** Write the last line so it leads back into the first. [practice]
+- **Make it loop.** Write the last line so it leads back into the first, and end on a button (`pipeline.py --loop`: the music stops on the last frame instead of fading). [practice]
 
 ## 2. Pacing, silences, jump cuts
 
@@ -43,8 +43,10 @@ Researched in October 2026.
   | Long 16:9, body | 5–7 s up to 15–30 s; re-hook every 60–90 s |
 
   - Viewers aged 25–35 and older are put off by over-editing.
+- **Zoom cuts** [practice]: a long take with no jump cut still needs a change every 2–4 s. `plan_cuts` marks word-boundary points inside every kept segment longer than about 3.5 s (prefers a Whisper segment end or a comma, ≥ 1.2 s from either edge), and `render_cuts --zoom-cuts` (default on for vertical) splits the take there into back-to-back shots with no time jump, alternating 100% / punch framing. Measured on a real 95 s selfie vlog cut to 40 s: 20 shots, average 2.0 s, longest 3.4 s, first change at 1.6 s (before: first change at 9.0 s, 7 of 9 shots over 4 s).
 - **Punch-ins** [practice]:
-  - Alternate 100% and 112–120% on consecutive jump cuts. The default is 1.12 on every 2nd segment.
+  - Alternate 100% and 112–120% on consecutive shots. The default is 1.12 on every 2nd shot (1.08 for 16:9).
+  - When the source is already upscaled more than 2× (720p into 1080×1920), the punch is capped at 1.05: a 12% crop on top looks soft.
   - Use 130–140% for an emphasis line.
   - On long takes, push slowly from 100% to 106% over 3–6 s (`--push 1.06`).
   - Land punch-ins on stressed words.
@@ -56,7 +58,7 @@ Researched in October 2026.
   - Keep the voice running under it (L-cut / J-cut).
   - Ken Burns on stills: 100% → 108–110%.
   - Talking head plus B-roll beats a pure talking head. [3P]
-- **Sound design** [practice]: a whoosh on transitions and a pop when text appears, about 18–24 dB under the voice, used sparingly.
+- **Sound design** [practice]: a whoosh on transitions and a pop when text appears, about 18–24 dB under the voice, used sparingly. `pipeline.py --sfx` synthesizes them (no licence issues): a pop when the hook and the CTA appear, a whoosh 0.12 s before each B-roll insert, ~20 dB under the voice; they also go to `stems/sfx.wav`.
 
 ## 3. Captions (burned in, 1080×1920)
 
@@ -74,10 +76,11 @@ Researched in October 2026.
   - No script fonts.
   - ALL CAPS is fine, since Inter has Ă Â Î Ș Ț.
 - **Position:**
-  - Centred, with the text inside x ≈ 200–880, so it clears the right action rails.
+  - Centred, with the text inside x ≈ 200–880, so it clears the right action rails. One line per chunk; a single word too long for that width (NECONSTITUȚIONALITATEA, ÎNTREPRINDERILOR) is drawn smaller (`\fs`) instead of crossing the safe zone. The width check includes the 110% pop and the outline.
   - Bottom of the text at or above y ≈ 1240.
   - Typical centre line y ≈ 1100–1250; the default is 1130.
-  - Never over the eyes or mouth. The `--avoid` band does this automatically.
+  - Never over the eyes or mouth. The `--avoid` band does this automatically: below the chin when the line fits above y 1240, otherwise above the brows.
+  - Hook and CTA boxes are placed clear of both the face band and the caption line (shrunk to as little as 50% if needed); if no spot exists, the captions move for the title's duration. `captions.py` re-measures every event from the .ass and fails the run if a caption sits under a title.
 - **Timing:**
   - Each caption appears at word onset and stays at least 0.15 s.
   - Hold the line between words; never flicker.
@@ -100,14 +103,20 @@ Researched in October 2026.
 
 - **Music under voice:**
   - The voice sits at −14 LUFS.
-  - The bed sits at about −20 to −22 LUFS in gaps and dips about 12 dB to around −32 LUFS under speech. That puts it 15–20 dB below the voice (WCAG advises at least 20 dB).
+  - Set the bed relative to the voice, not as an absolute level: **15 dB under the voice while talking** (`--music-under 15`, ≈ −29 LUFS), rising by the duck depth (`--duck 8`, ≈ −21 LUFS) in pauses. With tight cuts the voice is on 90–95% of the time, so the old "−20 in gaps, duck 12" left the bed at −31.5 LUFS, 21 dB under the voice, nearly inaudible on a phone speaker. WCAG 1.4.7 advises ≥ 20 dB for accessibility-critical speech; use `--music-under 20` for that.
   - The scripts use an offline gain curve: look-ahead 80 ms, attack 80 ms, release 450 ms, and gaps under 0.35 s held so the bed doesn't pump.
 - **Choosing music:**
   - Instrumental, or minimal vocals, under Romanian speech.
   - 100–130 BPM for upbeat content.
-  - End on a button or hard stop so it loops cleanly.
+  - End on a button or hard stop so it loops cleanly (`--loop`); otherwise a 1.5 s fade-out.
   - On Instagram and TikTok, trending in-app audio added at low volume is safer for reach and copyright than burned-in commercial music. [practice]
   - **YouTube [OFFICIAL]:** Shorts over 1 minute with any Content ID claim are blocked globally.
+
+## 4b. Framing a 16:9 selfie as 9:16
+
+- A full-height 9:16 crop of a 16:9 frame keeps only 32% of the width. On an arm's-length selfie the face then fills ~50% of the frame height, the 720p source is upscaled 2.7× (3× with a punch) and looks soft, and the captions have nowhere to go but the forehead.
+- Pro framing: face ≈ 30–38% of the frame height, eyes around 0.35–0.40 H, captions on the chest. `render_cuts --reframe auto` switches to **wide** when the tracked face is taller than 40% of the crop: the face-tracked picture is scaled so the face is ~30% of the height (centre at 0.40 H) over a blurred, darkened fill of the same frame. Upscale drops to about 1.6×, and the captions sit under the chin.
+- `render_cuts` prints the upscale factor per source and a WARN above 2×.
 
 ## 5. Colour for phone footage
 
@@ -126,7 +135,7 @@ Researched in October 2026.
 1. **Hook (0–2 s):** the payoff line or a bold claim, plus on-screen hook text.
 2. **Context (2–8 s):** why it matters, in one sentence.
 3. **Body:** 2–4 beats with one idea each. Change the visual every 2–4 s.
-4. **Payoff / CTA (last 3–5 s):** one CTA only ("salvează", "trimite unui prieten", "comentează X"). Avoid a long outro.
+4. **Payoff / CTA (last 3–5 s):** one CTA only ("salvează", "trimite unui prieten", "comentează X"). Avoid a long outro. If the speaker didn't say it, put it on screen: `pipeline.py --cta "SALVEAZĂ-L PENTRU MAI TÂRZIU"` (last 3 s, hook-style boxes, clear of face and captions).
 5. **Loop:** the last line leads back into the first.
 
 How to build it from `phrases.txt`:

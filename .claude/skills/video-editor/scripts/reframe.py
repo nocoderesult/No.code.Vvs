@@ -160,8 +160,12 @@ def main():
                     last = v
         x0, y0 = (out["pos"][0], 0) if axis == "x" else (0, out["pos"][0])
         pw = 360 if axis == "x" else 640
-        vc.run(vc.ffmpeg_cmd("-i", a.input, "-vf", f"fps={info['fps']},sendcmd=f='{cmds}',crop@rf=w={cw}:h={ch}:x={x0}:y={y0},"
-                             f"scale={pw}:-2", "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "26", a.preview))
+        import tempfile
+        with tempfile.TemporaryDirectory(prefix="ve_rf_") as tmp:   # the work path may hold an apostrophe
+            cf = vc.filter_file(cmds, tmp, "rf.sendcmd")
+            vc.run(vc.ffmpeg_cmd("-i", a.input, "-vf", f"fps={info['fps']},sendcmd=f='{cf}',crop@rf=w={cw}:h={ch}:"
+                                 f"x={x0}:y={y0},scale={pw}:-2", "-an", "-c:v", "libx264", "-preset", "veryfast",
+                                 "-crf", "26", a.preview))
         print(f"preview: {a.preview}")
     print(f"wrote {a.out}")
 

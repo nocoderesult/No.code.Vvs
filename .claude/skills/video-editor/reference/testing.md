@@ -63,10 +63,48 @@ Container: 4 CPUs, 15 GB RAM, no GPU.
 - Music ducking with `sidechaincompress` came out 31 dB under the voice. Replaced with an offline gain curve.
 - Whisper wrote Portuguese "ã" for ă. `fix_ro` maps it.
 
+## QA round 2 (2026-10-09): issues found on real and adversarial footage, and fixed
+
+Inputs: a real 95 s selfie vlog (1280×720 29.97, Romanian, outdoors), a 3.4 min 16:9 vlog, and adversarial clips (ambient-only, no audio, 60p VFR, PQ HDR, video starting 0.2 s after the audio, embedded timecode, apostrophe in the project folder). Every repro was re-run after the fix:
+
+| Problem | Before | After |
+|---|---|---|
+| Whisper hallucination on a 12 s ambient clip | "Să vă mulțumim pentru vizionare!" kept as P1 and burned in; QC 0 WARN | segment removed (4 signals: 16 words/s, 2 zero-length words, 15% speech energy, outro phrase); clip kept whole as NO-SPEECH with a WARN; no caption |
+| Hook over the captions when the face pushes them up | captions at y 499 under the hook box for 0–3 s; "OK" | hook placed clear of the caption line (61–78 px if needed); captions.py exits 3 if any caption meets a title; qc.py checks it too |
+| Long Romanian words | NECONSTITUȚIONALITATEA drawn at x 11–1073 | drawn at 63%: pixels at x 198–884 in all styles (universal box 120–888) |
+| Video starting 0.2 s after the audio | A−V +213 ms, QC FAIL | A−V +1.2 ms (= source); render asserts equal stream lengths |
+| Denoise latency | sound 12 ms (RNNoise) / 27 ms (afftdn) behind picture | measured and trimmed: 0.00 ms for off/rnnoise/afftdn; outputs A−V +0.0–1.0 ms on same-rate sources |
+| Two-pass loudnorm on −38/−12 LUFS sections | dynamic mode, LRA 19.3, quiet parts at −30/−24/−26 | leveler (LRA 19.8 → 3.4) + static gain/limiter: −14.1 LUFS, LRA 4.2, short-term −17.0…−12.7 |
+| Music bed with tight cuts | −31.5 LUFS, 21 dB under the voice | `--music-under 15`: 14.7 LU under the voice |
+| Long static shots in a talking-head reel | first change at 9.0 s, 7 of 9 shots > 4 s | zoom cuts: 20 shots in 39.7 s, mean 2.0 s, max 3.4 s, first change 1.6 s |
+| Close-up selfie 16:9 → 9:16 | face 51% of H, upscale 2.67×, captions on the forehead | `wide`: upscale 1.56×, face band 624–1085, captions under the chin (y 1157) |
+| Phrases on fluent speech | 10–25 s phrases; cold-open line buried | one phrase per sentence (P21 "Ai fost ales să găsești comoara lui Harry Potter." on its own) |
+| No-audio clip in a multi-clip auto edit | silently dropped | kept in story order as NO-SPEECH + WARN; unused clips listed as WARN |
+| FCPXML after a cold open on a 60p clip | sequence declared 1/60 s, clips off-grid | sequence `<format>` at the cut-list rate (1/25 s); exact-fraction read-back OK |
+| 29.97 footage read-back | false MISMATCH (OTIO read 29 fps) | exact parse: OK; format named FFVideoFormat720p2997 |
+| EDL | diacritics → '?', 60p source TCs like :34 in a 25p EDL | UTF-8 names; EDL only when all sources share the timeline rate, else skipped and explained in CITESTE-MA |
+| Embedded timecode on a VFR source | CFR copy kept TC 13:42:17:05, timeline said 0 | CFR copy written without a timecode track; read-back compares asset start with the media's TC |
+| Apostrophe in the project folder | render failed ("Option not found") | filter files copied to a plain temp path; renders fine |
+| QC severities | over-length, loudness, true peak only WARN | FAIL (181 s reel: FAIL + early WARN from plan_cuts) |
+| Hyphenated clitics | "S-A" reported as missing diacritics | not flagged |
+| qc_sheet.jpg shading | red tint made foliage orange | true colours, outline-only safe box; shading only on qc_captions.jpg |
+| Delivery size | final.mp4 copied into davinci.zip (84.8 MB zip) | not copied (zip 15.9 MB for the 40 s reel); social CRF 20 / 10 Mbps |
+
+Full runs after the fixes (all exit 0, QC loudness −13.8…−14.0 LUFS, true peak −1.2…−1.8 dBTP after AAC, video = audio duration to the ms):
+
+| Run | Result |
+|---|---|
+| Real selfie vlog → 39.7 s reel (cold open + loop, hook, CTA, music, sfx, `--resolve`) | 152 s total; reframe wide; 17 shots; QC 0 FAIL 0 WARN; ducked bed 14.7 LU under the voice; music cut on the last frame; cover picked at 3.6 s (eyes open); FCPXML/EDL/OTIO read-back OK |
+| 3.4 min 16:9 vlog → reels with hook (`--words` reuse) | 180.3 s → plan_cuts WARN + QC FAIL "length 180.3 s (platform max 180 s)" as intended; hook 313–471, captions at 555, no overlap |
+| Same vlog → youtube (`--words` from the reel run = "ambele") | 181.2 s, CRF 18 → 3.8 Mbps; chapters_draft.txt with 6 entries; thumb_16x9.jpg |
+| 5 clips 25/60/25/30/30 fps incl. no-audio | 40.2 s; no-audio clip kept (NO-SPEECH WARN); EDL skipped (mixed rates), FCPXML/OTIO OK; A−V +0.0–1.0 ms on 25 fps sources (±1 output frame of quantization on 30/60 fps sources) |
+| Ambient + speech clip | hallucination removed, no caption on the ambient part, 1 WARN (NO-SPEECH kept whole) |
+
 ## Known limitations
 
-- **Resolve import** is not tested in Resolve itself; only the OTIO read-back was checked.
-- **Real phone footage** wasn't available. Speech was synthetic Piper TTS and faces came from a moving still image. Re-check thresholds on the first real job:
+- **Resolve import** is not tested in Resolve itself; the FCPXML/EDL are checked by exact parsing and the OTIO by read-back. The vertical crop is not carried into the FCPXML (Position X values are listed in CITESTE-MA instead).
+- **Wide framing** puts a blurred fill under the picture (about the bottom 30% of the frame on a 720p selfie). It is the trade-off for a softer, extreme close-up; `--reframe track` restores the full-height crop.
+- **Real phone footage:** one real selfie vlog was tested in QA round 2; the rest is synthetic Piper TTS with faces from a moving still image. Re-check thresholds on the first real jobs:
   - the noise floor and the speech threshold
   - filler detection on fast speakers
 - **Fillers whisper doesn't transcribe** are removed only when the gap they leave is ≥ the pace's gap (0.25–0.5 s). Shorter "ăă"s inside a sentence stay.
