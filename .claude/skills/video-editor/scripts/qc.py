@@ -5,13 +5,20 @@ for Claude to look at (Read tool): a general sheet and a caption sheet with the 
 Checks: container faststart (moov before mdat), H.264 High yuv420p, resolution vs format, CFR fps,
 BT.709 tags, AAC 48 kHz stereo, video/audio duration match (A/V sync proxy), expected duration from cuts.json,
 platform length limits, loudness (integrated, true peak, LRA), long silences (missed cuts), black/frozen
-stretches, and caption text: cedilla ş/ţ, Portuguese ã, common Romanian words missing diacritics.
+stretches, the longest shot without a visual change, and captions: text (cedilla ş/ţ, Portuguese ã, common
+Romanian words missing diacritics), every event box inside the safe zone, no caption under the hook/CTA,
+and (with --words) caption speech rate (Whisper hallucinations come out at 10-20 words/s).
+FAIL = must fix before delivery: container/sync/duration, over the platform length limit, loudness more than
+1 LU off target, true peak above --tp, captions outside the safe zone or under a title, cedilla letters.
+Sheets: qc_sheet.jpg has true colours (safe area as thin lines) -> judge framing, colour, skin there;
+qc_captions.jpg has the UI zones shaded red and the measured caption (cyan) / title (magenta) boxes drawn.
 
 Examples:
   qc.py out/final.mp4 --format reels --cuts work/cuts.json --ass work/captions.ass --sheets out/qc
   qc.py out/yt.mp4 --format youtube --target -14
 """
 import argparse
+import math
 import os
 import re
 import struct
@@ -30,7 +37,24 @@ NO_DIACRITICS = {  # common words written without diacritics by weak ASR / typin
     "intrebare": "întrebare", "raspuns": "răspuns", "pret": "preț", "bucatarie": "bucătărie",
     "mancare": "mâncare", "cumparat": "cumpărat", "gasit": "găsit", "facut": "făcut", "placut": "plăcut",
 }
-PLATFORM_MAX = {"reels": 180, "tiktok": 600, "shorts": 180, "youtube": 12 * 3600, "vertical": 180}
+PLATFORM_MAX = {"reels": 180, "tiktok": 600, "shorts": 180, "youtube": 12 * 3600, "vertical": 180,
+                "landscape": 12 * 3600, "youtube4k": 12 * 3600}
+
+
+def scene_changes(path, thr=8.0):
+    """Times where the picture changes (cuts, punch-in/zoom cuts, b-roll): ffmpeg scdet scores above thr."""
+    st = vc.run(["ffmpeg", "-nostdin", "-hide_banner", "-nostats", "-i", path, "-map", "0:v:0", "-vf",
+                 "scale=270:-2,scdet=threshold=0.1,metadata=print:key=lavfi.scd.score", "-f", "null", "-"],
+                capture=True, check=False).stderr
+    out, t = [], None
+    for line in st.splitlines():
+        m = re.search(r"pts_time:([\d.]+)", line)
+        if m:
+            t = float(m.group(1))
+        m = re.search(r"lavfi\.scd\.score=([\d.]+)", line)
+        if m and t is not None and float(m.group(1)) >= thr:
+            out.append(t)
+    return out
 
 
 def moov_first(path):
@@ -89,6 +113,9 @@ def main():
     ap.add_argument("--target", type=float, default=-14.0, help="target integrated LUFS")
     ap.add_argument("--tp", type=float, default=-1.0, help="max true peak dBTP after encoding")
     ap.add_argument("--sheets", help="folder for qc_sheet.jpg / qc_captions.jpg (default: next to video)")
+    ap.add_argument("--words", help="words.json (with --cuts): caption speech-rate check")
+    ap.add_argument("--max-static", type=float, help="WARN if a shot lasts longer without a visual change "
+                    "(default 4 s vertical, 15 s 16:9; 0 = skip)")
     ap.add_argument("--json", help="write results JSON")
     a = ap.parse_args()
 
@@ -132,12 +159,12 @@ def main():
         rep("PASS" if abs(dur - exp) < 0.05 else "FAIL", f"duration {dur:.3f}s vs cut list {exp:.3f}s")
     mx = PLATFORM_MAX.get(a.format)
     if mx:
-        rep("PASS" if dur <= mx else "WARN", f"length {dur:.1f}s (platform max {mx}s"
+        rep("PASS" if dur <= mx else "FAIL", f"length {dur:.1f}s (platform max {mx}s"
             f"{'; Shorts > 60 s with Content-ID music get blocked' if a.format == 'shorts' and dur > 60 else ''})")
     if au:
         L = vc.ebur128(a.video)
-        rep("PASS" if abs(L["I"] - a.target) <= 1.0 else "WARN", f"loudness {L['I']:.1f} LUFS (target {a.target})")
-        rep("PASS" if L["TP"] <= a.tp else "WARN", f"true peak {L['TP']:.1f} dBTP (max {a.tp})")
+        rep("PASS" if abs(L["I"] - a.target) <= 1.0 else "FAIL", f"loudness {L['I']:.1f} LUFS (target {a.target} ±1)")
+        rep("PASS" if L["TP"] <= a.tp else "FAIL", f"true peak {L['TP']:.1f} dBTP (max {a.tp})")
         rep("PASS" if L["LRA"] <= 11 else "WARN", f"loudness range {L['LRA']:.1f} LU (speech <= 7-11)")
         sil = re.findall(r"silence_start: ([\d.]+)[\s\S]*?silence_duration: ([\d.]+)",
                          detect(a.video, af="silencedetect=n=-45dB:d=0.9"))
@@ -150,15 +177,53 @@ def main():
     rep("PASS" if not blacks else "WARN", "black stretches: " + (", ".join(f"{float(x):.1f}-{float(y):.1f}s" for x, y in blacks)
                                                                  or "none"))
     rep("PASS" if not frz else "WARN", "frozen video (>2.5 s): " + (", ".join(f"{float(x):.1f}s" for x in frz) or "none"))
+    ms = a.max_static if a.max_static is not None else (4.0 if H > W * 1.2 else 15.0)
+    if ms > 0:
+        ch = [0.0] + scene_changes(a.video) + [dur]
+        gaps = sorted(((y - x, x) for x, y in zip(ch, ch[1:])), reverse=True)
+        n_long = sum(1 for g, _ in gaps if g > ms)
+        rep("PASS" if not n_long else "WARN", f"longest shot without a visual change {gaps[0][0]:.1f}s at "
+            f"{gaps[0][1]:.1f}s ({len(ch) - 2} changes; {n_long} shot(s) > {ms:.0f}s"
+            f"{': zoom cuts/--punch/b-roll' if n_long else ''})")
+    if a.words and a.cuts:
+        import captions as capm
+        Wd = vc.load_json(a.words)
+        ws = capm.remap(Wd["words"], vc.load_json(a.cuts))
+        utt, cur = [], []
+        for w in ws:
+            if cur and w["s"] - cur[-1]["e"] > 0.3:
+                utt.append(cur)
+                cur = []
+            cur.append(w)
+        if cur:
+            utt.append(cur)
+        fast = [(len(u) / max(u[-1]["e"] - u[0]["s"], 0.01), u) for u in utt if len(u) >= 3]
+        fast = [(r, u) for r, u in fast if r > 6.0]
+        rep("PASS" if not fast else "WARN", "caption speech rate: " + (
+            "; ".join(f"{u[0]['s']:.1f}s '{' '.join(w['w'] for w in u)[:40]}' {r:.0f} words/s" for r, u in fast[:3])
+            + " - faster than speech: likely a Whisper hallucination, check and --drop/--cut it" if fast
+            else "<= 6 words/s"))
     cap_times = None
+    boxes = []
     if a.ass:
         words = ass_words(a.ass)
         txt = " ".join(words)
         bad = sorted(set(re.findall(r"\S*[şţŞŢãÃ]\S*", txt)))
         rep("PASS" if not bad else "FAIL", f"cedilla/foreign diacritics: {bad or 'none'}")
-        sus = sorted({w for w in words if re.sub(r"[^\w]", "", w.lower()) in NO_DIACRITICS
-                      and re.sub(r"[^\w]", "", w.lower()) != NO_DIACRITICS[re.sub(r"[^\w]", "", w.lower())].lower()})
+
+        def core(w):  # only edge punctuation; hyphenated clitics (s-a, n-a, c-a, într-o) are correct as written
+            return re.sub(r"^\W+|\W+$", "", w.lower())
+        sus = sorted({w for w in words if "-" not in core(w) and core(w) in NO_DIACRITICS
+                      and core(w) != NO_DIACRITICS[core(w)].lower()})
         rep("PASS" if not sus else "WARN", f"words that probably miss diacritics: {sus or 'none'}")
+        import captions as capm
+        boxes, play = capm.ass_boxes(a.ass)
+        if boxes:
+            safe = vc.safe_box(plat, W, H)
+            probs = capm.check_boxes(boxes, safe)
+            rep("PASS" if not probs else "FAIL", "caption/title layout: " + (
+                "; ".join(probs) if probs else
+                f"all {len(boxes)} events inside the {plat} safe zone, no caption under the hook/CTA"))
         uniq = sorted(set(re.sub(r"[^\wăâîșțĂÂÎȘȚ-]", "", w) for w in words))
         print(f"INFO caption vocabulary ({len(uniq)}): {' '.join(uniq)[:1500]}")
         starts = []
@@ -168,18 +233,28 @@ def main():
                 h, m, s = t.split(":")
                 starts.append(int(h) * 3600 + int(m) * 60 + float(s))
         starts = sorted(set(starts))
-        if starts:
+        titles = sorted({(b["name"], b["t0"], b["t1"]) for b in boxes if b["kind"] == "title"})
+        extra = []
+        for name, t0, t1 in titles:   # last frames of the hook (fade-out over captions) / CTA appearing
+            extra += [max(0.0, t1 - 0.1)] if name == "hook" else [min(dur - 0.05, t0 + 0.3)]
+        if starts or extra:
             step = max(1, len(starts) // 8)
-            cap_times = [0.0] + [min(dur - 0.05, t + 0.12) for t in starts[::step][:7] if t > 0.2]  # frame 0 = hook check
+            cap_times = sorted({0.0, *extra, *[min(dur - 0.05, t + 0.12) for t in starts[::step][:7] if t > 0.2]})
     out = a.sheets or os.path.dirname(os.path.abspath(a.video))
     os.makedirs(out, exist_ok=True)
     import contact_sheet as cs
-    p1, _ = cs.build(a.video, os.path.join(out, "qc_sheet.jpg"), n=12, safe=plat if H > W else None)
-    print(f"INFO sheet: {p1}")
+    p1, _ = cs.build(a.video, os.path.join(out, "qc_sheet.jpg"), n=12, safe=plat if H > W else None, shade=False)
+    print(f"INFO sheet (true colours, safe area as thin lines): {p1}")
     if cap_times:
-        p2, _ = cs.build(a.video, os.path.join(out, "qc_captions.jpg"), times=cap_times, safe=plat if H > W else None,
-                         width=360 if H > W else 640, cols=4)
-        print(f"INFO caption sheet: {p2}")
+        fpsf = float(vc.frac(i.get("fps", "30")))
+
+        def overlay(t):
+            tf = math.ceil(t * fpsf - 1e-6) / fpsf + 0.001   # the frame an accurate seek to t lands on
+            return [(b["box"], (0, 255, 255) if b["kind"] == "caption" else (255, 0, 255))
+                    for b in boxes if b["t0"] <= tf < b["t1"]]
+        p2, _ = cs.build(a.video, os.path.join(out, "qc_captions.jpg"), times=cap_times[:12],
+                         safe=plat if H > W else None, width=360 if H > W else 640, cols=4, overlay=overlay)
+        print(f"INFO caption sheet (UI zones shaded, caption boxes cyan, hook/CTA boxes magenta): {p2}")
     nfail = sum(1 for l, _ in res if l == "FAIL")
     nwarn = sum(1 for l, _ in res if l == "WARN")
     print(f"RESULT: {nfail} FAIL, {nwarn} WARN -> {'fix before delivery' if nfail else 'ok to deliver (review WARN)'}; "

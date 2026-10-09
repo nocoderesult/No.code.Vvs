@@ -43,24 +43,34 @@ def scene_times(path, n):
     return ts, [(sec(s), sec(e)) for s, e in scenes]
 
 
-def draw_safe(img, platform, info):
+def draw_safe(img, platform, info, shade=True):
+    """Safe-zone overlay. shade=True tints the platform-UI areas red/orange (caption checks); shade=False draws
+    only thin outlines, so colours stay true (judge skin/grade on an UNshaded sheet: the red tint turned green
+    foliage orange and a navy cap purple in testing)."""
     if info["w"] / info["h"] > 0.8 and platform not in ("youtube",):
         return img
     x0, y0, x1, y1 = vc.safe_box(platform, img.width, img.height)
     ov = Image.new("RGBA", img.size, (0, 0, 0, 0))
     d = ImageDraw.Draw(ov)
-    red = (255, 40, 40, 70)
-    d.rectangle([0, 0, img.width, y0], fill=red)
-    d.rectangle([0, y1, img.width, img.height], fill=red)
-    d.rectangle([0, y0, x0, y1], fill=red)
-    d.rectangle([x1, y0, img.width, y1], fill=red)
-    if platform in ("tiktok", "universal"):  # right action rail below y=840
-        d.rectangle([img.width * (1 - 300 / 1080), img.height * 840 / 1920, x1, y1], fill=(255, 140, 0, 60))
-    d.rectangle([x0, y0, x1, y1], outline=(255, 255, 0, 200), width=2)
+    rail = platform in ("tiktok", "universal")
+    if shade:
+        red = (255, 40, 40, 70)
+        d.rectangle([0, 0, img.width, y0], fill=red)
+        d.rectangle([0, y1, img.width, img.height], fill=red)
+        d.rectangle([0, y0, x0, y1], fill=red)
+        d.rectangle([x1, y0, img.width, y1], fill=red)
+        if rail:  # right action rail below y=840
+            d.rectangle([img.width * (1 - 300 / 1080), img.height * 840 / 1920, x1, y1], fill=(255, 140, 0, 60))
+    elif rail:
+        d.line([img.width * (1 - 300 / 1080), img.height * 840 / 1920, img.width * (1 - 300 / 1080), y1],
+               fill=(255, 140, 0, 160), width=1)
+    d.rectangle([x0, y0, x1, y1], outline=(255, 255, 0, 200 if shade else 150), width=2 if shade else 1)
     return Image.alpha_composite(img.convert("RGBA"), ov).convert("RGB")
 
 
-def build(path, out, n=12, every=None, times=None, cols=None, width=None, safe=None, scenes=False, title=True):
+def build(path, out, n=12, every=None, times=None, cols=None, width=None, safe=None, scenes=False, title=True,
+          shade=True, overlay=None):
+    """overlay: optional f(t) -> [((x0, y0, x1, y1) in video px, (r, g, b)), ...] boxes drawn on each tile."""
     info = vc.media_info(path)
     if not info.get("has_video"):
         raise vc.EditError(f"{path} has no video stream")
@@ -89,8 +99,12 @@ def build(path, out, n=12, every=None, times=None, cols=None, width=None, safe=N
         if im is None:
             continue
         if safe:
-            im = draw_safe(im, safe, info)
+            im = draw_safe(im, safe, info, shade)
         d = ImageDraw.Draw(im)
+        if overlay:
+            k = im.width / info["w"]
+            for (bx0, by0, bx1, by1), col in overlay(t):
+                d.rectangle([bx0 * k, by0 * k, bx1 * k, by1 * k], outline=col, width=1)
         label = f"{int(t // 60):02d}:{t % 60:05.2f}"
         bb = d.textbbox((6, 4), label, font=font)
         d.rectangle([bb[0] - 3, bb[1] - 2, bb[2] + 3, bb[3] + 2], fill=(0, 0, 0))
@@ -125,9 +139,10 @@ def main():
     ap.add_argument("--cols", type=int, help="columns (default 6 vertical / 4 landscape)")
     ap.add_argument("--width", type=int, help="tile width px (default 270 vertical / 480 landscape)")
     ap.add_argument("--safe", choices=list(vc.SAFE_ZONES), help="draw platform safe-zone overlay (red = UI)")
+    ap.add_argument("--outline", action="store_true", help="--safe as thin lines only (true colours)")
     a = ap.parse_args()
     times = [float(x) for x in a.times.split(",")] if a.times else None
-    out, ts = build(a.input, a.out, a.n, a.every, times, a.cols, a.width, a.safe, a.scenes)
+    out, ts = build(a.input, a.out, a.n, a.every, times, a.cols, a.width, a.safe, a.scenes, shade=not a.outline)
     print(f"wrote {out} ({len(ts)} frames) -> view it with the Read tool")
 
 

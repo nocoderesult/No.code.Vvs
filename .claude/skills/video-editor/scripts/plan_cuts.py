@@ -2,17 +2,23 @@
 """Plan the edit: remove silences, fillers (ăă, îî, "deci, practic."...) and retakes -> cuts.json + phrases.txt.
 
 Whisper decides WHAT was said, an energy envelope (RNNoise-denoised) decides WHERE speech starts/ends.
-Words are grouped into numbered phrases (P1, P2, ...) split at pauses >= --gap and at sentence ends.
-Then:
+Words are grouped into numbered phrases (P1, P2, ...) split at pauses >= --gap, at sentence ends, at Whisper
+segment boundaries (fluent speech often has no punctuation) and, above --max-phrase s (8), at the best comma
+or pause inside, so --select/--cold-open can pick single sentences. Then:
   * retakes   : a phrase whose first 6 words match the next phrase (difflib >= 0.72) is dropped (speaker restarted)
   * fillers   : phrases made only of hesitations/discourse markers are dropped; hesitations at phrase edges trimmed
   * boundaries: start snapped to real speech onset, end never before whisper's word end, then padded
+Clips with no speech (no audio track, or only ambience) become one whole-clip phrase marked NO-SPEECH, in
+story order, so they are never dropped silently; phrases with words transcribe.py flagged are marked SUSPECT.
+Each kept segment also gets "zooms": word-boundary points (no time jump) where render_cuts.py --zoom-cuts
+alternates the framing, so a long take changes picture every <= --zoom-every s (first change by 1.2-2.0 s).
 Read phrases.txt, then re-run with --select / --drop / --cold-open / --cut to make editorial decisions
 (story order, hook first, target length). Cut points are snapped to the output frame grid.
 
 cuts.json schema (all times in SOURCE seconds; order of "segments" = output order):
   {"fps":"30/1", "sources":[{"path","name","duration","fps"}],
-   "segments":[{"src","s","e","phrases":[...],"text"}], "phrases":[...], "removed":[...], "duration":out_s}
+   "segments":[{"src","s","e","phrases":[...],"text","zooms":[source s, ...]}], "phrases":[...], "removed":[...],
+   "duration":out_s, "unused_sources":[...]}
 
 Examples:
   plan_cuts.py work/words.json -o work/cuts.json                       # auto: silences+fillers+retakes
@@ -56,16 +62,40 @@ def norm(w):
     return re.sub(r"[^\wăâîșț-]", "", vc.fix_ro(w).lower())
 
 
-def phrases_of(words, gap):
+def phrases_of(words, gap, max_len=8.0):
+    """Split at pauses >= gap, sentence-final punctuation and Whisper segment boundaries; then split phrases
+    longer than max_len at their best internal comma/pause."""
     out, cur = [], []
     for w in words:
-        if cur and (w["s"] - cur[-1]["e"] >= gap or cur[-1]["w"].rstrip().endswith((".", "!", "?", "…"))):
+        if cur and (w["s"] - cur[-1]["e"] >= gap or cur[-1]["w"].rstrip().endswith((".", "!", "?", "…"))
+                    or ("si" in w and "si" in cur[-1] and w["si"] != cur[-1]["si"])):
             out.append(cur)
             cur = []
         cur.append(w)
     if cur:
         out.append(cur)
-    return out
+    return [p for ph in out for p in split_long(ph, max_len)]
+
+
+def split_long(ph, max_len, min_part=1.5):
+    """Recursively split a phrase longer than max_len at the internal word boundary with the best score:
+    comma/semicolon after the word, then the longest pause, slightly preferring the middle."""
+    dur = ph[-1]["e"] - ph[0]["s"]
+    if dur <= max_len or len(ph) < 4:
+        return [ph]
+    best, bi = -1e9, None
+    for i in range(1, len(ph)):
+        left, right = ph[i - 1]["e"] - ph[0]["s"], ph[-1]["e"] - ph[i]["s"]
+        if left < min_part or right < min_part:
+            continue
+        gap = max(0.0, ph[i]["s"] - ph[i - 1]["e"])
+        sc = (1.0 if ph[i - 1]["w"].rstrip().endswith((",", ";", ":", "–", "—")) else 0) + min(gap, 0.4) / 0.4 \
+            - 0.6 * abs(left - dur / 2) / dur
+        if sc > best:
+            best, bi = sc, i
+    if bi is None:
+        return [ph]
+    return split_long(ph[:bi], max_len, min_part) + split_long(ph[bi:], max_len, min_part)
 
 
 def is_filler(ph, keep_words):
@@ -145,17 +175,28 @@ def plan_from_words(W, a, P):
     rnn = vc.model_path("rnnoise")
     phrases, removed = [], []
     pid = 0
+    vc.assign_segments(W["words"], W.get("segments", []))
+    vc.tidy_transcript(W["words"])  # no-op on new transcripts (transcribe.py already did it)
     for si, src in enumerate(W["sources"]):
         words = [w for w in W["words"] if w.get("src", 0) == si]
         if not words:
+            # no speech (no audio track, or ambience only): keep the whole clip as one phrase in story order so the
+            # footage never disappears silently; Claude decides (--drop / --cut / move it to --broll)
+            pid += 1
+            why = "clip fără sunet" if not src.get("has_audio", True) else "fără vorbire, doar sunet ambiental"
+            phrases.append({"id": f"P{pid}", "src": si, "s": 0.0, "e": src["duration"], "text": f"({why})",
+                            "status": "keep", "kind": "nospeech", "ks": 0.0, "ke": src["duration"]})
             continue
         db, hop = vc.envelope_db(src["path"], rnn)
         thr, floor = vc.speech_threshold(db)
-        phs = phrases_of(words, P["gap"])
+        phs = phrases_of(words, P["gap"], a.max_phrase)
         for k, ph in enumerate(phs):
             pid += 1
             p = {"id": f"P{pid}", "src": si, "s": ph[0]["s"], "e": ph[-1]["e"],
                  "text": vc.fix_ro(" ".join(w["w"] for w in ph)), "status": "keep"}
+            flags = sorted({w["flag"] for w in ph if w.get("flag")})
+            if flags:
+                p["suspect"] = "; ".join(flags)
             if a.retakes and k + 1 < len(phs) and is_retake(ph, phs[k + 1]):
                 p["status"] = "retake"
             elif a.fillers and is_filler(ph, keep_words):
@@ -176,7 +217,15 @@ def plan_from_words(W, a, P):
                 else:
                     s, e = refine(core[0]["s"], core[-1]["e"], db, hop, thr)
                     e = max(e, core[-1]["e"])  # soft word tails sit below any threshold
-                    p["ks"], p["ke"] = round(max(0.0, s - P["pre"]), 3), round(min(src["duration"], e + P["post"]), 3)
+                    ks, ke = max(0.0, s - P["pre"]), min(src["duration"], e + P["post"])
+                    # phrases split without a pause (Whisper segment / long-phrase split): never reach into the
+                    # neighbouring words, or a cold open starts with the previous sentence's last syllable
+                    i0, i1 = words.index(ph[0]), words.index(ph[-1])
+                    if i0 > 0:
+                        ks = max(ks, (words[i0 - 1]["e"] + core[0]["s"]) / 2)
+                    if i1 + 1 < len(words):
+                        ke = min(ke, (core[-1]["e"] + words[i1 + 1]["s"]) / 2)
+                    p["ks"], p["ke"] = round(ks, 3), round(max(ke, ks + 0.05), 3)
             if p["status"] != "keep":
                 removed.append({"src": si, "s": p["s"], "e": p["e"], "type": p["status"], "text": p["text"]})
             phrases.append(p)
@@ -212,6 +261,41 @@ def segments_from_phrases(phrases, order, P, cuts, adds, natural_order):
         for s, e in rngs:
             if e - s >= P["min_keep"]:
                 out.append({**g, "s": round(s, 3), "e": round(e, 3)})
+    return out
+
+
+def zoom_points(seg, words, first, every, min_shot=1.2):
+    """Source times inside a kept segment where the framing may change without a time jump (zoom cut): gaps
+    between words, preferring punctuation / Whisper segment ends, every <= `every` s, never closer than min_shot
+    to a cut. The first output segment changes picture between 1.2 and 2.0 s (hook rhythm)."""
+    s0, e0 = seg["s"], seg["e"]
+    ws = [w for w in words if w.get("src", 0) == seg["src"] and w["s"] >= s0 - 0.02 and w["e"] <= e0 + 0.02]
+    cands = []
+    for a, b in zip(ws, ws[1:]):
+        gap = b["s"] - a["e"]
+        if gap < -0.01:
+            continue
+        punct = a["w"].rstrip().endswith((",", ".", "!", "?", "…", ";", ":")) or a.get("si") != b.get("si")
+        cands.append(((a["e"] + b["s"]) / 2, punct, max(0.0, gap)))
+    out, cur, k = [], s0, 0
+    while True:
+        lo, hi = cur + min_shot, cur + every
+        target = 1.6 if (first and k == 0) else min(every, 2.6)
+        if first and k == 0:
+            hi = min(hi, cur + 2.0)
+        elif e0 - cur <= every:
+            break
+        win = [c for c in cands if lo <= c[0] <= hi and e0 - c[0] >= min_shot]
+        if not win and first and k == 0:
+            win = [c for c in cands if lo <= c[0] <= cur + every and e0 - c[0] >= min_shot]
+        if not win:
+            later = [c for c in cands if c[0] > hi and e0 - c[0] >= min_shot]
+            if not later or (first and k == 0):
+                break
+            win = later[:1]
+        t = max(win, key=lambda c: (0.8 if c[1] else 0) + min(c[2], 0.3) - abs((c[0] - cur) - target) / every)[0]
+        out.append(round(t, 3))
+        cur, k = t, k + 1
     return out
 
 
@@ -269,6 +353,13 @@ def main():
     ap.add_argument("--full", action="store_true", help="inputs are media: keep everything (join clips in order)")
     ap.add_argument("--fps", help="output frame rate for cut alignment (default: first source's rate)")
     ap.add_argument("--max-duration", type=float, help="warn if the result is longer than this (s)")
+    ap.add_argument("--platform-max", type=float, help="hard platform length limit (s): WARN line in phrases.txt "
+                    "and stdout if the plan is longer (pipeline passes 180 for Reels/Shorts)")
+    ap.add_argument("--max-phrase", type=float, default=8.0, help="split phrases longer than this (s) at a comma/pause")
+    ap.add_argument("--zoom-every", type=float, default=3.5,
+                    help="zoom-cut points: change framing at least every N s inside long takes (3.5 vertical; "
+                         "pipeline passes 7 for 16:9); 0 = none")
+    ap.add_argument("--words", help="--full/--silence-only: words.json, only used for zoom-cut points")
     a = ap.parse_args()
 
     P = dict(PACE[a.pace])
@@ -276,10 +367,15 @@ def main():
         if getattr(a, k) is not None:
             P[k] = getattr(a, k)
     phrases, removed = [], []
+    words_all = []
     if a.silence_only or a.full:
         infos = [vc.media_info(p) for p in a.inputs]
-        sources = [{"path": i["path"], "name": i["name"], "duration": i["duration"], "fps": i.get("fps", "30")}
-                   for i in infos]
+        sources = [{"path": i["path"], "name": i["name"], "duration": i["duration"], "fps": i.get("fps", "30"),
+                    "has_audio": i["has_audio"]} for i in infos]
+        if a.words:
+            Wd = vc.load_json(a.words)
+            if [s_["path"] for s_ in Wd["sources"]] == [i["path"] for i in infos]:
+                words_all = vc.assign_segments(Wd["words"], Wd.get("segments", []))
         if a.full:
             segs = [{"src": k, "s": 0.0, "e": i["duration"], "phrases": [], "text": ""} for k, i in enumerate(infos)]
         else:
@@ -298,9 +394,11 @@ def main():
         sources = []
         for s in W["sources"]:
             i = vc.media_info(s["path"])
-            sources.append({"path": i["path"], "name": i["name"], "duration": i["duration"], "fps": i.get("fps", "30")})
+            sources.append({"path": i["path"], "name": i["name"], "duration": i["duration"], "fps": i.get("fps", "30"),
+                            "has_audio": i["has_audio"]})
         W["sources"] = sources
         phrases, removed = plan_from_words(W, a, P)
+        words_all = W["words"]
         ids = [p["id"] for p in phrases]
         by_id = {p["id"]: p for p in phrases}
         for i in parse_ids(a.restore, ids):
@@ -333,10 +431,38 @@ def main():
     out_segs = [{k: v for k, v in g.items() if k not in ("fs", "fe", "S", "E")} | {"s": round(float(g["S"]), 6),
                                                                                        "e": round(float(g["E"]), 6)}
                 for g in aligned]
+    if a.zoom_every > 0 and words_all:
+        for k, g in enumerate(out_segs):
+            z = zoom_points(g, words_all, k == 0, a.zoom_every)
+            if z:
+                g["zooms"] = z
     total = float(sum(g["E"] - g["S"] for g in aligned))
     src_total = sum(s["duration"] for s in sources)
+    kept = [0.0] * len(sources)
+    for g in aligned:
+        kept[g["src"]] += float(g["E"] - g["S"])
+    unused = [{"src": k, "name": s["name"], "duration": round(s["duration"], 2)} for k, s in enumerate(sources)
+              if kept[k] < 0.05]
+    warns = []
+    for u in unused:
+        ids = [p["id"] for p in phrases if p["src"] == u["src"]]
+        why = ("all its phrases are dropped/flagged: " + ",".join(ids)) if ids else "nothing kept"
+        warns.append(f"WARN src[{u['src']}] {u['name']} ({u['duration']:.1f}s) is NOT in the edit ({why}). "
+                     f"Intended? Otherwise --restore/--select it, or use it as --broll.")
+    for p in phrases:
+        if p.get("kind") == "nospeech" and p["status"] == "keep":
+            warns.append(f"WARN {p['id']} src[{p['src']}] {sources[p['src']]['name']}: no speech, kept whole "
+                         f"({p['e']:.1f}s) {p['text']}. Shorten it (--cut-range), drop it (--drop {p['id']}) or "
+                         f"move it to --broll.")
+        elif p.get("suspect") and p["status"] == "keep":
+            warns.append(f"WARN {p['id']} SUSPECT ({p['suspect']}): \"{p['text'][:60]}\" - listen/check it is real "
+                         f"speech, else --drop {p['id']}.")
+    if a.platform_max and total > a.platform_max:
+        warns.append(f"WARN planned length {total:.1f}s > platform max {a.platform_max:.0f}s: QC will FAIL. "
+                     f"Choose phrases with --select/--drop.")
     cuts = {"version": 1, "fps": str(fps), "sources": sources, "segments": out_segs, "phrases": phrases,
-            "removed": removed, "params": {**P, "pace": a.pace}, "duration": round(total, 3)}
+            "removed": removed, "params": {**P, "pace": a.pace, "zoom_every": a.zoom_every},
+            "duration": round(total, 3), "unused_sources": unused, "warnings": warns}
     vc.save_json(cuts, a.out)
 
     txt = a.out.rsplit(".", 1)[0] + "_phrases.txt" if not a.out.endswith("cuts.json") else \
@@ -346,14 +472,20 @@ def main():
                 f"({100 * total / max(src_total, 0.01):.0f}%) | {len(out_segs)} segments @ {fps} fps\n")
         f.write("# status: keep / filler / retake / dropped / unselected.  Re-run with --select/--drop/--cold-open.\n")
         for p in phrases:
-            f.write(f"{p['id']:>4} [{p['src']}] {vc.fmt_tc(p['s'])}-{vc.fmt_tc(p['e'])} {p['status'].upper():10s} {p['text']}\n")
+            st = p["status"].upper() + ("*" if p.get("suspect") else "")
+            note = "  [NO-SPEECH]" if p.get("kind") == "nospeech" else \
+                (f"  [SUSPECT: {p['suspect']}]" if p.get("suspect") else "")
+            f.write(f"{p['id']:>4} [{p['src']}] {vc.fmt_tc(p['s'])}-{vc.fmt_tc(p['e'])} {st:10s} {p['text']}{note}\n")
         f.write("\n# OUTPUT ORDER\n")
         t = 0.0
         for g in out_segs:
             d = g["e"] - g["s"]
+            z = f" [{len(g['zooms'])} zoom cut{'s' if len(g['zooms']) > 1 else ''}]" if g.get("zooms") else ""
             f.write(f"  out {vc.fmt_tc(t)} +{d:5.2f}s  src[{g['src']}] {vc.fmt_tc(g['s'])}-{vc.fmt_tc(g['e'])}  "
-                    f"{','.join(g['phrases'])}  {g['text'][:80]}\n")
+                    f"{','.join(g['phrases'])}{z}  {g['text'][:80]}\n")
             t += d
+        if warns:
+            f.write("\n" + "\n".join(warns) + "\n")
     print(open(txt, encoding="utf-8").read())
     print(f"wrote {a.out} and {txt}")
     if a.max_duration and total > a.max_duration:

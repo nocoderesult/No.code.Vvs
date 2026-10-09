@@ -217,6 +217,61 @@ def upper_ro(text: str) -> str:
     return fix_ro(text).upper()
 
 
+def fold(text: str) -> str:
+    """lowercase, no diacritics, letters/digits/spaces only (for matching phrases)."""
+    t = unicodedata.normalize("NFD", fix_ro(text).lower())
+    t = "".join(c for c in t if unicodedata.category(c) != "Mn")
+    return re.sub(r"\s+", " ", re.sub(r"[^\w\s-]", " ", t)).strip()
+
+
+def assign_segments(words, segments):
+    """Give every word the index ("si") of the Whisper segment it belongs to. New transcripts store it;
+    for older words.json it is recovered from the segment times (word midpoint, nearest segment)."""
+    if all("si" in w for w in words):
+        return words
+    by_src = {}
+    for k, s in enumerate(segments):
+        by_src.setdefault(s.get("src", 0), []).append((s["s"], s["e"], k))
+    for w in words:
+        if "si" in w:
+            continue
+        mid = (w["s"] + w["e"]) / 2
+        cands = by_src.get(w.get("src", 0), [])
+        if cands:
+            w["si"] = min(cands, key=lambda c: 0 if c[0] - 0.05 <= mid <= c[1] + 0.05 else
+                          min(abs(mid - c[0]), abs(mid - c[1])) + 1)[2]
+    return words
+
+
+END_PUNCT = (".", "!", "?", "…")
+
+
+def tidy_transcript(words):
+    """Sentence punctuation Whisper leaves out (words need "si", see assign_segments). Idempotent.
+      * a segment that ends without punctuation (or with a comma) before a capitalised next segment gets a
+        full stop: 'lui Harry Potter Vă dați seama' -> 'Potter. Vă dați seama'
+      * a capitalised common word after a comma inside a sentence is lowercased ('roșu, După care' ->
+        'roșu, după care') when the transcript also has it in lowercase (names/brands never are)."""
+    lower_seen = {fold(w["w"]) for w in words if w["w"][:1].islower()}
+    n = 0
+    for a, b in zip(words, words[1:]):
+        if a.get("src", 0) != b.get("src", 0):
+            continue
+        bw = b["w"].lstrip("„\"«(")
+        if not bw[:1].isupper() or (len(bw) > 1 and bw.isupper()):
+            continue
+        aw = a["w"].rstrip("\"”»)")
+        if aw.endswith(END_PUNCT):
+            continue
+        if a.get("si") is not None and a.get("si") != b.get("si"):
+            a["w"] = a["w"].rstrip(",;:") + "."
+            n += 1
+        elif aw.endswith(",") and fold(bw) in lower_seen:
+            b["w"] = b["w"].replace(bw, bw[0].lower() + bw[1:], 1)
+            n += 1
+    return n
+
+
 # --------------------------------------------------------------------------- audio helpers
 
 
@@ -335,8 +390,26 @@ def font_for(weight: str = "Black"):
 
 
 def ass_filter_path(path: str) -> str:
-    """Escape a path for use inside subtitles=filename='...' in a filtergraph."""
+    """Escape a path for use inside subtitles=filename='...' in a filtergraph. Only safe for paths without an
+    apostrophe (ffmpeg's two escaping levels make a quoted ' unreliable); use filter_file() for anything a user named."""
     return os.path.abspath(path).replace("\\", "/").replace(":", "\\:").replace("'", "\\'")
+
+
+_SAFE_PATH = re.compile(r"[A-Za-z0-9/_.+-]+")
+
+
+def filter_file(path: str, tmpdir: str, name: str) -> str:
+    """Path to put inside a filtergraph argument (subtitles=, sendcmd=, vidstab ...). Project folders are named
+    after the user's title ("Reel lui Ion's", diacritics, colons), and an apostrophe breaks ffmpeg's filter
+    parser, so anything that isn't plain ASCII is copied into the render's temp dir under `name` first."""
+    p = os.path.abspath(path)
+    if not _SAFE_PATH.fullmatch(p):
+        dst = os.path.join(tmpdir, name)
+        shutil.copy(p, dst)
+        p = dst
+        if not _SAFE_PATH.fullmatch(p):
+            raise EditError(f"temp dir {tmpdir} has characters ffmpeg filters can't take; set TMPDIR=/tmp")
+    return ass_filter_path(p)
 
 
 # --------------------------------------------------------------------------- json helpers

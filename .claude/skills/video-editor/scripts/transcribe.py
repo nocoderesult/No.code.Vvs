@@ -8,11 +8,19 @@ nudges verbatim fillers and comma-below diacritics. Post-processing:
   * clitic / punctuation tokens merged ("v" + "-a" -> "v-a", "corecte" + "." -> "corecte.")
   * word STARTS after a pause are snapped forward to the real speech onset from the energy envelope
     (whisper starts after pauses were measured 0.2-0.6 s early)
+  * hallucination screen (VAD stays off, so Whisper invents text on music/ambience/silence; measured: a 12 s
+    ambient clip gave 'Să vă mulțumim pentru vizionare!' with p 0.72-0.95 and no_speech_prob 0.00). Per
+    segment it checks: speech rate > 6 words/s, >= 2 zero-length words, speech energy (RNNoise envelope) in
+    < 35% of the span, a known Romanian outro/credit phrase, and Whisper's own no_speech/logprob/compression
+    stats. 2+ signals (or Whisper's stats) -> segment removed (listed in words.txt); 1 signal -> words kept
+    but marked "flag" (plan_cuts shows the phrase as SUSPECT).
+  * sentence punctuation Whisper leaves out at segment ends is added (vcommon.tidy_transcript)
 Audio is decoded with the ffmpeg CLI (faster_whisper.decode_audio crashes with PyAV 19).
 
 words.json schema:
   {"language","model","sources":[{"path","name","duration"}],
-   "segments":[{"src","s","e","text"}], "words":[{"src","w","s","e","p"}]}
+   "segments":[{"src","s","e","text","nsp","lp","cr"}], "words":[{"src","w","s","e","p","si"[,"flag"]}],
+   "removed":[{"src","s","e","text","why"}]}
 
 Examples:
   transcribe.py clip.mov -o work/words.json
@@ -22,6 +30,7 @@ Examples:
 """
 import argparse
 import os
+import re
 import time
 
 import numpy as np
@@ -71,6 +80,41 @@ def refine_starts(words, db, hop, thr, min_gap=0.12, max_shift=0.8):
     return n
 
 
+# Known Whisper hallucinations on non-speech audio (subtitle credits and YouTube outros from its training data),
+# matched on vcommon.fold() text (lowercase, no diacritics). A real speaker CAN say these, so a match alone only
+# flags the segment; it is removed only together with another signal.
+HALLU_RE = re.compile(
+    r"\b(va |sa va )?multum(esc|im)( frumos| mult)? (pentru|de) (vizionare|vizionat|urmarire|atentie)\b"
+    r"|\babona(ti|ti-va|ti va|-va|eaza-te|eaza te)\b|\bnu uita(ti)? sa (va abonati|dati like|lasati un)"
+    r"|\bsubtitr(are|area|ari)( realizata| facuta| de| traducere)|\bamara org\b|\blike (si|,)? ?(share|subscribe)"
+    r"|\bapasati (pe )?clopotel")
+
+
+def screen_segment(ws, db, hop, thr, nsp=0.0, lp=0.0, cr=1.0):
+    """Hallucination signals for one Whisper segment's words -> (drop, [reasons])."""
+    toks = [w for w in ws if re.search(r"\w", w["w"])]
+    if not toks:
+        return True, ["no words"]
+    why = []
+    span = toks[-1]["e"] - toks[0]["s"]
+    if len(toks) >= 3 and len(toks) / max(span, 0.01) > 6.0:
+        why.append(f"too fast ({len(toks) / max(span, 0.01):.0f} words/s)")
+    z = sum(1 for w in toks if w["e"] - w["s"] < 0.02)
+    if z >= 2 and z >= 0.25 * len(toks):
+        why.append(f"{z} zero-length words")
+    if db is not None and len(db):
+        a, b = int(toks[0]["s"] / hop), int(toks[-1]["e"] / hop) + 1
+        seg = db[max(0, a): max(a + 1, min(len(db), b))]
+        if len(seg) and float(np.mean(seg > thr)) < 0.35:
+            why.append(f"no speech energy ({100 * float(np.mean(seg > thr)):.0f}% of the span)")
+    if HALLU_RE.search(vc.fold(" ".join(w["w"] for w in toks))):
+        why.append("known outro/credit phrase")
+    whisper = (nsp > 0.6 and lp < -1.0) or cr > 2.4
+    if whisper:
+        why.append(f"whisper no_speech {nsp:.2f} / logprob {lp:.2f} / compression {cr:.1f}")
+    return whisper or len(why) >= 2, why
+
+
 def to_srt(words, max_chars=42, max_dur=5.0):
     import re
     lines, cur = [], []
@@ -104,6 +148,7 @@ def main():
     ap.add_argument("--threads", type=int, default=os.cpu_count() or 4)
     ap.add_argument("--srt", help="also write an SRT of the raw (uncut) transcript, source 0 timeline")
     ap.add_argument("--no-refine", action="store_true", help="keep whisper's raw word starts")
+    ap.add_argument("--no-screen", action="store_true", help="keep every segment (no hallucination screening)")
     a = ap.parse_args()
 
     try:
@@ -121,7 +166,7 @@ def main():
     model = WhisperModel(a.model, device="cpu", compute_type="int8", cpu_threads=a.threads)
     print(f"model {a.model} loaded in {time.time() - t0:.1f}s")
     rnn = vc.model_path("rnnoise")
-    words, segments, sources = [], [], []
+    words, segments, sources, removed = [], [], [], []
     for si, info in enumerate(infos):
         sources.append({"path": info["path"], "name": info["name"], "duration": info["duration"]})
         if not info["has_audio"]:
@@ -133,35 +178,71 @@ def main():
                                        vad_filter=a.vad,
                                        vad_parameters=dict(min_silence_duration_ms=500, speech_pad_ms=200) if a.vad else None)
         sw = []
+        db, hop = vc.envelope_db(info["path"], rnn)
+        thr, _ = vc.speech_threshold(db)
+        n_removed = n_flag = 0
         for s in segs:
-            segments.append({"src": si, "s": round(s.start, 3), "e": round(s.end, 3), "text": vc.fix_ro(s.text.strip())})
-            for w in s.words or []:
-                sw.append({"src": si, "w": vc.fix_ro(w.word.strip()), "s": round(w.start, 3), "e": round(w.end, 3),
-                           "p": round(w.probability, 3)})
+            ws = [{"src": si, "w": vc.fix_ro(w.word.strip()), "s": round(w.start, 3), "e": round(w.end, 3),
+                   "p": round(w.probability, 3)} for w in s.words or []]
+            text = vc.fix_ro(s.text.strip())
+            drop, why = (False, []) if a.no_screen else screen_segment(
+                ws, db, hop, thr, s.no_speech_prob, s.avg_logprob, s.compression_ratio)
+            if drop:
+                removed.append({"src": si, "s": round(s.start, 3), "e": round(s.end, 3), "text": text,
+                                "why": "; ".join(why)})
+                n_removed += 1
+                continue
+            k = len(segments)
+            segments.append({"src": si, "s": round(s.start, 3), "e": round(s.end, 3), "text": text,
+                             "nsp": round(s.no_speech_prob, 3), "lp": round(s.avg_logprob, 3),
+                             "cr": round(s.compression_ratio, 2), **({"flag": why[0]} if why else {})})
+            n_flag += bool(why)
+            for w in ws:
+                w["si"] = k
+                if why:
+                    w["flag"] = why[0]
+            sw += ws
         sw = merge_tokens(sw)
         el = time.time() - t1
         moved = 0
         if not a.no_refine and sw:
-            db, hop = vc.envelope_db(info["path"], rnn)
-            thr, _ = vc.speech_threshold(db)
             moved = refine_starts(sw, db, hop, thr)
         words += sw
         lang_found = tinfo.language
         print(f"[{si}] {info['name']}: {len(sw)} words, lang={lang_found}, {el:.1f}s for {tinfo.duration:.1f}s audio "
-              f"(RTF {el / max(tinfo.duration, 0.01):.2f}), {moved} starts snapped to speech onset")
+              f"(RTF {el / max(tinfo.duration, 0.01):.2f}), {moved} starts snapped to speech onset"
+              + (f", {n_removed} hallucinated segment(s) removed" if n_removed else "")
+              + (f", {n_flag} segment(s) flagged SUSPECT" if n_flag else ""))
+        if not sw:
+            print(f"[{si}] {info['name']}: NO SPEECH found (plan_cuts keeps it whole as a no-speech phrase)")
 
-    out = {"language": a.lang, "model": a.model, "sources": sources, "segments": segments, "words": words}
+    nt = vc.tidy_transcript(words)
+    out = {"language": a.lang, "model": a.model, "sources": sources, "segments": segments, "words": words,
+           "removed": removed}
     vc.save_json(out, a.out)
     # human-readable transcript for Claude to read (segments with times)
     txt = os.path.splitext(a.out)[0] + ".txt"
     with open(txt, "w", encoding="utf-8") as f:
-        for s in segments:
-            f.write(f"[{s['src']}] {vc.fmt_tc(s['s'])}-{vc.fmt_tc(s['e'])}  {s['text']}\n")
+        for k, s in enumerate(segments):
+            text = " ".join(w["w"] for w in words if w.get("si") == k) or s["text"]
+            f.write(f"[{s['src']}] {vc.fmt_tc(s['s'])}-{vc.fmt_tc(s['e'])}  {text}"
+                    f"{'   <- SUSPECT: ' + s['flag'] if s.get('flag') else ''}\n")
+        for si, src in enumerate(sources):
+            if not any(w["src"] == si for w in words):
+                f.write(f"[{si}] (no speech in {src['name']})\n")
+        if removed:
+            f.write("\n# removed as likely Whisper hallucinations (not speech; restore with --no-screen if wrong):\n")
+            for r in removed:
+                f.write(f"#  [{r['src']}] {vc.fmt_tc(r['s'])}-{vc.fmt_tc(r['e'])} '{r['text']}' ({r['why']})\n")
         low = [w for w in words if w["p"] < 0.5]
         if low:
             f.write("\n# low-confidence words (check names/brands/terms):\n")
             for w in low:
                 f.write(f"#  [{w['src']}] {vc.fmt_tc(w['s'])} '{w['w']}' p={w['p']}\n")
+        f.write("\n# Confident errors are NOT listed above (e.g. 'pogneau' for 'porneau', p=0.98): proofread every\n"
+                "# kept phrase as a Romanian reader and fix with --replace or by editing words.json.\n")
+    if nt:
+        print(f"punctuation: {nt} sentence boundaries / capitals fixed")
     if a.srt:
         with open(a.srt, "w", encoding="utf-8") as f:
             f.write(to_srt([w for w in words if w["src"] == 0]))

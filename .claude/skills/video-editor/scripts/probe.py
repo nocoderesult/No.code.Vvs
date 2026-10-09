@@ -71,7 +71,8 @@ def issues_for(i):
         if i.get("color_space") in ("bt470bg", "smpte170m") and max(i.get("w", 0), i.get("h", 0)) >= 1280:
             iss.append("HD tagged BT.601: will be converted to BT.709 matrix on export.")
         if not i.get("has_audio"):
-            iss.append("NO AUDIO stream: cannot transcribe/cut by speech; silence will be used.")
+            iss.append("NO AUDIO stream: no words to cut by; the auto edit keeps it WHOLE (silent) as a NO-SPEECH "
+                       "phrase in story order -> --drop it, trim it with --cut-range, or pass it as --broll.")
     if i.get("has_audio"):
         if i.get("sample_rate") and i["sample_rate"] != 48000:
             iss.append(f"audio {i['sample_rate']} Hz: resampled to 48 kHz.")
@@ -80,7 +81,10 @@ def issues_for(i):
         if i.get("audio_streams", 1) > 1:
             iss.append(f"{i['audio_streams']} audio streams: only the first is used (check which mic it is).")
         if i.get("has_video") and abs(i.get("a_start", 0) - i.get("v_start", 0)) > 0.02:
-            iss.append(f"audio starts {i['a_start'] - i['v_start']:+.3f}s vs video: handled (aresample first_pts=0).")
+            first = "video" if i["v_start"] > i["a_start"] else "audio"
+            iss.append(f"{first} starts {abs(i['a_start'] - i['v_start']):.3f}s after the "
+                       f"{'audio' if first == 'video' else 'video'}: kept in sync (the late stream is padded from t=0: "
+                       f"{'first frame repeated' if first == 'video' else 'silence'}).")
     return iss
 
 

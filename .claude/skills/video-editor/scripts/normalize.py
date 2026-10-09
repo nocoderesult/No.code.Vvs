@@ -4,7 +4,9 @@
 Needed rarely (render_cuts.py normalizes on the fly). Use it to give DaVinci Resolve a clip that matches the
 cloud edit frame-for-frame (variable-frame-rate phone clips drift in NLEs), or to tame odd sources before
 analysis. Fixes: rotation (auto-applied), HDR HLG/PQ -> SDR (zscale npl=203 + mobius, mean error 9.2 vs 41 for
-naive), VFR -> CFR (fps filter + aresample async), full range / BT.601 -> BT.709 TV range, any audio -> 48 kHz.
+naive), VFR -> CFR (fps filter + aresample async; video starting after the audio is padded with its first
+frame), full range / BT.601 -> BT.709 TV range, any audio -> 48 kHz. The source timecode is kept only when the
+frame rate is unchanged.
 
 Examples:
   normalize.py IMG_1234.MOV work/IMG_1234_CFR.mp4
@@ -16,12 +18,14 @@ import vcommon as vc
 from render_cuts import colour_norm
 
 
-def normalize(src, out, fps=None, prores=False, crf=16):
+def normalize(src, out, fps=None, prores=False, crf=16, keep_tc=True):
+    """keep_tc=False: no timecode track (export_resolve: a CFR copy at the timeline rate can't carry the source's
+    timecode, and the FCPXML asset start must equal the file's own timecode)."""
     info = vc.media_info(src)
     if not info.get("has_video"):
         raise vc.EditError(f"{src} has no video")
     fps = vc.frac(fps) if fps else vc.frac(info["fps"])
-    vf = f"fps={fps},{colour_norm(info, info['h'])},setsar=1"
+    vf = f"fps={fps}:start_time=0,{colour_norm(info, info['h'])},setsar=1"
     if prores:
         vf = vf.replace("format=yuv420p", "format=yuv422p10le")
         venc = ["-c:v", "prores_ks", "-profile:v", "3", "-vendor", "apl0", "-pix_fmt", "yuv422p10le"]
@@ -35,8 +39,10 @@ def normalize(src, out, fps=None, prores=False, crf=16):
     if info.get("has_audio"):
         cmd += ["-map", "0:a:0", "-af", "aresample=48000:async=1:first_pts=0,aformat=channel_layouts=stereo",
                 "-ar", "48000", *aenc]
-    if info.get("timecode"):
+    if info.get("timecode") and keep_tc and vc.frac(info["fps"]) == fps:
         cmd += ["-timecode", info["timecode"].replace(";", ":")]
+    else:
+        cmd += ["-map_metadata", "-1", "-write_tmcd", "0"]
     cmd += ["-movflags", "+faststart", out]
     vc.run(cmd)
     return info, vc.media_info(out)
