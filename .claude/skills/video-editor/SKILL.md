@@ -81,6 +81,13 @@ qc.py → cover.py → export_resolve.py
 
 `captions.py` exits 3 when a caption or title leaves the safe zone or a caption sits under the hook/CTA; fix it (shorter hook, `--hook-y`, `--size`, `--reframe wide`) rather than passing `--no-check`.
 
+### Expert motion pass (when the user wants "expert", "pro", effects, pop-ups, SFX)
+
+The pipeline output is a clean, correct edit, not a produced one. For a produced look (kinetic captions, animated hook,
+impact hits, glitch/whip transitions, animated emoji, badges, animated CTA, layered meme SFX), render the base without
+captions and build the overlay in Remotion with the template in `remotion/` (steps and asset sources in
+`remotion/README.md`). Show the user key frames before the full render.
+
 ## 4. Self-QC (mandatory before delivery)
 
 `pipeline.py` runs `qc.py`. After any manual render, run it yourself:
