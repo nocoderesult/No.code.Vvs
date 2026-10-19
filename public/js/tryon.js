@@ -1,9 +1,9 @@
-// „Vezi-o pe tine”: proba virtuală. Selfie-ul și tunsoarea aleasă merg la /api/tryon,
-// unde un model AI de editare a imaginii schimbă doar părul. Dacă AI-ul nu e încă
-// conectat (sau site-ul rulează local), secțiunea merge în mod demo.
+// „Vezi-o pe tine”: proba virtuală. Selfie-ul și alegerile merg la /api/tryon, unde un model AI
+// de editare a imaginii schimbă doar tunsoarea (și barba). Dacă AI-ul nu e încă conectat
+// (sau site-ul rulează local), secțiunea merge în mod demo, ca să se vadă fluxul.
 import { site } from './config.js';
 import { bookingLink } from './booking.js';
-import { STYLES, BEARDS, COLORS, FADES } from './catalog.js';
+import { STYLES, BEARDS } from './catalog.js';
 
 const { gsap } = window;
 const SCAN_STEPS = ['Analizăm forma feței…', 'Măsurăm linia părului…', 'Aplicăm tunsoarea…', 'Finisăm detaliile…'];
@@ -20,7 +20,7 @@ function loadImage(src) {
   });
 }
 
-// Micșorează poza în browser (mai rapid, mai ieftin, fără date inutile trimise)
+// Micșorăm poza în browser: e trimisă mai repede și fără date inutile
 async function downscale(file) {
   let src;
   try {
@@ -45,14 +45,8 @@ async function demoResult(photo) {
   c.width = img.naturalWidth;
   c.height = img.naturalHeight;
   const ctx = c.getContext('2d');
-  ctx.filter = 'contrast(1.12) saturate(.82) sepia(.22) brightness(1.04)';
+  ctx.filter = 'contrast(1.12) saturate(.8) sepia(.2) brightness(1.04)';
   ctx.drawImage(img, 0, 0);
-  ctx.filter = 'none';
-  const g = ctx.createRadialGradient(c.width / 2, c.height / 2, c.width * 0.25, c.width / 2, c.height / 2, c.width * 0.8);
-  g.addColorStop(0, 'rgba(0,0,0,0)');
-  g.addColorStop(1, 'rgba(0,0,0,.45)');
-  ctx.fillStyle = g;
-  ctx.fillRect(0, 0, c.width, c.height);
   return c.toDataURL('image/jpeg', 0.9);
 }
 
@@ -70,123 +64,80 @@ export function initTryOn() {
     styles: $('[data-styles]'),
     styleName: $('[data-style-name]'),
     custom: $('[data-custom]'),
-    length: $('[data-length]'),
-    fade: $('[data-fade]'),
     beard: $('[data-beard]'),
-    color: $('[data-color]'),
     consent: $('[data-consent]'),
     generate: $('[data-generate]'),
     status: $('[data-status]'),
     book: $('[data-book]'),
     bookStyle: $('[data-book-style]'),
-    placed: $('[data-placed]'),
     reset: $('[data-reset]'),
     scanText: $('[data-scan-text]'),
     demo: $('[data-demo-badge]'),
-    tabs: [...root.querySelectorAll('[data-view]')],
   };
 
-  const state = {
-    photo: null,
-    style: STYLES[0].id,
-    custom: '',
-    length: 40,
-    fade: 'mid',
-    beard: 'keep',
-    color: 'natural',
-    result: null,
-    busy: false,
-  };
+  const state = { photo: null, style: STYLES[0].id, custom: '', beard: 'keep', result: null, busy: false };
 
-  const styleName = () => (state.style === 'custom' ? 'Look-ul tău' : STYLES.find((s) => s.id === state.style).name);
+  const styleName = () => (state.style === 'custom' ? 'tunsoarea descrisă' : STYLES.find((s) => s.id === state.style).name);
 
-  // Ce scrie în mesajul de programare, ex. „Skin fade (mid fade), barbă scurtă”
+  // Ce scrie în mesajul de programare, ex. „Skin fade, barbă scurtă”
   function describeChoice() {
     const parts = [state.style === 'custom' ? `tunsoarea descrisă: „${state.custom}”` : styleName()];
-    if (state.style !== 'buzz' && state.style !== 'custom') parts[0] += ` (${FADES[state.fade]})`;
     if (state.beard !== 'keep') parts.push(`barbă: ${BEARDS.find((b) => b.id === state.beard).name.toLowerCase()}`);
-    if (state.color !== 'natural') parts.push(`culoare: ${COLORS.find((c) => c.id === state.color).name.toLowerCase()}`);
     return parts.join(', ');
   }
 
-  // ---------- Construim opțiunile ----------
-  const customCard = document.createElement('button');
-  customCard.type = 'button';
-  customCard.className = 'style-card';
-  customCard.setAttribute('role', 'radio');
-  customCard.dataset.value = 'custom';
+  // ---------- Opțiuni ----------
+  function radio(className, value, onPick) {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = className;
+    b.setAttribute('role', 'radio');
+    b.dataset.value = value;
+    b.addEventListener('click', onPick);
+    return b;
+  }
+
+  const customCard = radio('style-card', 'custom', () => select('style', 'custom'));
   customCard.hidden = true;
   customCard.innerHTML = '<span class="style-card__text" data-custom-text></span>';
-  customCard.addEventListener('click', () => select('style', 'custom'));
+  customCard.setAttribute('aria-label', 'Tunsoarea descrisă de tine');
   el.styles.append(customCard);
 
   for (const s of STYLES) {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'style-card';
-    b.setAttribute('role', 'radio');
-    b.setAttribute('aria-label', s.name);
-    b.dataset.value = s.id;
-    b.innerHTML = s.svg;
-    b.addEventListener('click', () => {
+    const b = radio('style-card', s.id, () => {
       el.custom.value = '';
       state.custom = '';
+      customCard.hidden = true;
       select('style', s.id);
     });
+    b.setAttribute('aria-label', s.name);
+    b.innerHTML = s.svg;
     el.styles.append(b);
   }
 
   for (const beard of BEARDS) {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'chip';
-    b.setAttribute('role', 'radio');
-    b.dataset.value = beard.id;
+    const b = radio('chip', beard.id, () => select('beard', beard.id));
     b.textContent = beard.name;
-    b.addEventListener('click', () => select('beard', beard.id));
     el.beard.append(b);
   }
 
-  for (const color of COLORS) {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'swatch';
-    b.setAttribute('role', 'radio');
-    b.setAttribute('aria-label', color.name);
-    b.dataset.value = color.id;
-    b.style.background = color.css;
-    b.addEventListener('click', () => select('color', color.id));
-    el.color.append(b);
-  }
-  const colorName = document.createElement('span');
-  colorName.className = 'swatches__name';
-  el.color.append(colorName);
-
-  el.fade.querySelectorAll('button').forEach((b) => b.addEventListener('click', () => select('fade', b.dataset.value)));
-
   function select(key, value) {
+    if (state[key] === value) return;
     state[key] = value;
     sync();
     if (key === 'style') {
-      gsap.fromTo(el.styleName, { yPercent: 40, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.6, ease: 'expo.out' });
+      gsap.fromTo(el.styleName, { y: 10, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.5, ease: 'power3.out' });
     }
   }
 
-  function markChecked(container, value) {
-    container.querySelectorAll('[role="radio"]').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.value === value)));
-  }
-
   function sync() {
-    markChecked(el.styles, state.style);
-    markChecked(el.fade, state.fade);
-    markChecked(el.beard, state.beard);
-    markChecked(el.color, state.color);
-    colorName.textContent = COLORS.find((c) => c.id === state.color).name;
-    el.styleName.textContent = styleName();
-    el.bookStyle.textContent = styleName();
-    el.length.style.setProperty('--fill', `${state.length}%`);
+    for (const [container, value] of [[el.styles, state.style], [el.beard, state.beard]]) {
+      container.querySelectorAll('[role="radio"]').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.value === value)));
+    }
+    const name = state.style === 'custom' ? 'Tunsoarea descrisă' : styleName();
+    el.styleName.textContent = name;
+    el.bookStyle.textContent = name;
     el.generate.disabled = !state.photo || !el.consent.checked || state.busy;
-    if (!state.result) el.placed.textContent = state.photo ? `Ales · ${styleName()}` : 'Alege o tunsoare';
   }
 
   el.custom.addEventListener('input', () => {
@@ -196,10 +147,6 @@ export function initTryOn() {
     if (state.custom) select('style', 'custom');
     else if (state.style === 'custom') select('style', STYLES[0].id);
   });
-  el.length.addEventListener('input', () => {
-    state.length = Number(el.length.value);
-    sync();
-  });
   el.consent.addEventListener('change', sync);
 
   // ---------- Poza ----------
@@ -208,18 +155,18 @@ export function initTryOn() {
     el.status.classList.toggle('is-error', isError);
   }
 
-  function setView(view) {
-    el.compare.dataset.view = view;
-    el.tabs.forEach((t) => t.setAttribute('aria-selected', String(t.dataset.view === view)));
-  }
-
   function setPos(v) {
     el.compare.style.setProperty('--pos', `${v}%`);
     el.range.value = v;
   }
 
-  function enableTabs(on) {
-    el.tabs.forEach((t) => { if (t.dataset.view !== 'before') t.disabled = !on; });
+  function showPhoto(on) {
+    el.empty.hidden = on;
+    el.compare.hidden = !on;
+    el.reset.hidden = !on;
+    el.compare.classList.remove('has-result');
+    el.demo.hidden = true;
+    el.book.classList.remove('is-ready');
   }
 
   async function onFile(e) {
@@ -239,15 +186,9 @@ export function initTryOn() {
     state.result = null;
     el.before.src = state.photo;
     el.after.removeAttribute('src');
-    el.empty.hidden = true;
-    el.compare.hidden = false;
-    el.reset.hidden = false;
-    el.demo.hidden = true;
-    el.book.classList.remove('is-ready');
-    enableTabs(false);
-    setView('before');
-    gsap.fromTo(el.before, { scale: 1.08, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 1.1, ease: 'expo.out' });
-    setStatus(el.consent.checked ? 'Poza e gata. Apasă „Generează look-ul”.' : 'Poza e gata. Bifează acordul și apasă „Generează look-ul”.');
+    showPhoto(true);
+    gsap.fromTo(el.before, { scale: 1.06, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.9, ease: 'power3.out' });
+    setStatus(el.consent.checked ? 'Poza e gata. Apasă „Generează previzualizarea”.' : 'Poza e gata. Bifează acordul de mai jos, apoi generează.');
     sync();
   }
 
@@ -256,22 +197,11 @@ export function initTryOn() {
   el.reset.addEventListener('click', () => {
     state.photo = null;
     state.result = null;
-    el.compare.hidden = true;
-    el.empty.hidden = false;
-    el.reset.hidden = true;
-    el.demo.hidden = true;
-    el.book.classList.remove('is-ready');
-    enableTabs(false);
-    setView('before');
+    showPhoto(false);
     setStatus('');
     sync();
   });
 
-  el.tabs.forEach((t) => t.addEventListener('click', () => {
-    if (t.disabled) return;
-    setView(t.dataset.view);
-    if (t.dataset.view === 'compare') setPos(50);
-  }));
   el.range.addEventListener('input', () => setPos(Number(el.range.value)));
 
   // ---------- Generarea ----------
@@ -280,8 +210,8 @@ export function initTryOn() {
     el.scanText.textContent = SCAN_STEPS[0];
     const id = setInterval(() => {
       i = (i + 1) % SCAN_STEPS.length;
-      gsap.fromTo(el.scanText, { autoAlpha: 0, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.5 });
       el.scanText.textContent = SCAN_STEPS[i];
+      gsap.fromTo(el.scanText, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.5 });
     }, 2200);
     return () => clearInterval(id);
   }
@@ -290,18 +220,15 @@ export function initTryOn() {
     state.result = src;
     el.after.src = src;
     el.demo.hidden = !demo;
-    enableTabs(true);
-    setView('compare');
+    el.compare.classList.add('has-result');
     const o = { v: 100 };
     gsap.timeline()
-      .to(o, { v: 0, duration: 1.3, ease: 'expo.inOut', onUpdate: () => setPos(o.v) })
-      .to(o, { v: 50, duration: 1.1, ease: 'expo.out', onUpdate: () => setPos(o.v) }, '+=0.5');
-    el.placed.textContent = `Aplicat · ${styleName()}`;
+      .to(o, { v: 0, duration: 1.2, ease: 'power3.inOut', onUpdate: () => setPos(o.v) })
+      .to(o, { v: 50, duration: 1, ease: 'power3.out', onUpdate: () => setPos(o.v) }, '+=0.4');
     el.book.classList.add('is-ready');
-    gsap.fromTo(el.book, { scale: 0.96 }, { scale: 1, duration: 0.9, ease: 'elastic.out(1, 0.5)' });
     setStatus(demo
       ? 'Mod demo: imaginea e doar simulată. Rezultatul real apare după ce conectăm AI-ul.'
-      : 'Gata! Trage de bară ca să compari. Îți place? Programează-te.');
+      : 'Gata! Trage de bară ca să compari înainte și după.');
   }
 
   async function generate() {
@@ -310,7 +237,7 @@ export function initTryOn() {
     sync();
     el.frame.classList.add('is-scanning');
     el.demo.hidden = true;
-    setStatus('Îți schițăm noul look. Durează cam 15 secunde.');
+    setStatus('Pregătim previzualizarea. Durează cam 15 secunde.');
     const stopScan = cycleScanText();
     let image = null;
     let demo = false;
@@ -323,10 +250,7 @@ export function initTryOn() {
           image: state.photo,
           style: state.style,
           custom: state.style === 'custom' ? state.custom : '',
-          length: state.length,
-          fade: state.fade,
           beard: state.beard,
-          color: state.color,
         }),
       });
       const data = await res.json().catch(() => ({}));
@@ -337,7 +261,7 @@ export function initTryOn() {
       demo = true; // fără server (ex. previzualizare locală)
     }
     if (demo) {
-      await wait(2600);
+      await wait(2400);
       image = await demoResult(state.photo);
     }
     stopScan();

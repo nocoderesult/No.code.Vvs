@@ -1,40 +1,86 @@
-// Intrarea cinematică: cadrele video-ului salonului sunt desenate pe un canvas
-// și derulate de scroll, ca pe site-urile Apple. Cadrele se generează cu
-// scripts/make-sequence.sh în public/assets/seq/ (împreună cu manifest.json).
-// Fără manifest rulează o animație provizorie: un culoar de uși spre o lumină caldă.
+// Intrarea: video-ul salonului, derulat de scroll pe un canvas, cu monograma RA desenată peste.
+// Cadrele vin din public/assets/seq/ (scripts/make-sequence.sh). Fazele, din progresul scroll-ului (0–1):
+//   0.06–0.29  R și A urcă pe rând din linia de bază; apoi apare „BARBERSHOP”
+//   0.50–0.72  literele devin ferestre: în jur se întunecă, video-ul se vede doar prin RA
+//   0.78–0.94  RA urcă și se micșorează; apar mesajul și butonul de programare
 
 const { gsap, ScrollTrigger } = window;
 
-// Ferestrele (din progresul total 0–1) în care apare fiecare cuvânt după nume
-const WORD_WINDOWS = [[0.3, 0.5], [0.56, 0.76]];
+const LABEL = 'BARBERSHOP';
+const CENTER_Y = 0.45; // poziția verticală a monogramei, din înălțimea ecranului
 const PARALLEL_LOADS = 6;
+
+const clamp01 = (v) => Math.min(1, Math.max(0, v));
+const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+const smooth = (t) => t * t * (3 - 2 * t);
+const lerp = (a, b, t) => a + (b - a) * t;
+const span = (p, a, b) => clamp01((p - a) / (b - a));
 
 export function initIntro({ reduceMotion }) {
   const section = document.querySelector('[data-intro]');
   const stage = section.querySelector('[data-intro-stage]');
   const canvas = section.querySelector('[data-intro-canvas]');
   const ctx = canvas.getContext('2d');
-  const words = [...section.querySelectorAll('[data-word]')];
-  const final = section.querySelector('[data-intro-final]');
+  const mask = document.createElement('canvas');
+  const mctx = mask.getContext('2d');
   const hint = section.querySelector('[data-intro-hint]');
-  const bar = section.querySelector('[data-intro-progress]');
+  const end = section.querySelector('[data-intro-end]');
   const dim = section.querySelector('[data-intro-dim]');
 
   const state = { p: 0 };
   let seq = null; // { count, frames }
+  let m = null; // dimensiunile monogramei, calculate la resize
   let dpr = 1;
-  let lastWidth = 0;
-  let lastHeight = 0;
+  let W = 0;
+  let H = 0;
+  let cssW = 0;
+  let cssH = 0;
+
+  // ---------- Dimensiuni ----------
+  function measure() {
+    ctx.font = '500 100px "Bodoni Moda"';
+    const size = ((W * 0.78) / ctx.measureText('RA').width) * 100;
+    ctx.font = `500 ${size}px "Bodoni Moda"`;
+    const r = ctx.measureText('R');
+    const a = ctx.measureText('A');
+    const total = ctx.measureText('RA').width;
+    const cap = r.actualBoundingBoxAscent || size * 0.68;
+    const labelSize = Math.max(11 * dpr, W * 0.03);
+    ctx.font = `500 ${labelSize}px Inter`;
+    const labelWidths = [...LABEL].map((ch) => ctx.measureText(ch).width);
+    const labelGap = labelSize * 0.55;
+    const gradient = ctx.createLinearGradient(0, -cap / 2, 0, cap / 2);
+    gradient.addColorStop(0, '#f7eedd');
+    gradient.addColorStop(0.55, '#e3cda4');
+    gradient.addColorStop(1, '#b8915a');
+    m = {
+      size, cap, total, gradient, labelSize, labelWidths, labelGap,
+      wR: r.width,
+      kern: total - r.width - a.width,
+      labelTotal: labelWidths.reduce((s, w) => s + w, 0) + labelGap * (LABEL.length - 1),
+    };
+  }
 
   function resize() {
-    const w = stage.clientWidth;
-    const h = stage.clientHeight;
+    cssW = stage.clientWidth;
+    cssH = stage.clientHeight;
     dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.round(w * dpr);
-    canvas.height = Math.round(h * dpr);
-    lastWidth = w;
-    lastHeight = h;
+    W = canvas.width = mask.width = Math.round(cssW * dpr);
+    H = canvas.height = mask.height = Math.round(cssH * dpr);
+    measure();
     render();
+  }
+
+  // ---------- Desen ----------
+  function cover(img, alpha) {
+    const ir = img.naturalWidth / img.naturalHeight;
+    let w = W;
+    let h = H;
+    if (ir > W / H) w = H * ir;
+    else h = W / ir;
+    ctx.globalAlpha = alpha;
+    ctx.drawImage(img, (W - w) / 2, (H - h) / 2, w, h);
+    ctx.globalAlpha = 1;
   }
 
   function nearestLoaded(i) {
@@ -47,65 +93,128 @@ export function initIntro({ reduceMotion }) {
     return null;
   }
 
-  function drawCover(img) {
-    const cw = canvas.width;
-    const ch = canvas.height;
-    const ir = img.naturalWidth / img.naturalHeight;
-    let w = cw;
-    let h = ch;
-    if (ir > cw / ch) w = ch * ir;
-    else h = cw / ir;
-    ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
+  // Cadrul curent, amestecat cu următorul, ca scroll-ul să curgă fără sacadări
+  function drawVideo(p) {
+    const pos = p * (seq.count - 1);
+    const i = Math.floor(pos);
+    const t = pos - i;
+    const base = nearestLoaded(i);
+    if (base) cover(base, 1);
+    const next = t > 0.02 && seq.frames[i + 1];
+    if (next) cover(next, t);
   }
 
-  function drawPlaceholder(p) {
-    const w = canvas.width;
-    const h = canvas.height;
-    const cx = w / 2;
-    const cy = h * 0.5;
-    ctx.fillStyle = '#070605';
-    ctx.fillRect(0, 0, w, h);
-
-    const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(w, h) * (0.3 + p * 0.55));
-    glow.addColorStop(0, `rgba(231, 211, 174, ${0.24 + p * 0.34})`);
-    glow.addColorStop(0.4, 'rgba(200, 163, 107, 0.09)');
-    glow.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    ctx.fillStyle = glow;
-    ctx.fillRect(0, 0, w, h);
-
-    ctx.lineWidth = dpr;
-    ctx.strokeStyle = 'rgba(236, 228, 214, 0.05)';
-    for (let k = -5; k <= 5; k++) {
-      ctx.beginPath();
-      ctx.moveTo(cx + k * w * 0.16, h);
-      ctx.lineTo(cx, cy);
-      ctx.stroke();
+  // Desenează R și A în jurul centrului; literele urcă din linia de bază (clip pe linia de bază)
+  function letters(target, g, mode, style) {
+    target.save();
+    target.translate(W / 2, H * CENTER_Y - g.shift);
+    target.scale(g.scale, g.scale);
+    target.font = `500 ${m.size}px "Bodoni Moda"`;
+    target.textBaseline = 'alphabetic';
+    const x0 = -m.total / 2;
+    const base = m.cap / 2;
+    target.beginPath();
+    target.rect(-W, -H, W * 2, H + base + m.size * 0.03);
+    target.clip();
+    const parts = [['R', x0, g.aR, g.riseR], ['A', x0 + m.wR + m.kern, g.aA, g.riseA]];
+    for (const [ch, x, alpha, rise] of parts) {
+      if (alpha <= 0.001) continue;
+      target.globalAlpha = alpha * g.alpha;
+      if (mode === 'stroke') {
+        target.strokeStyle = style;
+        target.lineWidth = (0.9 * dpr) / g.scale;
+        target.strokeText(ch, x, base + rise);
+      } else {
+        target.fillStyle = style;
+        target.fillText(ch, x, base + rise);
+      }
     }
+    target.restore();
+  }
 
-    const travel = p * 7.2;
-    const baseW = Math.min(w, h * 1.1) * 0.5;
-    const baseH = h * 0.84;
-    for (let i = 10; i >= 1; i--) {
-      const z = i - travel;
-      if (z <= 0.12) continue;
-      const s = 1 / z;
-      const a = Math.max(0, Math.min(1, 1.5 - z / 4)) * Math.min(1, z * 1.6);
-      ctx.strokeStyle = `rgba(236, 228, 214, ${0.6 * a})`;
-      ctx.lineWidth = Math.max(dpr, 3 * s * dpr);
-      ctx.strokeRect(cx - (baseW * s) / 2, cy - (baseH * s) / 2, baseW * s, baseH * s);
-    }
+  function label(g, alpha) {
+    if (alpha <= 0.001) return;
+    ctx.save();
+    ctx.translate(W / 2, H * CENTER_Y - g.shift);
+    ctx.scale(g.scale, g.scale);
+    ctx.globalAlpha = alpha;
+    const lineY = m.cap / 2 + m.size * 0.15;
+    const lineW = W * 0.1 * alpha;
+    ctx.fillStyle = 'rgba(230, 210, 173, 0.85)';
+    ctx.fillRect(-lineW / 2, lineY, lineW, Math.max(1, dpr));
+    ctx.font = `500 ${m.labelSize}px Inter`;
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = 'rgba(241, 235, 225, 0.92)';
+    let x = -m.labelTotal / 2;
+    const y = lineY + m.labelSize * 2.3;
+    [...LABEL].forEach((ch, i) => {
+      ctx.fillText(ch, x, y);
+      x += m.labelWidths[i] + m.labelGap;
+    });
+    ctx.restore();
   }
 
   function render() {
-    if (!canvas.width) return;
-    if (seq) {
-      const img = nearestLoaded(Math.round(state.p * (seq.count - 1)));
-      if (img) drawCover(img);
-    } else {
-      drawPlaceholder(state.p);
+    if (!W || !m) return;
+    const p = state.p;
+    const still = reduceMotion;
+    const aR = still ? 1 : easeOut(span(p, 0.06, 0.24));
+    const aA = still ? 1 : easeOut(span(p, 0.11, 0.29));
+    const aL = still ? 1 : easeOut(span(p, 0.22, 0.34));
+    const w = still ? 0 : smooth(span(p, 0.5, 0.72));
+    const q = still ? 0 : smooth(span(p, 0.78, 0.94));
+    const shown = Math.max(aR, aA);
+    const g = {
+      aR, aA, alpha: 1,
+      riseR: (1 - aR) * m.cap * 1.05,
+      riseA: (1 - aA) * m.cap * 1.05,
+      scale: lerp(1.04, 1, shown) * lerp(1, 0.84, q),
+      shift: H * 0.085 * q,
+    };
+
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, W, H);
+    if (seq) drawVideo(p);
+
+    // Strat întunecat cu „gaură” în forma literelor: din ce în ce mai opac în jur, transparent în litere
+    const darkness = lerp(0.2 + 0.3 * shown, 0.93, w);
+    mctx.globalCompositeOperation = 'source-over';
+    mctx.clearRect(0, 0, W, H);
+    mctx.fillStyle = `rgba(5, 4, 3, ${darkness})`;
+    mctx.fillRect(0, 0, W, H);
+    if (w > 0.001) {
+      mctx.globalCompositeOperation = 'destination-out';
+      letters(mctx, { ...g, alpha: w }, 'fill', '#000');
+      mctx.globalCompositeOperation = 'source-over';
     }
+    ctx.drawImage(mask, 0, 0);
+
+    // Umbre discrete sus și jos, pentru meniu și textele de jos
+    const top = ctx.createLinearGradient(0, 0, 0, H * 0.16);
+    top.addColorStop(0, 'rgba(0, 0, 0, 0.35)');
+    top.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = top;
+    ctx.fillRect(0, 0, W, H * 0.16);
+    const bottom = ctx.createLinearGradient(0, H * 0.62, 0, H);
+    bottom.addColorStop(0, 'rgba(0, 0, 0, 0)');
+    bottom.addColorStop(1, 'rgba(0, 0, 0, 0.55)');
+    ctx.fillStyle = bottom;
+    ctx.fillRect(0, H * 0.62, W, H * 0.38);
+
+    // Literele pline se sting pe măsură ce devin ferestre; video-ul din ele primește o lumină
+    // aurie discretă, iar conturul fin le păstrează forma
+    if (w < 0.999) letters(ctx, { ...g, alpha: 1 - w }, 'fill', m.gradient);
+    if (w > 0.001) {
+      ctx.globalCompositeOperation = 'soft-light';
+      letters(ctx, { ...g, alpha: 0.75 * w }, 'fill', m.gradient);
+      ctx.globalCompositeOperation = 'source-over';
+      letters(ctx, { ...g, alpha: 0.6 * w }, 'stroke', 'rgb(230, 210, 173)');
+    }
+    label(g, aL);
   }
 
+  // ---------- Încărcare ----------
   async function loadManifest() {
     try {
       const res = await fetch('assets/seq/manifest.json', { cache: 'no-cache' });
@@ -115,7 +224,7 @@ export function initIntro({ reduceMotion }) {
     }
   }
 
-  // Ordine grosier → fin: întâi fiecare al 16-lea cadru, ca scroll-ul să meargă devreme
+  // Ordine grosier → fin: întâi fiecare al 16-lea cadru, ca scroll-ul să meargă imediat
   function loadOrder(count) {
     const seen = new Uint8Array(count);
     const order = [];
@@ -127,23 +236,24 @@ export function initIntro({ reduceMotion }) {
     return order;
   }
 
-  // Rezolvă când s-au încărcat destule cadre pentru un scroll fluid; restul vin în fundal.
   async function preload(onProgress) {
+    await Promise.all([
+      document.fonts.load('500 100px "Bodoni Moda"'),
+      document.fonts.load('500 16px Inter'),
+    ]).catch(() => {});
     resize();
     const manifest = await loadManifest();
-    const portrait = window.innerHeight > window.innerWidth;
-    const variant = manifest && ((portrait && manifest.mobile) || manifest.desktop || manifest.mobile);
+    const variant = manifest && (manifest.mobile || manifest.desktop);
     if (!variant) {
       onProgress(1);
       return;
     }
     seq = { count: variant.count, frames: new Array(variant.count) };
     const order = loadOrder(variant.count);
-    const gate = Math.min(order.length, Math.max(1, Math.ceil(order.length * 0.3)));
+    const gate = Math.max(1, Math.ceil(order.length * 0.35));
     const url = (i) => `${variant.path}${String(i + 1).padStart(variant.pad || 4, '0')}.${variant.ext || 'webp'}`;
     let done = 0;
     let next = 0;
-
     await new Promise((resolve) => {
       const pump = () => {
         if (next >= order.length) return;
@@ -155,66 +265,53 @@ export function initIntro({ reduceMotion }) {
           done++;
           if (done <= gate) onProgress(done / gate);
           if (done === gate) resolve();
-          if (i === 0 || done <= gate) render();
+          if (i === 0) render();
           pump();
         };
         img.src = url(i);
       };
       for (let k = 0; k < PARALLEL_LOADS; k++) pump();
     });
+    render();
   }
 
+  // ---------- Scroll ----------
   function buildScroll() {
     const tl = gsap.timeline({ defaults: { ease: 'none' } });
     tl.to(state, { p: 1, duration: 1, onUpdate: render }, 0);
-    tl.to(bar, { scaleX: 1, duration: 1 }, 0);
-    tl.to(hint, { autoAlpha: 0, duration: 0.03 }, 0.01);
-    tl.to(words[0], { autoAlpha: 0, y: -24, filter: 'blur(10px)', duration: 0.08 }, 0.12);
-    words.slice(1).forEach((el, k) => {
-      const [a, b] = WORD_WINDOWS[k] || [0.3 + k * 0.2, 0.45 + k * 0.2];
-      tl.fromTo(el,
-        { autoAlpha: 0, y: 26, filter: 'blur(12px)', letterSpacing: '0.7em' },
-        { autoAlpha: 1, y: 0, filter: 'blur(0px)', letterSpacing: '0.42em', duration: 0.08 }, a);
-      tl.to(el, { autoAlpha: 0, y: -26, filter: 'blur(12px)', duration: 0.08 }, b - 0.08);
-    });
-    tl.fromTo(final, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.04 }, 0.84);
-    tl.from(final.querySelectorAll('.intro__kicker, .intro__title > *, .btn'),
-      { yPercent: 70, autoAlpha: 0, stagger: 0.015, duration: 0.1 }, 0.84);
+    tl.to(hint, { autoAlpha: 0, duration: 0.05 }, 0.02);
+    tl.fromTo(end, { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.12 }, 0.84);
 
     ScrollTrigger.create({
       trigger: section,
       start: 'top top',
       // video-ul se termină înainte ca secțiunea următoare să urce peste el
       end: () => '+=' + Math.max(1, section.offsetHeight - 2 * stage.offsetHeight),
-      scrub: 0.6,
+      scrub: 1,
       animation: tl,
       invalidateOnRefresh: true,
     });
 
-    // Cortina: secțiunea următoare urcă, iar scena se micșorează și se întunecă
-    gsap.timeline({
-      scrollTrigger: { trigger: '.curtain', start: 'top bottom', end: 'top top', scrub: true },
-    })
-      .to(stage, { scale: 0.9, ease: 'none' }, 0)
-      .to(dim, { opacity: 0.75, ease: 'none' }, 0);
+    gsap.timeline({ scrollTrigger: { trigger: '.curtain', start: 'top bottom', end: 'top top', scrub: true } })
+      .to(stage, { scale: 0.92, ease: 'none' }, 0)
+      .to(dim, { opacity: 0.7, ease: 'none' }, 0);
   }
 
   function start() {
     if (reduceMotion) {
-      gsap.set([words[0], final], { autoAlpha: 1 });
+      gsap.set(hint, { autoAlpha: 0 });
+      gsap.set(end, { autoAlpha: 1 });
+      render();
       return;
     }
-    gsap.fromTo(words[0],
-      { autoAlpha: 0, y: 24, filter: 'blur(14px)', letterSpacing: '0.62em' },
-      { autoAlpha: 1, y: 0, filter: 'blur(0px)', letterSpacing: '0.34em', duration: 1.8, ease: 'expo.out', delay: 0.15 });
-    gsap.from(canvas, { scale: 1.14, duration: 2.4, ease: 'expo.out' });
-    gsap.from(hint, { autoAlpha: 0, y: 14, duration: 1, delay: 1 });
+    gsap.from(canvas, { scale: 1.08, duration: 2.4, ease: 'power3.out' });
+    gsap.from(hint, { autoAlpha: 0, y: 10, duration: 1, delay: 0.9, ease: 'power2.out' });
     buildScroll();
   }
 
   window.addEventListener('resize', () => {
-    // pe telefon bara de adresă declanșează resize-uri mici de înălțime; le ignorăm
-    if (Math.abs(stage.clientWidth - lastWidth) > 2 || Math.abs(stage.clientHeight - lastHeight) > 120) resize();
+    // bara de adresă a telefonului schimbă puțin înălțimea; redesenăm doar la schimbări reale
+    if (Math.abs(stage.clientWidth - cssW) > 1 || Math.abs(stage.clientHeight - cssH) > 120) resize();
   });
 
   return { preload, start };
