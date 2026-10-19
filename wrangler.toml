@@ -1,0 +1,4 @@
+# Cloudflare Pages: site-ul static din /public + funcția /api/tryon din /functions
+name = "barbershop"
+pages_build_output_dir = "public"
+compatibility_date = "2026-10-01"

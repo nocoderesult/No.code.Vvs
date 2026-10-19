@@ -1,0 +1,9 @@
+node_modules/
+.wrangler/
+.dev.vars
+.DS_Store
+# video-urile brute stau local; în site intră doar cadrele generate
+*.mov
+*.MOV
+raw/
+preview/
