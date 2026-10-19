@@ -1,0 +1,30 @@
+# Publică folderul public/ pe ramura gh-pages (de unde îl servește GitHub Pages)
+# la fiecare modificare a site-ului pe ramura barbershop-site.
+name: Publică site-ul
+
+on:
+  push:
+    branches: [barbershop-site]
+    paths: ['public/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publica-site
+  cancel-in-progress: true
+
+jobs:
+  publica:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Copiază public/ pe gh-pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git subtree split --prefix public -b gh-pages-build
+          git push --force origin gh-pages-build:gh-pages

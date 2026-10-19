@@ -143,7 +143,7 @@ function initLinks(toggleMenu) {
   document.querySelectorAll('[data-maps]').forEach((a) => external(a, `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.address)}`));
   document.querySelectorAll('[data-address]').forEach((el) => (el.textContent = site.address));
   document.querySelectorAll('[data-phone]').forEach((a) => {
-    a.href = `tel:${site.phone.replace(/\s/g, '')}`;
+    a.href = `tel:${site.phoneLink}`;
     a.textContent = site.phone;
   });
   document.querySelectorAll('[data-year]').forEach((s) => (s.textContent = new Date().getFullYear()));

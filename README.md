@@ -19,8 +19,8 @@ lin pe telefon. Pe telefoanele cu „mișcare redusă” activată, animațiile 
 
 | Ce | Unde |
 | --- | --- |
-| Telefon, WhatsApp, adresă, Instagram, link de programare (Booksy/MERO etc.) | `public/js/config.js` |
-| Prețuri și durate (acum sunt exemple) | `public/index.html`, secțiunea „Servicii” |
+| Telefon, WhatsApp, localitate, Instagram, link de programare (Booksy/MERO etc.) | `public/js/config.js` |
+| Prețuri și durate | `public/index.html`, secțiunea „Servicii” |
 | Program | `public/index.html`, secțiunea „Programări” |
 | Date pentru Google (telefon, adresă, program) | `public/index.html`, blocul `application/ld+json` |
 | Video de intrare și poze proprii | vezi mai jos |
@@ -61,15 +61,22 @@ Merge orice video; unul orizontal e decupat automat pe centru la format de telef
 Iese cel mai frumos o filmare calmă, făcută mergând încet prin salon, cu detalii de aproape la final:
 acele cadre se văd prin literele RA.
 
-## Publicare (Cloudflare Pages, gratuit și pentru uz comercial)
+## Publicare
 
-1. Cloudflare → Workers & Pages → Create → Pages → conectezi acest repository GitHub.
+Site-ul e publicat gratuit pe GitHub Pages: https://nocoderesult.github.io/No.code.Vvs/
+
+La fiecare modificare în `public/` pe ramura `barbershop-site`, workflow-ul
+`.github/workflows/publica-site.yml` copiază site-ul pe ramura `gh-pages`, iar GitHub Pages
+îl actualizează în 1–2 minute.
+
+Pe GitHub Pages proba virtuală rulează în mod demo, pentru că acolo nu există server pentru AI.
+Pentru AI și un domeniu propriu, site-ul se mută pe Cloudflare Pages (gratuit, permis și pentru uz comercial):
+
+1. Cloudflare → Workers & Pages → Create → Pages → conectezi acest repository GitHub, ramura `barbershop-site`.
 2. Build command: gol. Build output directory: `public`.
 3. Settings → Variables and Secrets → secretul `GEMINI_API_KEY` (cheia din Google AI Studio).
    Opțional: `GEMINI_IMAGE_MODEL` (implicit `gemini-2.5-flash-image`).
 4. Custom domains → domeniul salonului.
-
-Fără `GEMINI_API_KEY`, site-ul merge normal, iar proba virtuală rulează în mod demo.
 
 ## Proba virtuală și datele personale
 
