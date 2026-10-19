@@ -8,7 +8,7 @@ Site gândit pentru telefon (pe calculator apare ca o coloană de telefon pe cen
 - **Studio**: prezentare scurtă și o fotografie.
 - **Servicii și tarife**: atingerea unui serviciu deschide programarea cu serviciul ales.
 - **Probă virtuală („Vezi-o pe tine”)**: selfie → tunsoare (8 modele sau descrisă liber) → barbă →
-  previzualizare AI → comparator înainte/după → programare cu tunsoarea aleasă.
+  previzualizare AI (GPT Image, OpenAI) → comparator înainte/după → programare cu tunsoarea aleasă.
 - **Galerie** cu glisare, **Programări** (online, WhatsApp, telefon, program, adresă) și footer.
 - Buton „Programează-te” care rămâne la îndemână în timpul scroll-ului.
 
@@ -37,7 +37,7 @@ public/                 site-ul (ce se publică)
   js/catalog.js         tunsorile și opțiunile de barbă
   assets/seq/           cadrele video-ului de intrare
   assets/img/           pozele
-functions/api/tryon.js  serverul care trimite selfie-ul la AI (cheia stă aici, nu în browser)
+functions/api/tryon.js  serverul care trimite selfie-ul la OpenAI (cheia stă aici, nu în browser)
 scripts/make-sequence.sh  video → cadre pentru intrare
 CREDITS.md              sursele foto/video și licențele
 ```
@@ -63,26 +63,36 @@ acele cadre se văd prin literele RA.
 
 ## Publicare
 
-Site-ul e publicat gratuit pe GitHub Pages: https://nocoderesult.github.io/No.code.Vvs/
+### Cloudflare Pages (site-ul principal, cu AI)
 
-La fiecare modificare în `public/` pe ramura `barbershop-site`, workflow-ul
-`.github/workflows/publica-site.yml` copiază site-ul pe ramura `gh-pages`, iar GitHub Pages
-îl actualizează în 1–2 minute.
+1. Cloudflare → **Workers & Pages** → **Create application** → **Pages** → **Connect to Git**.
+2. **GitHub** → autorizezi accesul → alegi `nocoderesult/No.code.Vvs` → **Begin setup**.
+3. Project name: `ra-barbershop` · Production branch: `barbershop-site` · Framework preset: `None` ·
+   Build command: gol · Build output directory: `public` → **Save and Deploy**.
+4. Proiect → **Settings** → **Variables and Secrets** → **Add** → tip **Secret**, nume `OPENAI_API_KEY`,
+   valoarea = cheia OpenAI. Opțional, ca variabile simple: `OPENAI_IMAGE_MODEL`
+   (implicit `gpt-image-2.5-flare`; mai precis, dar mai lent: `gpt-image-2.5-sunburst`) și
+   `OPENAI_IMAGE_QUALITY` (`low`, `medium` implicit, `high`).
+5. Variabilele noi intră în vigoare la următoarea publicare: **Deployments** → ultima → **Retry deployment**
+   (sau orice commit nou pe `barbershop-site`).
+6. Opțional: **Custom domains** → domeniul salonului.
 
-Pe GitHub Pages proba virtuală rulează în mod demo, pentru că acolo nu există server pentru AI.
-Pentru AI și un domeniu propriu, site-ul se mută pe Cloudflare Pages (gratuit, permis și pentru uz comercial):
+Fără `OPENAI_API_KEY`, site-ul merge normal, iar proba virtuală rulează în mod demo.
 
-1. Cloudflare → Workers & Pages → Create → Pages → conectezi acest repository GitHub, ramura `barbershop-site`.
-2. Build command: gol. Build output directory: `public`.
-3. Settings → Variables and Secrets → secretul `GEMINI_API_KEY` (cheia din Google AI Studio).
-   Opțional: `GEMINI_IMAGE_MODEL` (implicit `gemini-2.5-flash-image`).
-4. Custom domains → domeniul salonului.
+În contul OpenAI: cheia se face din **API keys**. Contul are nevoie de credit și, pentru modelele
+GPT Image, poate cere **Organization verification**. Pune și o **limită lunară de cost**
+(Settings → Limits), ca proba virtuală să nu poată depăși un buget fix.
+
+### GitHub Pages (copie gratuită, fără AI)
+
+https://nocoderesult.github.io/No.code.Vvs/ se actualizează automat la fiecare modificare în `public/`
+(workflow-ul `.github/workflows/publica-site.yml`). Aici proba virtuală rulează în mod demo.
 
 ## Proba virtuală și datele personale
 
 - Poza e micșorată în browser și trimisă doar pentru generare; nu o salvăm nicăieri.
 - Clientul bifează acordul înainte de generare.
-- Folosește cheia Gemini pe un proiect cu facturare activă: pe nivelul gratuit, Google poate folosi
-  datele pentru îmbunătățirea produselor.
+- Pe API, OpenAI nu folosește implicit datele pentru antrenarea modelelor; le poate păstra temporar
+  pentru prevenirea abuzurilor.
 - În pagina de confidențialitate a salonului trebuie o frază despre proba virtuală
-  (procesare de către Google, fără stocare).
+  (procesare de către OpenAI, fără stocare la noi).
