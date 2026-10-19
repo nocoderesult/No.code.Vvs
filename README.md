@@ -38,6 +38,8 @@ public/                 site-ul (ce se publică)
   assets/seq/           cadrele video-ului de intrare
   assets/img/           pozele
 functions/api/tryon.js  serverul care trimite selfie-ul la OpenAI (cheia stă aici, nu în browser)
+worker/index.js         intrarea pe Cloudflare: fișierele din public/ + /api/tryon
+wrangler.jsonc          setările Cloudflare
 scripts/make-sequence.sh  video → cadre pentru intrare
 CREDITS.md              sursele foto/video și licențele
 ```
@@ -63,19 +65,19 @@ acele cadre se văd prin literele RA.
 
 ## Publicare
 
-### Cloudflare Pages (site-ul principal, cu AI)
+### Cloudflare (site-ul principal, cu AI)
 
-1. Cloudflare → **Workers & Pages** → **Create application** → **Pages** → **Connect to Git**.
-2. **GitHub** → autorizezi accesul → alegi `nocoderesult/No.code.Vvs` → **Begin setup**.
-3. Project name: `ra-barbershop` · Production branch: `barbershop-site` · Framework preset: `None` ·
-   Build command: gol · Build output directory: `public` → **Save and Deploy**.
-4. Proiect → **Settings** → **Variables and Secrets** → **Add** → tip **Secret**, nume `OPENAI_API_KEY`,
-   valoarea = cheia OpenAI. Opțional, ca variabile simple: `OPENAI_IMAGE_MODEL`
+Site-ul rulează ca Worker cu fișiere statice: `wrangler.jsonc` publică folderul `public/`,
+iar `worker/index.js` răspunde la `/api/tryon`. Se publică automat de pe ramura `main`.
+
+1. Cloudflare → **Workers & Pages** → **Create** → importă repository-ul `nocoderesult/No.code.Vvs`.
+2. Project name: `ra-barbershop` (trebuie să fie identic cu `name` din `wrangler.jsonc`) ·
+   Build command: gol · Deploy command: `npx wrangler deploy` · **Enable Preview builds: oprit** → **Deploy**.
+3. Proiect → **Settings** → **Variables and Secrets** → **Add** → tip **Secret**, nume `OPENAI_API_KEY`,
+   valoarea = cheia OpenAI → **Deploy**. Opțional, ca variabile text: `OPENAI_IMAGE_MODEL`
    (implicit `gpt-image-2.5-flare`; mai precis, dar mai lent: `gpt-image-2.5-sunburst`) și
    `OPENAI_IMAGE_QUALITY` (`low`, `medium` implicit, `high`).
-5. Variabilele noi intră în vigoare la următoarea publicare: **Deployments** → ultima → **Retry deployment**
-   (sau orice commit nou pe `barbershop-site`).
-6. Opțional: **Custom domains** → domeniul salonului.
+4. Opțional: **Domains & Routes** → domeniul salonului.
 
 Fără `OPENAI_API_KEY`, site-ul merge normal, iar proba virtuală rulează în mod demo.
 
@@ -85,7 +87,7 @@ GPT Image, poate cere **Organization verification**. Pune și o **limită lunar�
 
 ### GitHub Pages (copie gratuită, fără AI)
 
-https://nocoderesult.github.io/No.code.Vvs/ se actualizează automat la fiecare modificare în `public/`
+https://nocoderesult.github.io/No.code.Vvs/ se actualizează automat la fiecare modificare în `public/` pe `main`
 (workflow-ul `.github/workflows/publica-site.yml`). Aici proba virtuală rulează în mod demo.
 
 ## Proba virtuală și datele personale

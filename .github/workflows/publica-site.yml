@@ -1,10 +1,10 @@
 # Publică folderul public/ pe ramura gh-pages (de unde îl servește GitHub Pages)
-# la fiecare modificare a site-ului pe ramura barbershop-site.
+# la fiecare modificare a site-ului pe ramura main.
 name: Publică site-ul
 
 on:
   push:
-    branches: [barbershop-site]
+    branches: [main]
     paths: ['public/**']
   workflow_dispatch:
 

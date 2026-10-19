@@ -1,8 +1,8 @@
-// Cloudflare Pages Function: POST /api/tryon
+// POST /api/tryon — apelată din worker/index.js (Cloudflare Workers); merge și ca Pages Function.
 // Primește selfie-ul și alegerile clientului și îi cere modelului GPT Image (OpenAI) să schimbe
 // doar tunsoarea și, la cerere, barba. Cheia stă pe server și nu ajunge niciodată în browser.
 //
-// Variabile (Cloudflare Pages → Settings → Variables and Secrets):
+// Variabile (Cloudflare → proiectul → Settings → Variables and Secrets):
 //   OPENAI_API_KEY        cheia OpenAI, ca secret. Fără ea, proba virtuală rulează în mod demo.
 //   OPENAI_IMAGE_MODEL    opțional; implicit gpt-image-2.5-flare (rapid).
 //                         Pentru precizie maximă, dar mai lent: gpt-image-2.5-sunburst

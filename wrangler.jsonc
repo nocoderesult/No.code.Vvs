@@ -1,0 +1,13 @@
+// Cloudflare Workers: site-ul static din public/ + proba virtuală la /api/tryon
+{
+  "name": "ra-barbershop",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS"
+  },
+  // păstrează variabilele puse din panoul Cloudflare la fiecare publicare
+  "keep_vars": true,
+  "observability": { "enabled": true }
+}
