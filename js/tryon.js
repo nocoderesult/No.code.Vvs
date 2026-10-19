@@ -8,6 +8,7 @@ import { STYLES, BEARDS } from './catalog.js';
 const { gsap } = window;
 const SCAN_STEPS = ['Analizăm forma feței…', 'Măsurăm linia părului…', 'Aplicăm tunsoarea…', 'Finisăm detaliile…'];
 const MAX_SIDE = 1024;
+const TIMEOUT_MS = 150000;
 
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -20,7 +21,8 @@ function loadImage(src) {
   });
 }
 
-// Micșorăm poza în browser: e trimisă mai repede și fără date inutile
+// Micșorăm poza în browser: e trimisă mai repede și fără date inutile.
+// Întoarce poza ca imagine de afișat (url) și ca fișier JPEG de trimis (blob).
 async function downscale(file) {
   let src;
   try {
@@ -35,7 +37,9 @@ async function downscale(file) {
   c.width = Math.round(w * k);
   c.height = Math.round(h * k);
   c.getContext('2d').drawImage(src, 0, 0, c.width, c.height);
-  return c.toDataURL('image/jpeg', 0.9);
+  const blob = await new Promise((resolve) => c.toBlob(resolve, 'image/jpeg', 0.9));
+  if (!blob) throw new Error('Poza nu a putut fi pregătită.');
+  return { url: c.toDataURL('image/jpeg', 0.9), blob };
 }
 
 // Rezultat simulat pentru modul demo: doar o corecție de culoare, ca să se vadă fluxul
@@ -75,6 +79,7 @@ export function initTryOn() {
     demo: $('[data-demo-badge]'),
   };
 
+  // photo = { url, blob } după ce clientul alege o poză
   const state = { photo: null, style: STYLES[0].id, custom: '', beard: 'keep', result: null, busy: false };
 
   const styleName = () => (state.style === 'custom' ? 'tunsoarea descrisă' : STYLES.find((s) => s.id === state.style).name);
@@ -184,7 +189,7 @@ export function initTryOn() {
       return;
     }
     state.result = null;
-    el.before.src = state.photo;
+    el.before.src = state.photo.url;
     el.after.removeAttribute('src');
     showPhoto(true);
     gsap.fromTo(el.before, { scale: 1.06, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.9, ease: 'power3.out' });
@@ -237,32 +242,34 @@ export function initTryOn() {
     sync();
     el.frame.classList.add('is-scanning');
     el.demo.hidden = true;
-    setStatus('Pregătim previzualizarea. Durează cam 15 secunde.');
+    setStatus('Pregătim previzualizarea. Durează cam 30 de secunde.');
     const stopScan = cycleScanText();
     let image = null;
     let demo = false;
     let error = null;
+    const form = new FormData();
+    form.append('image', state.photo.blob, 'selfie.jpg');
+    form.append('style', state.style);
+    form.append('custom', state.style === 'custom' ? state.custom : '');
+    form.append('beard', state.beard);
+    const abort = new AbortController();
+    const timer = setTimeout(() => abort.abort(), TIMEOUT_MS);
     try {
-      const res = await fetch(site.tryOnEndpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          image: state.photo,
-          style: state.style,
-          custom: state.style === 'custom' ? state.custom : '',
-          beard: state.beard,
-        }),
-      });
+      const res = await fetch(site.tryOnEndpoint, { method: 'POST', body: form, signal: abort.signal });
       const data = await res.json().catch(() => ({}));
-      if (res.ok && data.image) image = data.image;
+      const b64 = data.data && data.data[0] && data.data[0].b64_json;
+      if (res.ok && b64) image = `data:image/jpeg;base64,${b64}`;
       else if (data.demo || [404, 405, 501].includes(res.status)) demo = true;
       else error = data.error || 'Generarea nu a mers. Mai încearcă o dată.';
-    } catch {
-      demo = true; // fără server (ex. previzualizare locală)
+    } catch (err) {
+      if (err.name === 'AbortError') error = 'A durat prea mult. Mai încearcă o dată.';
+      else demo = true; // fără server (ex. previzualizare locală)
+    } finally {
+      clearTimeout(timer);
     }
     if (demo) {
       await wait(2400);
-      image = await demoResult(state.photo);
+      image = await demoResult(state.photo.url);
     }
     stopScan();
     el.frame.classList.remove('is-scanning');
