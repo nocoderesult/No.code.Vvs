@@ -156,18 +156,8 @@ export const STYLES = [
 
 export const BEARDS = [
   { id: 'keep', name: 'Păstrează' },
-  { id: 'none', name: 'Fără' },
-  { id: 'stubble', name: 'Stubble' },
+  { id: 'none', name: 'Fără barbă' },
+  { id: 'stubble', name: 'De 3 zile' },
   { id: 'short', name: 'Scurtă' },
   { id: 'full', name: 'Completă' },
 ];
-
-export const COLORS = [
-  { id: 'natural', name: 'Naturală', css: 'conic-gradient(from 200deg, #2a1c13, #6b4a32, #b08a5a, #3b2a1d, #2a1c13)' },
-  { id: 'black', name: 'Negru', css: '#16110e' },
-  { id: 'brown', name: 'Șaten', css: '#5b3d28' },
-  { id: 'blonde', name: 'Blond', css: '#c39b5e' },
-  { id: 'platinum', name: 'Platinat', css: '#e4ded1' },
-];
-
-export const FADES = { low: 'low fade', mid: 'mid fade', high: 'high fade' };
