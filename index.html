@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>The Barber Experience — Barbershop</title>
+  <meta name="description" content="Barbershop premium: skin fade, tuns clasic, barbă și bărbierit cu prosop cald. Vezi tunsoarea pe tine cu AI și programează-te online.">
+  <meta name="theme-color" content="#0b0a09">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The Barber Experience — Barbershop">
+  <meta property="og:description" content="Vezi tunsoarea pe tine înainte să te așezi pe scaun.">
+  <meta property="og:locale" content="ro_RO">
+
+  <link rel="preload" href="fonts/eb-garamond-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="vendor/lenis.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HairSalon",
+    "name": "The Barber Experience",
+    "telephone": "+40700000000",
+    "address": { "@type": "PostalAddress", "streetAddress": "Strada Exemplu 10", "addressLocality": "București", "addressCountry": "RO" },
+    "openingHours": ["Mo-Fr 10:00-20:00", "Sa 10:00-16:00"],
+    "priceRange": "$$"
+  }
+  </script>
+</head>
+<body class="is-loading">
+  <a class="skip" href="#studio">Sari la conținut</a>
+
+  <!-- Preloader: numele urcă literă cu literă, contorul urmărește încărcarea video-ului de intrare -->
+  <div class="loader" data-loader aria-hidden="true">
+    <div class="loader__inner">
+      <p class="loader__brand" data-loader-brand>The Barber Experience</p>
+      <div class="loader__bar"><span data-loader-bar></span></div>
+      <div class="loader__meta">
+        <span>Pregătim scaunul</span>
+        <span class="loader__count" data-loader-count>000</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span data-scroll-progress></span></div>
+  <div class="cursor" data-cursor-el aria-hidden="true">
+    <span class="cursor__ring"><span class="cursor__label" data-cursor-label></span></span>
+    <span class="cursor__dot"></span>
+  </div>
+  <div class="hover-preview" data-hover-preview aria-hidden="true"><div class="hover-preview__img" data-hover-preview-img></div></div>
+
+  <header class="header" data-header>
+    <a href="#top" class="logo" data-scroll-to>The Barber Experience</a>
+    <nav class="header__nav" aria-label="Navigație principală">
+      <a href="#servicii" data-scroll-to>Servicii</a>
+      <a href="#vezi-o-pe-tine" data-scroll-to>Vezi-o pe tine</a>
+      <a href="#galerie" data-scroll-to>Galerie</a>
+      <a href="#echipa" data-scroll-to>Echipa</a>
+    </nav>
+    <a href="#programare" class="btn btn--pill header__cta" data-scroll-to data-magnetic>Programează</a>
+    <button class="burger" type="button" aria-label="Deschide meniul" aria-expanded="false" aria-controls="menu" data-menu-toggle>
+      <span></span><span></span>
+    </button>
+  </header>
+
+  <div class="menu" id="menu" data-menu aria-hidden="true">
+    <nav class="menu__nav" aria-label="Meniu mobil">
+      <a href="#servicii" data-scroll-to><span>01</span>Servicii</a>
+      <a href="#vezi-o-pe-tine" data-scroll-to><span>02</span>Vezi-o pe tine</a>
+      <a href="#galerie" data-scroll-to><span>03</span>Galerie</a>
+      <a href="#echipa" data-scroll-to><span>04</span>Echipa</a>
+      <a href="#programare" data-scroll-to><span>05</span>Programare</a>
+    </nav>
+    <p class="menu__foot"><a href="tel:+40700000000" data-phone>+40 700 000 000</a></p>
+  </div>
+
+  <main>
+    <!-- 00 · Intrarea: video-ul salonului rulat de scroll, cu cuvinte care apar pe rând -->
+    <section class="intro" id="top" data-intro>
+      <div class="intro__stage" data-intro-stage>
+        <canvas class="intro__canvas" data-intro-canvas></canvas>
+        <div class="intro__shade"></div>
+        <div class="intro__dim" data-intro-dim></div>
+        <h1 class="sr-only">The Barber Experience — barbershop în București</h1>
+        <div class="intro__words" aria-hidden="true">
+          <p class="intro__word intro__word--brand" data-word>The Barber Experience</p>
+          <p class="intro__word" data-word>La milimetru</p>
+          <p class="intro__word" data-word>Fără grabă</p>
+        </div>
+        <div class="intro__final" data-intro-final>
+          <p class="intro__kicker">Barbershop · București</p>
+          <p class="intro__title"><span>Tunsoarea ta,</span> <em>ritualul</em> <span>nostru.</span></p>
+          <a href="#programare" class="btn btn--light" data-scroll-to data-magnetic>Programează-te</a>
+        </div>
+        <div class="intro__hint" data-intro-hint aria-hidden="true"><span>Scroll</span><i></i></div>
+        <div class="intro__progress" aria-hidden="true"><span data-intro-progress></span></div>
+      </div>
+    </section>
+
+    <!-- 01 · Studioul -->
+    <section class="studio curtain" id="studio">
+      <div class="container">
+        <p class="label" data-reveal="fade"><span>01</span> · Studioul</p>
+        <p class="manifesto" data-manifesto>Nu tundem pe bandă rulantă. Fiecare vizită începe cu o discuție, continuă cu foarfeca și se încheie cu un prosop cald. Ieși de aici arătând ca tine — doar mai bine.</p>
+        <div class="studio__grid">
+          <figure class="media media--tall" data-reveal="clip" data-parallax>
+            <div class="ph" data-ph="Foto · interiorul salonului"></div>
+          </figure>
+          <div class="studio__side">
+            <figure class="media media--wide" data-reveal="clip" data-parallax>
+              <div class="ph ph--warm" data-ph="Foto · unelte și detalii"></div>
+            </figure>
+            <ul class="stats">
+              <li data-reveal="fade"><strong data-count="12">0</strong><span>ani de meserie</span></li>
+              <li data-reveal="fade"><strong data-count="18000" data-suffix="+">0</strong><span>tunsori făcute</span></li>
+              <li data-reveal="fade"><strong data-count="4.9" data-decimals="1">0</strong><span>notă pe Google</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 02 · Servicii -->
+    <section class="services" id="servicii">
+      <div class="container">
+        <div class="section-head">
+          <p class="label" data-reveal="fade"><span>02</span> · Servicii</p>
+          <h2 class="h2" data-reveal="lines">Meniul casei</h2>
+        </div>
+        <ul class="service-list">
+          <li class="service" data-service data-cursor="Programează" data-preview-label="Tuns clasic">
+            <span class="service__num">01</span>
+            <div class="service__body"><h3 class="service__name">Tuns clasic</h3><p class="service__desc">Foarfecă și mașină, spălat, styling</p></div>
+            <span class="service__time">45 min</span>
+            <span class="service__price">— lei</span>
+          </li>
+          <li class="service" data-service data-cursor="Programează" data-preview-label="Skin fade">
+            <span class="service__num">02</span>
+            <div class="service__body"><h3 class="service__name">Skin fade</h3><p class="service__desc">Degradé până la piele, contur cu briciul</p></div>
+            <span class="service__time">50 min</span>
+            <span class="service__price">— lei</span>
+          </li>
+          <li class="service" data-service data-cursor="Programează" data-preview-label="Tuns + barbă">
+            <span class="service__num">03</span>
+            <div class="service__body"><h3 class="service__name">Tuns + barbă</h3><p class="service__desc">Pachetul complet, cu prosop cald</p></div>
+            <span class="service__time">75 min</span>
+            <span class="service__price">— lei</span>
+          </li>
+          <li class="service" data-service data-cursor="Programează" data-preview-label="Contur barbă">
+            <span class="service__num">04</span>
+            <div class="service__body"><h3 class="service__name">Contur barbă</h3><p class="service__desc">Aranjare, contur cu briciul, ulei</p></div>
+            <span class="service__time">30 min</span>
+            <span class="service__price">— lei</span>
+          </li>
+          <li class="service" data-service data-cursor="Programează" data-preview-label="Bărbierit tradițional">
+            <span class="service__num">05</span>
+            <div class="service__body"><h3 class="service__name">Bărbierit tradițional</h3><p class="service__desc">Prosop cald, brici, balsam după ras</p></div>
+            <span class="service__time">40 min</span>
+            <span class="service__price">— lei</span>
+          </li>
+          <li class="service" data-service data-cursor="Programează" data-preview-label="Ritual complet">
+            <span class="service__num">06</span>
+            <div class="service__body"><h3 class="service__name">Ritual complet</h3><p class="service__desc">Tuns, barbă, mască, masaj scalp</p></div>
+            <span class="service__time">100 min</span>
+            <span class="service__price">— lei</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Bandă cu text infinit; viteza crește cu viteza scroll-ului -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__row" data-marquee="1">
+        <div class="marquee__track"><span>Skin fade</span><i>✦</i><span>Hot towel</span><i>✦</i><span>Beard sculpt</span><i>✦</i><span>Buzz cut</span><i>✦</i><span>Taper</span><i>✦</i><span>French crop</span><i>✦</i></div>
+      </div>
+      <div class="marquee__row marquee__row--outline" data-marquee="-1">
+        <div class="marquee__track"><span>La milimetru</span><i>✦</i><span>Fără grabă</span><i>✦</i><span>Cu prosop cald</span><i>✦</i><span>Din 2014</span><i>✦</i></div>
+      </div>
+    </div>
+
+    <!-- 03 · Vezi-o pe tine: proba virtuală de tunsoare cu AI -->
+    <section class="tryon" id="vezi-o-pe-tine" data-tryon>
+      <div class="container">
+        <div class="tryon__head">
+          <p class="label" data-reveal="fade"><span>03</span> · Probă virtuală</p>
+          <h2 class="display" data-reveal="lines">Vezi-o pe tine</h2>
+          <p class="lead" data-reveal="fade">Încarcă un selfie, alege tunsoarea și vezi cum îți stă, înainte să te așezi pe scaun.</p>
+        </div>
+
+        <div class="tryon__ui" data-reveal="fade">
+          <div class="tryon__stage">
+            <div class="tabs" role="tablist" aria-label="Vizualizare">
+              <button type="button" role="tab" aria-selected="true" data-view="before">Înainte</button>
+              <button type="button" role="tab" aria-selected="false" data-view="after" disabled>După</button>
+              <button type="button" role="tab" aria-selected="false" data-view="compare" disabled>Compară</button>
+            </div>
+            <button type="button" class="tryon__reset" data-reset hidden>Altă poză</button>
+
+            <div class="tryon__frame" data-frame>
+              <div class="tryon__empty" data-empty>
+                <svg class="face-guide" viewBox="0 0 200 250" aria-hidden="true">
+                  <ellipse cx="100" cy="115" rx="62" ry="82" />
+                  <path d="M30 250c8-38 34-56 70-56s62 18 70 56" />
+                </svg>
+                <p class="tryon__hintText">Poză din față, lumină bună, fără șapcă.</p>
+                <div class="tryon__upload">
+                  <label class="btn btn--light" data-magnetic>
+                    <input type="file" accept="image/*" data-file class="sr-only">Încarcă o poză
+                  </label>
+                  <label class="btn btn--ghost" data-magnetic>
+                    <input type="file" accept="image/*" capture="user" data-camera class="sr-only">Fă un selfie
+                  </label>
+                </div>
+              </div>
+
+              <div class="compare" data-compare hidden>
+                <img class="compare__img" data-before alt="Poza ta, înainte">
+                <div class="compare__after" data-after-wrap>
+                  <img class="compare__img" data-after alt="Previzualizare AI cu tunsoarea aleasă">
+                </div>
+                <span class="compare__handle" data-compare-handle aria-hidden="true"></span>
+                <input type="range" class="compare__range" min="0" max="100" value="50" step="0.1" aria-label="Compară înainte și după" data-compare-range>
+              </div>
+
+              <div class="scan" data-scan aria-hidden="true">
+                <span class="scan__grid"></span>
+                <span class="scan__line"></span>
+                <span class="scan__corner scan__corner--tl"></span><span class="scan__corner scan__corner--tr"></span>
+                <span class="scan__corner scan__corner--bl"></span><span class="scan__corner scan__corner--br"></span>
+                <span class="scan__text" data-scan-text>Analizăm forma feței…</span>
+              </div>
+
+              <span class="tag tryon__badge" data-demo-badge hidden>Demo</span>
+            </div>
+            <p class="tryon__placed" data-placed>Alege o tunsoare</p>
+          </div>
+
+          <div class="tryon__panel">
+            <div class="field">
+              <p class="field__label">01 · Tunsoare</p>
+              <div class="styles" data-styles role="radiogroup" aria-label="Alege tunsoarea"></div>
+              <p class="styles__name" data-style-name>Skin fade</p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="tryon-custom">Sau descrie-o</label>
+              <input id="tryon-custom" class="input" type="text" maxlength="140" autocomplete="off" placeholder="Ex: french crop texturat, fade mediu, breton scurt…" data-custom>
+            </div>
+
+            <div class="field field--split">
+              <div>
+                <label class="field__label" for="tryon-length">02 · Lungime sus</label>
+                <input id="tryon-length" class="slider" type="range" min="0" max="100" value="40" data-length>
+              </div>
+              <div>
+                <p class="field__label">03 · Fade</p>
+                <div class="seg" data-fade role="radiogroup" aria-label="Înălțimea fade-ului">
+                  <button type="button" role="radio" aria-checked="false" data-value="low">Low</button>
+                  <button type="button" role="radio" aria-checked="true" data-value="mid">Mid</button>
+                  <button type="button" role="radio" aria-checked="false" data-value="high">High</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <p class="field__label">04 · Barbă</p>
+              <div class="chips" data-beard role="radiogroup" aria-label="Barbă"></div>
+            </div>
+
+            <div class="field">
+              <p class="field__label">05 · Culoare</p>
+              <div class="swatches" data-color role="radiogroup" aria-label="Culoarea părului"></div>
+            </div>
+
+            <label class="consent">
+              <input type="checkbox" data-consent>
+              <span>Sunt de acord ca poza să fie procesată de AI doar pentru această previzualizare. Nu o păstrăm.</span>
+            </label>
+
+            <button type="button" class="btn btn--light btn--block" data-generate disabled>Generează look-ul</button>
+            <p class="tryon__status" data-status aria-live="polite"></p>
+            <a class="btn btn--cta btn--block" href="#programare" data-book>Programează tunsoarea asta · <span data-book-style>Skin fade</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 · Galerie orizontală (fixată pe desktop, glisare pe telefon) -->
+    <section class="gallery" id="galerie" data-gallery>
+      <div class="gallery__pin" data-gallery-pin>
+        <div class="container gallery__head">
+          <p class="label" data-reveal="fade"><span>04</span> · Galerie</p>
+          <h2 class="h2" data-reveal="lines">Lucrări recente</h2>
+        </div>
+        <div class="gallery__track" data-gallery-track>
+          <figure class="shot"><div class="shot__img"><div class="ph" data-ph="Mid fade texturizat"></div></div><figcaption><span>01</span>Mid fade texturizat</figcaption></figure>
+          <figure class="shot shot--tall"><div class="shot__img"><div class="ph ph--warm" data-ph="Barbă sculptată"></div></div><figcaption><span>02</span>Barbă sculptată</figcaption></figure>
+          <figure class="shot"><div class="shot__img"><div class="ph" data-ph="French crop"></div></div><figcaption><span>03</span>French crop</figcaption></figure>
+          <figure class="shot shot--wide"><div class="shot__img"><div class="ph ph--warm" data-ph="Interior · scaunul"></div></div><figcaption><span>04</span>Scaunul</figcaption></figure>
+          <figure class="shot shot--tall"><div class="shot__img"><div class="ph" data-ph="Skin fade"></div></div><figcaption><span>05</span>Skin fade</figcaption></figure>
+          <figure class="shot"><div class="shot__img"><div class="ph ph--warm" data-ph="Prosop cald"></div></div><figcaption><span>06</span>Bărbierit cu prosop cald</figcaption></figure>
+          <figure class="shot"><div class="shot__img"><div class="ph" data-ph="Pompadour"></div></div><figcaption><span>07</span>Pompadour</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 05 · Echipa -->
+    <section class="team" id="echipa">
+      <div class="container">
+        <div class="section-head">
+          <p class="label" data-reveal="fade"><span>05</span> · Echipa</p>
+          <h2 class="h2" data-reveal="lines">Mâinile din spatele scaunului</h2>
+        </div>
+        <div class="team__grid">
+          <article class="barber" data-tilt data-reveal="fade">
+            <div class="barber__img"><div class="ph" data-ph="Foto frizer"></div></div>
+            <h3 class="barber__name">Andrei</h3>
+            <p class="barber__role">Fondator · Fade-uri și bărbi</p>
+            <a class="link" href="#programare" data-scroll-to>Programează cu Andrei <span aria-hidden="true">→</span></a>
+          </article>
+          <article class="barber" data-tilt data-reveal="fade">
+            <div class="barber__img"><div class="ph ph--warm" data-ph="Foto frizer"></div></div>
+            <h3 class="barber__name">Vlad</h3>
+            <p class="barber__role">Senior barber · Tunsori clasice</p>
+            <a class="link" href="#programare" data-scroll-to>Programează cu Vlad <span aria-hidden="true">→</span></a>
+          </article>
+          <article class="barber" data-tilt data-reveal="fade">
+            <div class="barber__img"><div class="ph" data-ph="Foto frizer"></div></div>
+            <h3 class="barber__name">Radu</h3>
+            <p class="barber__role">Barber · Bărbierit tradițional</p>
+            <a class="link" href="#programare" data-scroll-to>Programează cu Radu <span aria-hidden="true">→</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 · Recenzii -->
+    <section class="reviews">
+      <div class="container">
+        <p class="label" data-reveal="fade"><span>06</span> · Recenzii</p>
+        <div class="reviews__stage" data-reviews>
+          <blockquote class="review">
+            <p>„Cel mai curat fade pe care l-am avut. Am venit pentru tunsoare și am rămas pentru atmosferă.”</p>
+            <cite>Mihai · Google</cite>
+          </blockquote>
+          <blockquote class="review">
+            <p>„Bărbieritul cu prosop cald e un ritual. Nu mai merg nicăieri altundeva.”</p>
+            <cite>Alex · Google</cite>
+          </blockquote>
+          <blockquote class="review">
+            <p>„Am încercat tunsoarea pe site înainte. A ieșit exact ca în poză.”</p>
+            <cite>Cristian · Google</cite>
+          </blockquote>
+        </div>
+        <div class="reviews__foot">
+          <p class="reviews__score"><span class="stars" aria-hidden="true">★★★★★</span> 4,9 din 200+ recenzii pe Google</p>
+          <div class="reviews__dots" data-review-dots></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 07 · Programare și contact -->
+    <section class="booking" id="programare">
+      <div class="container">
+        <p class="label" data-reveal="fade"><span>07</span> · Programare</p>
+        <h2 class="display" data-reveal="lines">Ocupă scaunul.</h2>
+        <div class="booking__grid">
+          <div class="booking__actions" data-reveal="fade">
+            <a class="btn btn--light btn--xl" href="#" data-book-online data-magnetic>Programează online</a>
+            <a class="btn btn--ghost btn--xl" href="#" data-whatsapp data-magnetic>Scrie-ne pe WhatsApp</a>
+            <a class="link link--big" href="tel:+40700000000" data-phone>+40 700 000 000</a>
+          </div>
+          <div class="booking__info" data-reveal="fade">
+            <div>
+              <p class="field__label">Adresă</p>
+              <address>Strada Exemplu 10<br>București</address>
+            </div>
+            <div>
+              <p class="field__label">Program</p>
+              <dl class="hours">
+                <div><dt>Luni – Vineri</dt><dd>10:00 – 20:00</dd></div>
+                <div><dt>Sâmbătă</dt><dd>10:00 – 16:00</dd></div>
+                <div><dt>Duminică</dt><dd>Închis</dd></div>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__big" data-footer-big aria-hidden="true">Barber</div>
+    <div class="container footer__row">
+      <span>© <span data-year>2026</span> The Barber Experience</span>
+      <a href="https://instagram.com/" data-instagram target="_blank" rel="noopener">Instagram</a>
+      <a href="#top" data-scroll-to>Înapoi sus ↑</a>
+    </div>
+  </footer>
+
+  <script src="vendor/gsap.min.js" defer></script>
+  <script src="vendor/ScrollTrigger.min.js" defer></script>
+  <script src="vendor/SplitText.min.js" defer></script>
+  <script src="vendor/lenis.min.js" defer></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
