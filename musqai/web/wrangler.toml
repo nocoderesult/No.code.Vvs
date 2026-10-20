@@ -1,9 +1,17 @@
-# Configurația proiectului Cloudflare Pages „musqai”.
-# Root directory în Cloudflare: musqai/web · Build output directory: public · Build command: gol
+# MUSQAI pe Cloudflare Workers, când „Root directory” e musqai/web.
+# (Există și un wrangler.toml în rădăcina repo-ului, pentru când Root directory rămâne gol.)
 name = "musqai"
-pages_build_output_dir = "./public"
+main = "worker.js"
 compatibility_date = "2026-10-01"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+not_found_handling = "404-page"
 
 # Zonele de generare folosesc Workers AI prin legătura „AI”.
 [ai]
 binding = "AI"
+
+[observability]
+enabled = true

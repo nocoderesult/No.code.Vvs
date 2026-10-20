@@ -71,7 +71,7 @@
     return data;
   }
 
-  /* Imaginea pentru Image → Prompt: o micșorăm la maximum 1024 px, JPEG */
+  /* Imaginea pentru Image → Prompt: o micșorăm la maximum 672 px, JPEG (modelul citește oricum la rezoluție mică) */
   let imageB64 = "";
   const drop = document.getElementById("drop");
   const fileInput = form.elements.file;
@@ -94,7 +94,7 @@
     try {
       const bmp = await loadBitmap(file);
       const w0 = bmp.width || bmp.naturalWidth, h0 = bmp.height || bmp.naturalHeight;
-      const k = Math.min(1, 1024 / Math.max(w0, h0));
+      const k = Math.min(1, 672 / Math.max(w0, h0));
       const cv = document.createElement("canvas");
       cv.width = Math.round(w0 * k);
       cv.height = Math.round(h0 * k);

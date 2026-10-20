@@ -4,7 +4,7 @@
 
 | Ce | Unde |
 |---|---|
-| Site-ul public, cu zonele de generare | `musqai/web/` (se publică pe Cloudflare Pages) |
+| Site-ul public, cu zonele de generare | `musqai/web/` (se publică pe Cloudflare Workers) |
 | Planul interactiv pe 12 săptămâni | `musqai/plan/` · https://claude.ai/artifact/PxsV2fLh32QkoKwrvYGqW2 |
 | Prototipul vechi al site-ului (înlocuit de `musqai/web/`) | `musqai/site/` |
 
@@ -12,21 +12,21 @@
 - `content.mjs`: tot textul site-ului (caractere, nișe, prețuri, procese, zone).
 - `build.mjs`: face câte o pagină HTML pentru fiecare adresă, în `public/`. Rulare: `node musqai/web/build.mjs`.
 - `static/`: stilul, scripturile, fonturile găzduite local, pozele lui Iness, favicon-ul.
-- `functions/api/`: cele 5 zone de generare (idei, imagine, prompt, text, caracter), care rulează pe Cloudflare cu Workers AI.
+- `worker.js` și `functions/api/`: cele 5 zone de generare (idei, imagine, prompt, text, caracter), care rulează pe Cloudflare cu Workers AI.
 - `lib/ai.js`: verificările de siguranță, modelele folosite și marcajul AI din imagini.
 - `tools/assets.py` și `tools/og.py`: refac fonturile, pozele și imaginea de distribuire.
 
 După orice schimbare în `content.mjs` sau `static/`, rulezi `node musqai/web/build.mjs` și faci commit și la `public/`.
 
-## Publicarea pe Cloudflare Pages (o singură dată)
-1. Cloudflare → Workers & Pages → Create application → Pages → Connect to Git / Import an existing Git repository.
-2. Repo: `nocoderesult/No.code.Vvs`. Numele proiectului: `musqai`. Production branch: `comfy-ui-rr`.
-3. Framework preset: None. Build command: gol. Build output directory: `public`. Root directory (Advanced): `musqai/web`.
-4. Save and Deploy.
+## Publicarea pe Cloudflare Workers (o singură dată)
+1. Cloudflare → Workers & Pages → Create application → importă repo-ul `nocoderesult/No.code.Vvs`.
+2. Project name: `musqai` (trebuie să fie exact numele din `wrangler.toml`). Build command: gol. Deploy command: `npx wrangler deploy`.
+3. Deploy. Primul build pică, pentru că Cloudflare ia branch-ul `main`, unde e alt proiect, cu alt nume.
+4. În Worker-ul `musqai`: Settings → Build → Branch control → Production branch: `comfy-ui-rr` → Save. Următorul push pe `comfy-ui-rr` publică site-ul.
 
-Legătura cu Workers AI (`AI`) e declarată în `musqai/web/wrangler.toml`. Dacă Cloudflare nu o preia, o adaugi manual: proiectul → Settings → Bindings → Add → Workers AI, cu numele `AI`, apoi faci din nou Deploy.
+Root directory poate rămâne gol: în rădăcina repo-ului e un `wrangler.toml` care trimite la `musqai/web`. Merge și cu Root directory `musqai/web`, unde e un `wrangler.toml` echivalent.
 
-Zonele de generare nu merg dacă proiectul e făcut prin încărcarea directă a unei arhive: Cloudflare nu acceptă funcții în acest mod. Ai nevoie de varianta din GitHub.
+Configurația declară tot ce trebuie: paginile din `musqai/web/public`, intrarea `musqai/web/worker.js` pentru `/api/*` și legătura Workers AI cu numele `AI`. Verificată cu `wrangler deploy --dry-run` (wrangler 4.151.3).
 
 ## Modelele din zonele de generare
 - Texte: `@cf/meta/llama-3.3-70b-instruct-fp8-fast` (Built with Llama).

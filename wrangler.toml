@@ -1,0 +1,16 @@
+# MUSQAI pe Cloudflare Workers (proiectul „musqai”, branch-ul comfy-ui-rr).
+# Site-ul și zonele de generare sunt în musqai/web/. Detalii: musqai/README.md
+name = "musqai"
+main = "musqai/web/worker.js"
+compatibility_date = "2026-10-01"
+
+[assets]
+directory = "./musqai/web/public"
+binding = "ASSETS"
+not_found_handling = "404-page"
+
+[ai]
+binding = "AI"
+
+[observability]
+enabled = true
