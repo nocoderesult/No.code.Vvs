@@ -114,7 +114,7 @@ export const list = (v, n, max = 300) => (Array.isArray(v) ? v : []).map((x) => 
 /* Imaginea: FLUX.1 [schnell], apoi marcajul AI în fișier. */
 export async function makeImage(env, prompt) {
   const seed = 1 + Math.floor(Math.random() * 2147483646);
-  const out = await env.AI.run(IMAGE_MODEL, { prompt: prompt.slice(0, 2000), steps: 6, seed });
+  const out = await env.AI.run(IMAGE_MODEL, { prompt: prompt.slice(0, 2000), steps: 6 });
   let bytes;
   if (out && typeof out.image === "string") bytes = b64ToBytes(out.image);
   else if (out instanceof ReadableStream) bytes = new Uint8Array(await new Response(out).arrayBuffer());
