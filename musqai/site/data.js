@@ -416,7 +416,7 @@ window.MQ = {
   ],
 
   faq: [
-    ["E legal să folosesc un ambasador AI?", "Da, dacă e etichetat corect. Din 2 august 2026, în UE, conținutul generat cu AI care pare real trebuie marcat (AI Act, articolul 50). Noi etichetăm fiecare postare și punem marcajul și în fișier."],
+    ["E legal să folosesc un ambasador AI?", "Da, dacă e etichetat corect. Din 2 august 2026, în UE, conținutul generat cu AI care pare real trebuie marcat (AI Act, articolul 50). Noi etichetăm fiecare postare. În platformă adăugăm și marcajul în fișier."],
     ["Oamenii vor ști că e AI?", "Da. Ambasadorul are „AI creator” în bio, iar fiecare postare are eticheta AI. Produsul e real și arată exact ca în magazin."],
     ["Produsul meu va arăta exact ca în realitate?", "Lucrăm după pozele voastre. Nu schimbăm culoarea, forma, logo-ul sau textul de pe produs, iar fiecare livrabil trece printr-o verificare înainte să-l primiți."],
     ["Pot avea un caracter doar al meu?", "Da. În pachetul Pro creăm un caracter exclusiv pentru nișa ta, cu voce proprie. Caracterele casei (Daria și ceilalți) rămân ale MUSQAI."],
@@ -491,7 +491,7 @@ window.MQ = {
     {
       id: "caracter", name: "Caracter nou: de la fișă la lansare", area: "Caractere", time: "2–3 săptămâni",
       steps: [
-        ["Fișa: aspect, stil, voce, reguli", "Claude", "personaj/CARACTER.md ca model", "1 h"],
+        ["Fișa: aspect, stil, voce, reguli", "Claude", "fișa standard", "1 h"],
         ["40 de fețe, alegi una", "Tu", "Krea 2 / Nano Banana", "2 h"],
         ["Corpul de referință", "Tu", "4 imagini, corp întreg", "1 h"],
         ["Setul de antrenare: 34 de poze", "Tu", "12 față + 10 studio + 12 insta", "6–8 h"],
@@ -609,7 +609,7 @@ window.MQ = {
     ],
     alerts: [
       ["LoRA v2 Daria: antrenare la pasul 1.900 din 3.000", "ok"],
-      ["Volumul de pe pod: 239 din 250 GB", "warn"],
+      ["2 imagini trebuie refăcute: mâinile", "warn"],
       ["2 livrabile așteaptă verificarea", "warn"]
     ],
     calendar: [

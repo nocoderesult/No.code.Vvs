@@ -13,6 +13,8 @@
   const byId = (id) => D.characters.find((c) => c.id === id);
   const STATUS = { live: "acc", casting: "gold", planned: "" };
   const DAYS = ["Luni", "Marți", "Miercuri", "Joi", "Vineri", "Sâmbătă", "Duminică"];
+  /* Versiunea publică (Cloudflare) ascunde prompturile, declanșatorii LoRA și rutina internă de pe pod. */
+  const PUBLIC = !!window.MQ_PUBLIC;
 
   const chip = (text, kind = "") => `<span class="chip ${kind}">${esc(text)}</span>`;
   const stateChip = (state, text) => {
@@ -337,6 +339,11 @@
     const prev = D.characters[(i + D.characters.length - 1) % D.characters.length];
     const next = D.characters[(i + 1) % D.characters.length];
     const done = c.pipeline.filter((p) => p[1] === "done").length;
+    const gen = PUBLIC
+      ? ""
+      : `<div class="sec-head" style="margin-bottom:0"><p class="eyebrow">Pentru generare</p><h2 class="h2">Descrierea fixă <em>din fiecare prompt</em>.</h2><p class="lead">Declanșatorul LoRA e <b class="mono" style="font-size:15px">${esc(c.prompt.split(",")[0])}</b>. Textul de mai jos se copiază identic la fiecare imagine.</p></div>
+      ${copyBlock(c.prompt, "Copiază promptul")}
+      <div class="stack" style="gap:6px"><p class="eyebrow">Negative prompt</p>${copyBlock(c.negative, "Copiază")}</div>`;
     return `
     <section class="band" style="padding-top:36px"><div class="wrap">
       <p class="eyebrow" style="margin-bottom:22px"><a href="#caractere">Caractere</a> / ${esc(c.name)}</p>
@@ -352,7 +359,7 @@
           <h1 class="display" style="font-size:clamp(60px,9vw,120px)">${esc(c.name)}</h1>
           <p class="h3" style="font-weight:600">${esc(c.role)} · <span class="muted">${esc(c.archetype)}</span></p>
           <p class="lead">${esc(c.summary)}</p>
-          ${specs(c.comp)}
+          ${specs(PUBLIC ? c.comp.filter(([k]) => k !== "Declanșator") : c.comp)}
         </div>
       </div>
     </div></section>
@@ -368,8 +375,7 @@
       <div class="panel stack">
         <h3 class="h3">Vocea</h3>
         <p>${esc(c.voice.desc)}</p>
-        <p class="eyebrow">Descrierea pentru ElevenLabs Voice Design</p>
-        ${copyBlock(c.voice.design)}
+        ${PUBLIC ? "" : `<p class="eyebrow">Descrierea pentru ElevenLabs Voice Design</p>${copyBlock(c.voice.design)}`}
       </div>
     </div></section>
 
@@ -399,9 +405,7 @@
     </div></section>
 
     <section class="band"><div class="wrap stack" style="gap:22px">
-      <div class="sec-head" style="margin-bottom:0"><p class="eyebrow">Pentru generare</p><h2 class="h2">Descrierea fixă <em>din fiecare prompt</em>.</h2><p class="lead">Declanșatorul LoRA e <b class="mono" style="font-size:15px">${esc(c.prompt.split(",")[0])}</b>. Textul de mai jos se copiază identic la fiecare imagine.</p></div>
-      ${copyBlock(c.prompt, "Copiază promptul")}
-      <div class="stack" style="gap:6px"><p class="eyebrow">Negative prompt</p>${copyBlock(c.negative, "Copiază")}</div>
+      ${gen}
       <div class="char-nav"><a class="btn btn-ghost" href="#${prev.id}">← ${esc(prev.name)}</a><a class="btn btn-ghost" href="#${next.id}">${esc(next.name)} →</a></div>
     </div></section>`;
   }
@@ -535,7 +539,7 @@
         <div class="panel"><h3 class="h3">AI Act, articolul 50</h3><p class="muted">Din 2 august 2026, în UE, imaginile, clipurile și sunetele generate cu AI care par reale trebuie marcate ca atare. Cine oferă un generator trebuie să pună un marcaj citibil de mașină.</p></div>
         <div class="panel"><h3 class="h3">Fețe reale, doar cu acord</h3><p class="muted">Folosim fața sau vocea unei persoane reale doar cu acordul ei scris și după verificare. Acordul poate fi retras oricând.</p></div>
         <div class="panel"><h3 class="h3">Fără recenzii false</h3><p class="muted">Ambasadorul prezintă produsul. Nu spune că l-a cumpărat, nu dă note și nu se prezintă drept client mulțumit.</p></div>
-        <div class="panel"><h3 class="h3">Date personale</h3><p class="muted">Cerem doar datele de care avem nevoie, cu acord explicit. Pentru învățare folosim doar date anonimizate. Avem contracte de prelucrare cu furnizorii.</p></div>
+        <div class="panel"><h3 class="h3">Date personale</h3><p class="muted">Cerem doar datele de care avem nevoie, cu acord explicit. Pentru învățare folosim doar date anonimizate. Semnăm contracte de prelucrare a datelor cu furnizorii care lucrează cu datele clienților.</p></div>
         <div class="panel"><h3 class="h3">Modele cu licență</h3><p class="muted">Folosim modele care permit utilizarea comercială și verificăm licența fiecăruia înainte să-l folosim pentru clienți.</p></div>
       </div>
     </div></section>
@@ -547,6 +551,7 @@
 
   /* ---------- Contact ---------- */
   function viewContact() {
+    const v = (val, ph) => (PUBLIC ? `placeholder="${esc(ph)}"` : `value="${esc(val)}"`);
     return `
     <section class="band" style="padding-top:48px"><div class="wrap split" style="align-items:start">
       <div class="stack" style="gap:20px">
@@ -561,17 +566,17 @@
       <div class="panel" id="contact-box">
         <form class="form" id="contact-form" novalidate>
           <div class="grid-2" style="gap:12px">
-            <div class="field"><label for="cf-name">Numele tău</label><input id="cf-name" name="name" autocomplete="name" value="Ana Popescu" required></div>
-            <div class="field"><label for="cf-company">Firma</label><input id="cf-company" name="company" autocomplete="organization" value="Atelier Satin"></div>
+            <div class="field"><label for="cf-name">Numele tău</label><input id="cf-name" name="name" autocomplete="name" ${v("Ana Popescu", "Numele și prenumele")} required></div>
+            <div class="field"><label for="cf-company">Firma</label><input id="cf-company" name="company" autocomplete="organization" ${v("Atelier Satin", "Numele firmei")}></div>
           </div>
-          <div class="field"><label for="cf-link">Site sau Instagram</label><input id="cf-link" name="link" value="instagram.com/ateliersatin"></div>
+          <div class="field"><label for="cf-link">Site sau Instagram</label><input id="cf-link" name="link" ${v("instagram.com/ateliersatin", "site.ro sau instagram.com/brand")}></div>
           <div class="grid-2" style="gap:12px">
             <div class="field"><label for="cf-niche">Nișa</label><select id="cf-niche" name="niche">${D.niches.map((n) => `<option>${esc(n.name)}</option>`).join("")}</select></div>
             <div class="field"><label for="cf-want">Ce te interesează</label><select id="cf-want" name="want"><option>5 creative AI (99 €)</option><option>Lansarea completă (490 €)</option><option>Abonament lunar</option><option>Caracter exclusiv</option></select></div>
           </div>
-          <div class="field"><label for="cf-msg">Ce vrei să vinzi?</label><textarea id="cf-msg" name="msg">Rochia de satin champagne, colecția de toamnă. Reclamele noastre sunt doar poze pe fundal alb.</textarea></div>
+          <div class="field"><label for="cf-msg">Ce vrei să vinzi?</label><textarea id="cf-msg" name="msg"${PUBLIC ? ' placeholder="Produsul, linkul către el și ce vrei să obții."' : ""}>${PUBLIC ? "" : "Rochia de satin champagne, colecția de toamnă. Reclamele noastre sunt doar poze pe fundal alb."}</textarea></div>
           <div><button class="btn" type="submit">Trimite cererea</button></div>
-          <p class="muted small">Formular demo: în varianta live, cererea ajunge direct în tabelul de vânzări.</p>
+          <p class="muted small">${PUBLIC ? "Butonul deschide aplicația ta de email, cu cererea completată." : "Formular demo: în varianta live, cererea ajunge direct în tabelul de vânzări."}</p>
         </form>
       </div>
     </div></section>`;
@@ -619,9 +624,9 @@
 
   function viewStudioChars() {
     return studio("studio-caractere", "Caractere", "Starea reală a producției", `
-      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Caracter</th><th>Rol</th><th>Declanșator</th><th>Producție</th><th>Stare</th></tr></thead><tbody>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>Caracter</th><th>Rol</th>${PUBLIC ? "" : "<th>Declanșator</th>"}<th>Producție</th><th>Stare</th></tr></thead><tbody>
       ${D.characters.map((c) => { const d = c.pipeline.filter((p) => p[1] === "done").length; const pct = Math.round((d / c.pipeline.length) * 100);
-        return `<tr><td><a href="#${c.id}"><b>${esc(c.name)}</b></a>, ${c.age}</td><td>${esc(c.role)}</td><td class="mono">${esc(c.prompt.split(",")[0])}</td>
+        return `<tr><td><a href="#${c.id}"><b>${esc(c.name)}</b></a>, ${c.age}</td><td>${esc(c.role)}</td>${PUBLIC ? "" : `<td class="mono">${esc(c.prompt.split(",")[0])}</td>`}
         <td style="min-width:150px"><div class="pillar" style="border:0;padding:0"><span class="small">${d} din ${c.pipeline.length} pași</span><span class="mono tnum" style="text-align:right">${pct}%</span><span class="bar"><i style="width:${pct}%"></i></span></div></td>
         <td>${chip(c.statusLabel, STATUS[c.status])}</td></tr>`; }).join("")}
       </tbody></table></div>
@@ -679,7 +684,7 @@
           <input id="i2p-file" type="file" accept="image/jpeg,image/png,image/webp,image/gif" hidden>
           <div class="panel form">
             <div class="field"><label for="i2p-target">Pentru ce generator</label><select id="i2p-target"><option>Krea 2 + LoRA (ComfyUI)</option><option>Nano Banana</option><option>Seedance / Kling (video)</option><option>Midjourney</option></select></div>
-            <div class="field"><label for="i2p-char">Pune caracterul în locul persoanei</label><select id="i2p-char"><option value="">Nu, descrie imaginea așa cum e</option>${D.characters.map((c) => `<option value="${c.id}">${esc(c.name)} (${esc(c.prompt.split(",")[0])})</option>`).join("")}</select></div>
+            <div class="field"><label for="i2p-char">Pune caracterul în locul persoanei</label><select id="i2p-char"><option value="">Nu, descrie imaginea așa cum e</option>${D.characters.map((c) => `<option value="${c.id}">${esc(c.name)}${PUBLIC ? "" : ` (${esc(c.prompt.split(",")[0])})`}</option>`).join("")}</select></div>
             <div class="row"><button class="btn" id="i2p-go" type="button">Scrie promptul</button><button class="btn btn-ghost" id="i2p-stop" type="button" hidden>Oprește</button></div>
             <p class="status-line" id="i2p-status" role="status" aria-live="polite"></p>
           </div>
@@ -726,7 +731,7 @@
 
   function viewStudioProcesses() {
     return studio("studio-procese", "Procese", "Cele 10 procese ale studioului", `
-      <div class="proc-list">${D.processes.map((p, i) => `<details class="panel proc"${i === 0 ? " open" : ""}>
+      <div class="proc-list">${D.processes.filter((p) => !(PUBLIC && p.id === "pod")).map((p, i) => `<details class="panel proc"${i === 0 ? " open" : ""}>
         <summary><span class="stack" style="gap:2px"><span class="h3">${esc(p.name)}</span><span class="muted small">${p.steps.length} pași</span></span><span class="meta">${chip(p.area, "acc")}${chip(p.time)}</span></summary>
         <ol>${p.steps.map(([s, who, tool, dur]) => `<li><span>${esc(s)}</span><span class="who">${chip(who, who === "Client" ? "gold" : who.includes("Claude") || who.includes("Agent") ? "acc" : "")}</span><span class="tool">${esc(tool)}</span><span class="dur">${esc(dur)}</span></li>`).join("")}</ol>
       </details>`).join("")}</div>`);
@@ -852,7 +857,8 @@
     if (!document.body.contains(form)) return;
     if (!sample) {
       go.disabled = true;
-      status.textContent = "Generarea live merge când deschizi pagina în Claude. Mai jos vezi trei idei de exemplu.";
+      if (PUBLIC) status.innerHTML = 'Generarea live e disponibilă clienților MUSQAI. <a href="#contact">Cere acces</a>. Mai jos vezi trei idei de exemplu.';
+      else status.textContent = "Generarea live merge când deschizi pagina în Claude. Mai jos vezi trei idei de exemplu.";
     }
     startBank();
     let ctl = null;
@@ -1004,7 +1010,8 @@
     if (!document.body.contains(go)) return;
     if (!sample || !limits || !limits.images) {
       go.disabled = true;
-      status.textContent = "Generarea live merge când deschizi pagina în Claude. În dreapta vezi un exemplu.";
+      if (PUBLIC) status.innerHTML = 'Image → Prompt e disponibil clienților MUSQAI. <a href="#contact">Cere acces</a>. În dreapta vezi un exemplu.';
+      else status.textContent = "Generarea live merge când deschizi pagina în Claude. În dreapta vezi un exemplu.";
       return;
     }
     input.accept = limits.images.mediaTypes.join(",");
@@ -1055,8 +1062,16 @@
     const form = $("#contact-form");
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      const name = form.elements.name.value.trim();
-      if (!name) { form.elements.name.focus(); toast("Scrie-ți numele, ca să știm cui răspundem."); return; }
+      const f = form.elements;
+      const name = f.name.value.trim();
+      if (!name) { f.name.focus(); toast("Scrie-ți numele, ca să știm cui răspundem."); return; }
+      if (PUBLIC) {
+        const company = f.company.value.trim();
+        const body = [`Nume: ${name}`, `Firma: ${company}`, `Site sau Instagram: ${f.link.value.trim()}`, `Nișa: ${f.niche.value}`, `Mă interesează: ${f.want.value}`, "", f.msg.value.trim()].join("\n");
+        window.location.href = `mailto:${D.brand.email}?subject=${encodeURIComponent("Cerere mostră" + (company ? ": " + company : ""))}&body=${encodeURIComponent(body)}`;
+        $("#contact-box").innerHTML = `<div class="stack"><span class="chip ok">● Emailul e pregătit</span><h2 class="h2" style="font-size:34px">Mulțumim, ${esc(name.split(" ")[0])}.</h2><p class="lead">Ți-am deschis aplicația de email cu cererea completată. Apasă „Trimite” acolo. Dacă nu s-a deschis, scrie-ne direct la <b>${esc(D.brand.email)}</b>.</p><p><a class="btn btn-ghost" href="#acasa">Înapoi acasă</a></p></div>`;
+        return;
+      }
       $("#contact-box").innerHTML = `<div class="stack"><span class="chip ok">● Cerere primită</span><h2 class="h2" style="font-size:34px">Mulțumim, ${esc(name.split(" ")[0])}.</h2><p class="lead">În varianta live, cererea ta ajunge în tabelul de vânzări și primești un răspuns în 24 de ore. Acum e un formular demo, deci nu s-a trimis nimic.</p><p><a class="btn btn-ghost" href="#acasa">Înapoi acasă</a></p></div>`;
     });
   }
