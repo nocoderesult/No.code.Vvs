@@ -34,7 +34,7 @@ export function handler(fn) {
         return json({ eroare: "Limita zilnică de generare a fost atinsă. Revino mâine sau scrie-ne pentru acces." }, 429);
       }
       console.error("musqai-api", msg);
-      return json({ eroare: "Generarea n-a mers de data asta. Încearcă din nou peste câteva secunde." }, 502);
+      return json({ eroare: "Generarea n-a mers de data asta. Încearcă din nou peste câteva secunde.", detaliu: msg.slice(0, 300) }, 502);
     }
   };
 }
