@@ -4,6 +4,17 @@
 
 ---
 
+## 2026-10-20 (noaptea)
+
+**Decizii:**
+- **Daria se numește acum Iness.** Numele tehnice rămân la fel: cuvântul LoRA `d4ria`, fișierele `daria_v2_*.png`, `DARIA_CONTEXT.md` de pe pod.
+- Poza oficială a lui Iness e cea trimisă azi: bob negru drept cu **cărare pe mijloc**, ochi verde-alune, pistrui fini, **cercei rotunzi argintii**.
+- Site-ul public e construit din nou, în `musqai/web/`: pagini separate, design nou, Iness cu poza ei și 5 zone de generare care funcționează pe Cloudflare (Workers AI).
+
+**De decis:** fișa (`personaj/CARACTER.md`) și setul v2 spun încă „cărare laterală” și „cercei mici cu diamant”. Le aliniem după poză înainte de luni?
+
+---
+
 ## 2026-10-20 (seara)
 
 **Decizii:**

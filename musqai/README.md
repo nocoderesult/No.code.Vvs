@@ -1,25 +1,36 @@
 # MUSQAI
 
-**MUSQAI: Marketing Universe Studio · Quantum AI.** Studioul și platforma de ambasadori AI.
+**MUSQAI: Marketing Universe Studio · Quantum AI.** Studioul și platforma de ambasadori AI. Prima ambasadoare: **Iness**.
 
-| Ce | Fișierele | Link (privat) |
-|---|---|---|
-| Site-ul (prototip pe mai multe pagini + Studio demo) | `musqai/site/` | https://claude.ai/artifact/Pfw75NmdRWfk1g54VUmsi1 |
-| Planul interactiv pe 12 săptămâni | `musqai/plan/` | https://claude.ai/artifact/PxsV2fLh32QkoKwrvYGqW2 |
+| Ce | Unde |
+|---|---|
+| Site-ul public, cu zonele de generare | `musqai/web/` (se publică pe Cloudflare Pages) |
+| Planul interactiv pe 12 săptămâni | `musqai/plan/` · https://claude.ai/artifact/PxsV2fLh32QkoKwrvYGqW2 |
+| Prototipul vechi al site-ului (înlocuit de `musqai/web/`) | `musqai/site/` |
 
-## Site-ul public (Cloudflare Pages)
-Versiunea publică stă în `musqai/public/`. Ea ascunde prompturile, declanșatorii LoRA și rutina internă de pe pod, iar fonturile sunt găzduite local. Formularul de contact deschide emailul vizitatorului, adresat către contact@musqai.com.
+## Site-ul (`musqai/web/`)
+- `content.mjs`: tot textul site-ului (caractere, nișe, prețuri, procese, zone).
+- `build.mjs`: face câte o pagină HTML pentru fiecare adresă, în `public/`. Rulare: `node musqai/web/build.mjs`.
+- `static/`: stilul, scripturile, fonturile găzduite local, pozele lui Iness, favicon-ul.
+- `functions/api/`: cele 5 zone de generare (idei, imagine, prompt, text, caracter), care rulează pe Cloudflare cu Workers AI.
+- `lib/ai.js`: verificările de siguranță, modelele folosite și marcajul AI din imagini.
+- `tools/assets.py` și `tools/og.py`: refac fonturile, pozele și imaginea de distribuire.
 
-- **Din GitHub (se actualizează singur la fiecare push):** Cloudflare → Workers & Pages → Create application → Pages → Import an existing Git repository → `nocoderesult/No.code.Vvs`. Branch: `comfy-ui-rr`. Framework preset: None. Build command: gol. Build output directory: `musqai/public`.
-- **Prin încărcare directă:** Workers & Pages → Create application → Get started → Drag and drop your files. Încarci arhiva zip a folderului `musqai/public`. Un proiect creat așa nu mai poate fi legat de GitHub mai târziu.
+După orice schimbare în `content.mjs` sau `static/`, rulezi `node musqai/web/build.mjs` și faci commit și la `public/`.
 
-După orice modificare în `musqai/site/`, rulezi `python3 musqai/build_public.py` și faci commit la `musqai/public/`.
+## Publicarea pe Cloudflare Pages (o singură dată)
+1. Cloudflare → Workers & Pages → Create application → Pages → Connect to Git / Import an existing Git repository.
+2. Repo: `nocoderesult/No.code.Vvs`. Numele proiectului: `musqai`. Production branch: `comfy-ui-rr`.
+3. Framework preset: None. Build command: gol. Build output directory: `public`. Root directory (Advanced): `musqai/web`.
+4. Save and Deploy.
 
-## Cum se actualizează
-- Caracterele, nișele, ofertele și procesele: `musqai/site/data.js`.
-- Blocurile planului, zi cu zi: `musqai/plan/plan-data.js`.
-- După o modificare, Claude republică pagina la același link.
+Legătura cu Workers AI (`AI`) e declarată în `musqai/web/wrangler.toml`. Dacă Cloudflare nu o preia, o adaugi manual: proiectul → Settings → Bindings → Add → Workers AI, cu numele `AI`, apoi faci din nou Deploy.
 
-## Ce se salvează și unde
-- Bifele, notițele zilelor și setările planului (modul, ora de start, prima zi): baza de date a paginii planului. Claude le poate citi.
-- Banca de idei din Studio (Content Brain): baza de date a site-ului.
+Zonele de generare nu merg dacă proiectul e făcut prin încărcarea directă a unei arhive: Cloudflare nu acceptă funcții în acest mod. Ai nevoie de varianta din GitHub.
+
+## Modelele din zonele de generare
+- Texte: `@cf/meta/llama-3.3-70b-instruct-fp8-fast` (Built with Llama).
+- Imagini: `@cf/black-forest-labs/flux-1-schnell`, pătrate 1024 × 1024, cu marcaj XMP „generat cu AI” în fișier.
+- Citirea pozelor: `@cf/llava-hf/llava-1.5-7b-hf`.
+
+Pe planul gratuit Cloudflare există o limită zilnică de utilizare. Când e atinsă, zonele afișează un mesaj și merg din nou a doua zi. Pe planul gratuit nu se plătește nimic în plus.

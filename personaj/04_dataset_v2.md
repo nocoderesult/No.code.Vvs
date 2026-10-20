@@ -1,4 +1,4 @@
-# Daria — setul de antrenare v2 (34 de poze)
+# Iness — setul de antrenare v2 (34 de poze)
 
 Structură: **12 față + 10 studio (corp) + 12 insta (poze de telefon)**.
 Același set îl folosim pentru LoRA-ul de poze (Krea 2) și pentru LoRA-ul video (Wan).

@@ -1,0 +1,9 @@
+# Configurația proiectului Cloudflare Pages „musqai”.
+# Root directory în Cloudflare: musqai/web · Build output directory: public · Build command: gol
+name = "musqai"
+pages_build_output_dir = "./public"
+compatibility_date = "2026-10-01"
+
+# Zonele de generare folosesc Workers AI prin legătura „AI”.
+[ai]
+binding = "AI"

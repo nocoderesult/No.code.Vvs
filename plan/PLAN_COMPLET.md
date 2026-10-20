@@ -11,7 +11,7 @@
 - **Cum facem bani:**
   1. **acum:** servicii pentru firme, după modelul de bani din `skills/money-model`;
   2. **după ce automatizăm:** abonamente pe platformă, cu credite;
-  3. **contracte de brand** pentru caracterele casei (Daria și celelalte).
+  3. **contracte de brand** pentru caracterele casei (Iness și celelalte).
 - **Ordinea:** validăm pe bani reali → automatizăm ce funcționează → deschidem platforma.
 - **Nișele le testăm pe rând, cu același protocol:**
   1. magazine online;
@@ -21,7 +21,7 @@
   5. wellness și cosmetice, doar cu reguli stricte.
 
   Saloanele sunt pe pauză.
-- **Primul pas:** Daria live + mostre pentru nișa 1 + primele 30 de contacte.
+- **Primul pas:** Iness live + mostre pentru nișa 1 + primele 30 de contacte.
 
 ---
 
@@ -77,15 +77,15 @@
 
 | Ce | Stare |
 |---|---|
-| Daria: fișa, fața, corpul | ✅ `personaj/CARACTER.md` |
-| LoRA v1 Daria (Krea 2) | ✅ cel mai bun checkpoint: pasul 2500. Ai făcut și un v3 |
+| Iness: fișa, fața, corpul | ✅ `personaj/CARACTER.md` |
+| LoRA v1 Iness (Krea 2) | ✅ cel mai bun checkpoint: pasul 2500. Ai făcut și un v3 |
 | Setul de antrenare v2 (34 de poze) | 📝 planul e gata: `personaj/04_dataset_v2.md` + `04_captions_v2.txt` |
 | Pod RunPod + ComfyUI + agentul de pe pod | ✅ volum de 250 GB, L40S, contextul în `DARIA_CONTEXT.md` pe pod |
 | Imagini: Krea 2 + realism (Z-Image) | ✅ merge. De rezolvat aspectul de plastic (LoRA v2) |
 | Video | SCAIL-2 pentru înlocuire (de instalat complet). MiniMax H3 și Qwen rămân pe volum. Wan 2.2 de evaluat |
-| Voce | HeyGen / ElevenLabs. Vocea „Daria” trebuie salvată |
+| Voce | HeyGen / ElevenLabs. Vocea „Iness” trebuie salvată |
 | Skill-uri | ✅ conținut: caption, carusel, calendar, reel-script, DM, nișă, statistici, prompt-builder. ✅ vânzare: `money-model`, `sales-call`, `abonament-retentie` |
-| Conturile de social media ale Dariei | ❌ de făcut |
+| Conturile de social media ale lui Iness | ❌ de făcut |
 
 ---
 
@@ -93,9 +93,9 @@
 
 | # | Nume de lucru | Rol | Nișe | Când îl facem |
 |---|---|---|---|---|
-| 1 | **Daria** | ambasadoare lifestyle & lux | magazine online (modă, accesorii), turism, evenimente | acum |
+| 1 | **Iness** | ambasadoare lifestyle & lux | magazine online (modă, accesorii), turism, evenimente | acum |
 | 2 | **„Ambasadorul”** (bărbat, 30–35 de ani) | elegant, încrezător, „omul de business” | imobiliare, auto, modă masculină, servicii | când nișa imobiliare arată interes |
-| 3 | **„Exploratoarea”** (28–32 de ani, alt stil decât Daria) | travel & food | turism, HoReCa | la sprintul turism |
+| 3 | **„Exploratoarea”** (28–32 de ani, alt stil decât Iness) | travel & food | turism, HoReCa | la sprintul turism |
 | 4 | **„Vecina de alături”** (25–30 de ani, look natural, accesibil) | stil UGC autentic, produse de zi cu zi | magazine online mass-market, home decor | când magazinele cer un look mai „de zi cu zi” |
 | 5 | **„Fața platformei”** | explică AI și marketing, promovează studioul | promovarea noastră | în faza 2 (platforma) |
 
@@ -132,21 +132,21 @@
 - **Clientul ideal:** brand românesc cu magazin online (Shopify, WooCommerce sau Instagram Shop), 1–20 angajați, **care rulează deja reclame**. Verifici în Meta Ad Library: dacă rulează reclame, are buget.
 - **Durerea:** reclamele se „ard” repede, ședințele foto sunt scumpe și n-au o față constantă.
 - **Ce livrăm:**
-  - poze lifestyle cu produsul pe Daria;
+  - poze lifestyle cu produsul pe Iness;
   - reels de 8–15 secunde, pentru reclame și organic;
   - variante de hook pentru testare A/B;
   - textele.
 - **Reguli speciale:**
   - produsul trebuie **identic cu realitatea**: folosim pozele lor ca referință;
-  - Daria e **ambasadoare AI declarată**, nu „clientă”;
+  - Iness e **ambasadoare AI declarată**, nu „clientă”;
   - postările au etichetă AI.
 - **Unde găsim clienți:** Meta Ad Library, TikTok Shop, Instagram, listele de magazine românești, marketplace-uri.
-- **Metrica clientului:** CTR și ROAS ale reclamelor cu Daria față de reclamele lor vechi; costul pe creativ.
+- **Metrica clientului:** CTR și ROAS ale reclamelor cu Iness față de reclamele lor vechi; costul pe creativ.
 
 #### N2. Imobiliare (dezvoltatori premium, agenții de top)
 - **Durerea:** fac puțin video, producția e scumpă, iar ansamblurile sunt greu de „vândut” emoțional.
 - **Ce livrăm:**
-  - un prezentator AI (Ambasadorul sau Daria) în video cu **proprietatea reală, filmată real**;
+  - un prezentator AI (Ambasadorul sau Iness) în video cu **proprietatea reală, filmată real**;
   - „o zi în viața ta aici”;
   - noutăți de piață săptămânale.
 - **Reguli speciale:** nu inventăm finisaje, priveliști sau dotări. Etichetă AI.
@@ -155,13 +155,13 @@
 
 #### N3. Turism și HoReCa (hoteluri boutique, pensiuni premium, rooftop, spa)
 - **Durerea:** conținutul e sezonier, fotografii sunt scumpi și au nevoie de „atmosferă”.
-- **Ce livrăm:** Daria sau Exploratoarea „descoperă” locul, **declarată ambasador AI, nu oaspete real**. Reels de atmosferă pe imagini reale ale locației.
+- **Ce livrăm:** Iness sau Exploratoarea „descoperă” locul, **declarată ambasador AI, nu oaspete real**. Reels de atmosferă pe imagini reale ale locației.
 - **Reguli speciale:** nu inventăm facilități și nu facem recenzii false.
 - **Unde găsim clienți:** Booking și Google Maps. Rating mare + Instagram slab = oportunitate.
 - **Metrica clientului:** rezervări și mesaje venite din Instagram.
 
 #### N4. Evenimente și nightlife (cluburi, organizatori, festivaluri mici)
-- **Ce livrăm:** teasere, anunțuri, numărătoare inversă cu Daria.
+- **Ce livrăm:** teasere, anunțuri, numărătoare inversă cu Iness.
 - **Reguli speciale:** respectăm regulile de reclamă pentru alcool. Etichetă AI.
 - **Metrica clientului:** bilete vândute, înscrieri.
 
@@ -261,17 +261,17 @@
 ## 9. Promovarea organică (primele 90 de zile)
 
 **Canale:**
-- Instagram + TikTok, cu Daria;
+- Instagram + TikTok, cu Iness;
 - LinkedIn + X, cu tine, construind în public;
 - YouTube Shorts, cu aceleași clipuri refolosite.
 
 **Piloni de conținut:**
-1. Lifestyle Daria: **60%**.
+1. Lifestyle Iness: **60%**.
 2. „Cum am făcut-o” / din culise: **15%**.
 3. Studii de caz cu clienți, doar cu acordul lor: **15%**.
 4. Educativ, AI pentru afaceri în română: **10%**.
 
-**Frecvență:** Daria 4–5 postări pe săptămână + stories zilnic. Tu 3 postări pe săptămână.
+**Frecvență:** Iness 4–5 postări pe săptămână + stories zilnic. Tu 3 postări pe săptămână.
 
 **Unelte gratuite pe site** (aduc trafic din Google și clienți noi, ca la Higgsfield):
 - image-to-prompt;
@@ -414,8 +414,8 @@ Cu ele aflăm ce tip de caracter, format și hook merge, pe ce nișă și la ce 
 
 | Săpt. | Tu | Eu |
 |---|---|---|
-| 1 | Setul v2 pentru Daria (Nano Banana). Conturile IG + TikTok, bio „AI creator”. 9 postări gata | Fișa detaliată N1, criteriile pentru firme, mesajele, planul celor 5 mostre |
-| 2 | LoRA v2 Krea + test de realism. Lansarea Dariei (3–4 postări pe săptămână) | Concepte și scripturi pentru cele 5 mostre N1 |
+| 1 | Setul v2 pentru Iness (Nano Banana). Conturile IG + TikTok, bio „AI creator”. 9 postări gata | Fișa detaliată N1, criteriile pentru firme, mesajele, planul celor 5 mostre |
+| 2 | LoRA v2 Krea + test de realism. Lansarea lui Iness (3–4 postări pe săptămână) | Concepte și scripturi pentru cele 5 mostre N1 |
 | 3 | Faci cele 5 mostre N1 și lista de 30 de branduri | Oferta (pagină / PDF), ciorna de contract, tabelul de vânzări |
 | 4 | Contactezi cele 30 de branduri și revii după 3 și 7 zile | Răspunsurile la obiecții, ajustez mesajele după răspunsuri |
 | 5 | Apeluri + piloți N1 → **decizie go/no-go** | Raportul sprintului, actualizez jurnalul |
@@ -432,7 +432,7 @@ Cu ele aflăm ce tip de caracter, format și hook merge, pe ce nișă și la ce 
 
 - **Afacere:** contacte, % răspunsuri, apeluri, piloți, clienți, venit lunar recurent, clienți pierduți.
 - **Producție:** timp pe livrabil, cost GPU pe livrabil, revizii pe livrabil.
-- **Daria:** urmăritori, reach, salvări, distribuiri, mesaje.
+- **Iness:** urmăritori, reach, salvări, distribuiri, mesaje.
 - **Tabelul de rezultate pe postare:** data, ora, caracterul, nișa, formatul, hook-ul, durata, CTA-ul, reach, vizionarea medie, salvări, distribuiri, comentarii, click-uri, costul.
 
 ---
@@ -478,7 +478,7 @@ Cu ele aflăm ce tip de caracter, format și hook merge, pe ce nișă și la ce 
 ### A. Mesajele de abordare (N1, magazine online)
 
 **Primul mesaj (DM sau email):**
-> Salut, [Nume]! Am văzut reclamele voastre pentru [produs], arată foarte bine. Lucrez cu un ambasador AI, Daria, și am făcut un exemplu cu [produsul vostru], ca să vedeți cum ar arăta o reclamă nouă fără ședință foto: [link]. E conținut AI declarat și etichetat corect. Dacă vă place, vă pot face câteva variante pentru test. Vă interesează?
+> Salut, [Nume]! Am văzut reclamele voastre pentru [produs], arată foarte bine. Lucrez cu un ambasador AI, Iness, și am făcut un exemplu cu [produsul vostru], ca să vedeți cum ar arăta o reclamă nouă fără ședință foto: [link]. E conținut AI declarat și etichetat corect. Dacă vă place, vă pot face câteva variante pentru test. Vă interesează?
 
 **Revenirea 1 (ziua 3):**
 > Revin scurt: ați apucat să vă uitați la exemplul cu [produs]? Pot să vă trimit și o variantă în format de reclamă (9:16), dacă vă ajută.

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Texte pentru postări · MUSQAI</title>
+<meta name="description" content="Texte pentru postări: Descrieri cu hook, îndemn și hashtag-uri, în trei variante.">
+<link rel="canonical" href="https://musqai.com/genereaza/text/">
+<meta name="theme-color" content="#0a090c">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="MUSQAI">
+<meta property="og:locale" content="ro_RO">
+<meta property="og:title" content="Texte pentru postări · MUSQAI">
+<meta property="og:description" content="Texte pentru postări: Descrieri cu hook, îndemn și hashtag-uri, în trei variante.">
+<meta property="og:url" content="https://musqai.com/genereaza/text/">
+<meta property="og:image" content="https://musqai.com/assets/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/BricolageGrotesque-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/Manrope-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Sari la conținut</a>
+<svg width="0" height="0" class="sr-only" aria-hidden="true" focusable="false"><defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#ff8a3d"/><stop offset=".5" stop-color="#ff2d78"/><stop offset="1" stop-color="#9d5cff"/></linearGradient></defs></svg>
+<header class="hdr"><div class="wrap">
+  <a class="logo" href="/" aria-label="MUSQAI, prima pagină"><i></i>MUSQAI</a>
+  <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Meniu</button>
+  <nav class="nav" id="nav" aria-label="Principal">
+    <a href="/caractere/">Caractere</a>
+    <a href="/genereaza/" class="on" aria-current="page">Generează</a>
+    <a href="/servicii/">Servicii</a>
+    <a href="/nise/">Nișe</a>
+    <a href="/cum-lucram/">Cum lucrăm</a>
+    <a class="btn btn-sm" href="/contact/">Cere o mostră</a>
+  </nav>
+</div></header>
+<main id="main">
+
+
+<section class="page-head"><div class="wrap">
+  <nav class="crumbs" aria-label="Unde ești"><a href="/genereaza/">Generează</a><span>/</span><span>Texte pentru postări</span></nav>
+  <span class="eyebrow">Zonă de generare</span>
+  <h1 class="h1">Texte pentru postări</h1>
+  <p class="lead">Spui despre ce e postarea. Primești trei variante de descriere, cu hook, îndemn și hashtag-uri.</p>
+</div></section>
+<section class="section-tight" style="padding-top:0"><div class="wrap zone-grid">
+  <form class="glass zone-form" id="zone-form" data-zone="text" novalidate>
+    
+    <div class="field"><span class="lbl">Platformă</span><div class="opts" role="radiogroup"><label><input type="radio" name="platforma" value="Instagram" checked><span>Instagram</span></label><label><input type="radio" name="platforma" value="TikTok"><span>TikTok</span></label><label><input type="radio" name="platforma" value="Facebook"><span>Facebook</span></label><label><input type="radio" name="platforma" value="LinkedIn"><span>LinkedIn</span></label></div></div>
+    <div class="field"><span class="lbl">Ton</span><div class="opts" role="radiogroup"><label><input type="radio" name="ton" value="cald" checked><span>Cald</span></label><label><input type="radio" name="ton" value="premium"><span>Premium</span></label><label><input type="radio" name="ton" value="amuzant"><span>Amuzant</span></label><label><input type="radio" name="ton" value="direct"><span>Direct</span></label></div></div>
+    <div class="field"><label for="f-despre">Despre ce e postarea</label><textarea class="textarea" id="f-despre" name="despre" maxlength="800" placeholder="Ex.: lansăm colecția de toamnă, 12 rochii din satin, livrare în 24 de ore." required></textarea></div>
+    <div class="field"><label for="f-cta">Ce vrei să facă oamenii</label><input class="input" id="f-cta" name="cta" maxlength="120" placeholder="Ex.: să intre pe site prin linkul din bio"></div>
+    <div class="field"><label for="f-caracter">Vocea unui caracter</label><select class="select" id="f-caracter" name="caracter"><option value="">Fără caracter</option><option value="iness">Iness · Ambasadoare lifestyle &amp; lux</option><option value="matei">Matei · Ambasador business &amp; imobiliare</option><option value="ilinca">Ilinca · Exploratoare: travel &amp; food</option><option value="ioana">Ioana · Produse de zi cu zi</option><option value="mira">Mira · Fața platformei MUSQAI</option></select></div>
+    <button class="btn" type="submit" id="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15l.7 2.1 2.3.9-2.3.8L19 21l-.7-2.2-2.3-.8 2.3-.9z"/></svg>Scrie textele</button>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+  </form>
+  <div class="output" id="output" aria-live="polite">
+    <div class="empty"><span class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="url(#g)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h11"/><path d="M4 18h14"/></svg></span><span>Cele trei variante apar aici.</span></div>
+  </div>
+</div></section>
+<section class="section-tight"><div class="wrap grid-3">
+  <div class="note-box"><b>Ce nu generăm</b>Nuditate, conținut sexual, minori, violență, persoane reale sau sosii ale lor, logo-uri de branduri reale.</div>
+  <div class="note-box"><b>Ce se întâmplă cu datele</b>Ce trimiți e procesat de Cloudflare Workers AI doar ca să primești răspunsul. Noi nu salvăm nimic.</div>
+  <div class="note-box"><b>Modelele</b>FLUX.1 [schnell] pentru imagini, LLaVA pentru citirea pozelor și Llama 3.3 pentru texte (Built with Llama), prin Cloudflare Workers AI.</div>
+</div></section>
+</main>
+<footer class="ftr"><div class="wrap">
+  <div class="ftr-grid">
+    <div class="stack"><div class="word">MUSQAI</div><p class="muted small">Marketing Universe Studio · Quantum AI</p><p class="small" style="max-width:34ch;color:var(--text-2)">Ambasadori AI pentru branduri. Conținut nou în fiecare săptămână, etichetat corect.</p></div>
+    <div><h4>Studio</h4><a href="/caractere/">Caractere</a><a href="/servicii/">Servicii și prețuri</a><a href="/nise/">Nișe</a><a href="/cum-lucram/">Cum lucrăm</a></div>
+    <div><h4>Generează</h4><a href="/genereaza/idei/">Idei de conținut</a><a href="/genereaza/imagine/">Imagine din text</a><a href="/genereaza/prompt/">Image → Prompt</a><a href="/genereaza/text/">Texte pentru postări</a><a href="/genereaza/caracter/">Creează-ți caracterul</a></div>
+    <div><h4>Încredere</h4><a href="/transparenta/">Transparență AI</a><a href="/platforma/">Platforma</a><a href="/contact/">Contact</a></div>
+  </div>
+  <div class="ftr-base"><span>© 2026 MUSQAI</span><span>Tot conținutul cu ambasadorii MUSQAI e generat cu AI și etichetat ca atare.</span></div>
+</div></footer>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<script src="/assets/site.js" defer></script>
+<script src="/assets/gen.js" defer></script>
+</body>
+</html>

@@ -1,9 +1,9 @@
-# Daria — fișa personajului (NU se modifică)
+# Iness — fișa personajului (NU se modifică)
 
 Personaj 100% fictiv, generat cu AI. Nu seamănă intenționat cu nicio persoană reală.
 
 ## Identitate
-- Nume: **Daria** · vârstă aparentă 25 · nișă: lifestyle & lux (mașini, hoteluri, călătorii, outfit-uri)
+- Nume: **Iness** · vârstă aparentă 25 · nișă: lifestyle & lux (mașini, hoteluri, călătorii, outfit-uri)
 - Cuvânt-declanșator LoRA: **d4ria**
 
 ## Descrierea fixă (se copiază identic în fiecare prompt — căsuța „Personaj (fix)”)

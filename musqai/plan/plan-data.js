@@ -41,7 +41,7 @@ window.PLAN = {
   week0: [
     ["Cumperi domeniul musqai.com", "Pe 20 octombrie 2026 părea liber. Verifici și musqai.ro."],
     ["Rezervi numele @musqai", "Instagram, TikTok, YouTube, LinkedIn, X. Chiar dacă nu postezi încă."],
-    ["Alegi numele contului Dariei", "Ex.: @daria.musqai. Verifici să fie liber pe Instagram și TikTok."],
+    ["Alegi numele contului lui Iness", "Ex.: @iness.musqai. Verifici să fie liber pe Instagram și TikTok."],
     ["Răspunzi la cele 6 întrebări din plan (§17)", "PFA sau SRL, bugetul, orele pe zi, ordinea nișelor, prima ofertă."],
     ["Mărești volumul RunPod la ~350 GB", "Ca să încapă SCAIL-2 lângă MiniMax și Qwen."],
     ["Instalezi Meta Business Suite pe telefon", "Aici programezi postările și vezi statisticile."],
@@ -52,7 +52,7 @@ window.PLAN = {
     /* ---------------- Săptămâna 1 ---------------- */
     {
       title: "Setul v2 și conturile",
-      goal: "34 de poze v2 aprobate, conturile Dariei create și etichetate AI, 9 postări de lansare pregătite, LoRA v2 pornit.",
+      goal: "34 de poze v2 aprobate, conturile lui Iness create și etichetate AI, 9 postări de lansare pregătite, LoRA v2 pornit.",
       kpi: ["34 / 34 poze aprobate", "Instagram, TikTok și pagina FB create", "9 postări pregătite ca ciorne"],
       live: false,
       post: [],
@@ -62,23 +62,23 @@ window.PLAN = {
           [1, 30, "prod", "Referințele curate, fără tatuaj", ["Nano Banana: urci daria_ref.png și scrii „Remove the tattoo from her wrist. Keep everything else exactly identical.”", "Salvezi ref_fata.png. Repeți cu front_00002_.png și salvezi ref_corp.png."], "Ai ref_fata.png și ref_corp.png, fără tatuaj."],
           [1, 55, "prod", "Setul v2: pozele 01–06 (fața)", ["Deschizi personaj/04_dataset_v2.md.", "Prompt = ÎNCEPUT + rândul din tabel + SFÂRȘIT. Urci ref_fata.png.", "Salvezi cu numele exact: daria_v2_01.png și așa mai departe."], "6 poze care trec checklist-ul din fișă."],
           [2, 45, "eu", "Sesiune cu Claude: pornim săptămâna 1", ["Îmi scrii: „Citește plan/PLAN_COMPLET.md și plan/JURNAL.md, suntem la săptămâna 1.”", "Îmi ceri fișa N1, mesajele și textele celor 9 postări."], "Ai livrabilele mele pentru săptămâna 1."],
-          [2, 60, "cont", "Contul de Instagram al Dariei", ["Creezi contul (ex. @daria.musqai) și îl treci pe Profesional, apoi Creator.", "Bio: „AI creator ✨” și o propoziție despre ea.", "Poza de profil: cea mai bună față de până acum."], "Cont Creator, cu „AI creator” în bio."],
-          [3, 45, "cont", "TikTok și pagina de Facebook a Dariei", ["TikTok: cont, bio cu „AI creator”.", "Facebook: o pagină „Daria”, legată de contul de Instagram. O cere API-ul mai târziu."], "TikTok gata, pagina FB legată de Instagram."],
+          [2, 60, "cont", "Contul de Instagram al lui Iness", ["Creezi contul (ex. @iness.musqai) și îl treci pe Profesional, apoi Creator.", "Bio: „AI creator ✨” și o propoziție despre ea.", "Poza de profil: cea mai bună față de până acum."], "Cont Creator, cu „AI creator” în bio."],
+          [3, 45, "cont", "TikTok și pagina de Facebook a lui Iness", ["TikTok: cont, bio cu „AI creator”.", "Facebook: o pagină „Iness”, legată de contul de Instagram. O cere API-ul mai târziu."], "TikTok gata, pagina FB legată de Instagram."],
           [3, 60, "inv", "Studiu: cum postează creatorii AI de top", ["Alegi 3 conturi mari de influenceri AI (ex. Aitana López).", "Notezi cât de des postează, ce formate, ce hook-uri, cum spun că sunt AI."], "5 lucruri de preluat, notate."],
           [3, 60, "tech", "Pod: verifici SCAIL-2", ["Pornești podul și agentul (vezi Rutinele).", "Îi ceri să verifice cele 7 fișiere SCAIL-2 și să descarce ce lipsește, dacă ai spațiu.", "Oprești podul la final."], "SCAIL-2 e complet sau știi exact ce lipsește."]
         ]},
         { theme: "Producție: setul v2", blocks: [
           [1, 85, "prod", "Setul v2: pozele 07–14", ["07–12: urci ref_fata.png. 13–14: urci ref_fata.png și ref_corp.png.", "Chat nou după fiecare 5 poze.", "Verifici mâinile: 5 degete, unghii nude-roz, fără tatuaj."], "14 poze aprobate."],
           [2, 60, "cont", "Cele 9 postări de lansare: pozele", ["Alegi 9 poze (v1 și v2): 3 cu fața, 3 cu ținute, 3 „din viață”.", "Le aranjezi în ordinea grilei, într-o aplicație de previzualizare."], "9 poze, în ordinea grilei."],
-          [2, 60, "cont", "Textele celor 9 postări", ["Pornești de la textele mele.", "Le scurtezi pe vocea Dariei: calde, cu o întrebare la final.", "3–5 hashtag-uri pe postare."], "9 texte gata."],
-          [3, 90, "prod", "Reel-ul de lansare", ["3 clipuri de 3–5 s din pozele de lansare (Wan 2.2 I2V pe pod sau alt generator).", "Montaj de 8–12 s în CapCut, cu textul „Bună, sunt Daria. Și da, sunt AI.”"], "Reel-ul de lansare e gata."],
+          [2, 60, "cont", "Textele celor 9 postări", ["Pornești de la textele mele.", "Le scurtezi pe vocea lui Iness: calde, cu o întrebare la final.", "3–5 hashtag-uri pe postare."], "9 texte gata."],
+          [3, 90, "prod", "Reel-ul de lansare", ["3 clipuri de 3–5 s din pozele de lansare (Wan 2.2 I2V pe pod sau alt generator).", "Montaj de 8–12 s în CapCut, cu textul „Bună, sunt Iness. Și da, sunt AI.”"], "Reel-ul de lansare e gata."],
           [3, 60, "inv", "Regulile Meta și TikTok pentru conținut AI", ["Citești cum funcționează eticheta „AI info” pe Instagram.", "Citești regulile TikTok pentru conținutul generat cu AI.", "Notezi ce bifezi la fiecare postare."], "Știi exact cum etichetezi."]
         ]},
         { theme: "Producție: setul v2", blocks: [
           [1, 85, "prod", "Setul v2: pozele 15–22 (studio)", ["Urci ref_fata.png și ref_corp.png la fiecare chat nou.", "Verifici proporțiile corpului și lipsa tatuajelor."], "22 de poze aprobate."],
-          [2, 45, "cont", "Stories de lansare", ["3 stories: „Cine e Daria”, „Cum e făcută”, „Ce urmează”.", "Coperți pentru highlights."], "3 stories gata."],
+          [2, 45, "cont", "Stories de lansare", ["3 stories: „Cine e Iness”, „Cum e făcută”, „Ce urmează”.", "Coperți pentru highlights."], "3 stories gata."],
           [2, 60, "admin", "Conturile MUSQAI", ["Instagram, TikTok și LinkedIn pentru @musqai.", "Bio: „Ambasadori AI pentru branduri. Conținut gata de postat.”"], "@musqai e rezervat și completat."],
-          [3, 120, "tech", "Test SCAIL-2 cu filmarea ta", ["Filmezi 10 s cu tine: lumină bună, mișcări lente, nimic în fața feței.", "Îi ceri agentului înlocuirea cu Daria. Referința: cea mai bună poză a ei.", "Compari fața, mâinile și fundalul, apoi notezi."], "Primul test de înlocuire, notat în jurnal."],
+          [3, 120, "tech", "Test SCAIL-2 cu filmarea ta", ["Filmezi 10 s cu tine: lumină bună, mișcări lente, nimic în fața feței.", "Îi ceri agentului înlocuirea cu Iness. Referința: cea mai bună poză a ei.", "Compari fața, mâinile și fundalul, apoi notezi."], "Primul test de înlocuire, notat în jurnal."],
           [3, 60, "inv", "Studiu: 10 reclame de modă din România", ["Biblioteca de reclame Meta, țara România: „rochii”, „bijuterii”, „genți”.", "Salvezi 10 reclame care rulează de peste 30 de zile.", "Notezi formatul, hook-ul și durata."], "10 exemple salvate pentru mostre."]
         ]},
         { theme: "Producție: setul v2", blocks: [
@@ -91,7 +91,7 @@ window.PLAN = {
         { theme: "Producție și verificare", blocks: [
           [1, 85, "prod", "Setul v2: pozele 29–34 (insta)", ["Aceleași reguli: lumină reală, fundal aglomerat, fără tatuaj.", "Salvezi cu numele exacte."], "Toate cele 34 de poze sunt făcute."],
           [2, 60, "prod", "Verificarea finală a setului", ["Le pui una lângă alta și le compari.", "Scoți orice poză cu fața diferită, tatuaj, mâini greșite sau text.", "Mai bine 28 perfecte decât 34 cu greșeli."], "Setul final, fără nicio poză îndoielnică."],
-          [2, 45, "cont", "Primul post „build in public”", ["LinkedIn sau X: „Construiesc MUSQAI, un studio de ambasadori AI. Săptămâna 1: Daria.”", "O captură din culise, nu doar rezultatul."], "Primul post public despre MUSQAI."],
+          [2, 45, "cont", "Primul post „build in public”", ["LinkedIn sau X: „Construiesc MUSQAI, un studio de ambasadori AI. Săptămâna 1: Iness.”", "O captură din culise, nu doar rezultatul."], "Primul post public despre MUSQAI."],
           [3, 90, "tech", "Setul și captions-urile pe pod", ["Urci pozele în /workspace/datasets/daria_v2/.", "Agentul scrie captions-urile din personaj/04_captions_v2.txt lângă fiecare poză.", "Verifici că niciun caption nu conține „tattoo”."], "Setul e pe pod, gata de antrenare."],
           [3, 45, "eu", "Calendarul de conținut pe 2 săptămâni", ["Îmi ceri calendarul (skill-ul content-calendar).", "4 postări în săptămâna 2, 5 în săptămâna 3, stories zilnic."], "Calendarul e aprobat."]
         ]},
@@ -106,13 +106,13 @@ window.PLAN = {
 
     /* ---------------- Săptămâna 2 ---------------- */
     {
-      title: "LoRA v2 și lansarea Dariei",
-      goal: "Checkpoint-ul LoRA v2 ales, Daria live cu 4 postări, vocea „Daria” salvată, primele cifre notate.",
-      kpi: ["Daria e live", "4 postări + stories zilnic", "Vocea salvată", "Lista N1: 30 de firme"],
+      title: "LoRA v2 și lansarea lui Iness",
+      goal: "Checkpoint-ul LoRA v2 ales, Iness live cu 4 postări, vocea „Iness” salvată, primele cifre notate.",
+      kpi: ["Iness e live", "4 postări + stories zilnic", "Vocea salvată", "Lista N1: 30 de firme"],
       live: true,
       post: [1, 3, 5, 6],
       postTitles: { 1: "Lansarea: reel-ul de la 19:00" },
-      eu: ["Conceptele și scripturile pentru cele 5 mostre N1", "Prompturile pentru mostre (produsul pe Daria)", "Textele postărilor din săptămâna 3", "Răspunsuri-tip la comentarii („ești reală?”)"],
+      eu: ["Conceptele și scripturile pentru cele 5 mostre N1", "Prompturile pentru mostre (produsul pe Iness)", "Textele postărilor din săptămâna 3", "Răspunsuri-tip la comentarii („ești reală?”)"],
       days: [
         { theme: "Lansare", blocks: [
           [1, 40, "prod", "Alegi checkpoint-ul LoRA v2", ["Același prompt cu checkpoint-urile 1500, 2000, 2500 și 3000.", "Alegi după: fața seamănă, pielea nu e de plastic, mâinile sunt bune."], "Un singur checkpoint ales și notat."],
@@ -120,25 +120,25 @@ window.PLAN = {
           [2, 60, "prod", "Testul de realism cu LoRA v2", ["Krea 2 Turbo + LoRA v2, apoi Z-Image 0.25, FaceDetailer 0.20 și grain.", "10 scene de telefon (flash, fundal aglomerat). Compari cu v1."], "10 imagini mai realiste decât v1."],
           [2, 45, "eu", "Sesiune cu Claude: săptămâna 2", ["Îmi trimiți checkpoint-ul ales și 3 imagini de test.", "Îmi ceri conceptele celor 5 mostre N1."], "Ai conceptele mostrelor."],
           [3, 60, "cont", "Comunitatea în ziua lansării", ["Urmărești 30 de conturi din modă și lifestyle din România.", "Lași comentarii utile, nu spam."], "30 de conturi urmărite, 15 comentarii lăsate."],
-          [3, 90, "prod", "Vocea Dariei", ["ElevenLabs Voice Design, cu descrierea din fișa ei (site-ul MUSQAI, pagina Daria).", "3 variante, alegi una și o salvezi ca „Daria”.", "Test: un text de 15 s în română."], "Vocea „Daria” e salvată."]
+          [3, 90, "prod", "Vocea lui Iness", ["ElevenLabs Voice Design, cu descrierea: „Young Romanian woman, mid-20s, warm and slightly low voice, calm confident pace, friendly smile in the voice, clear diction, studio-quality recording.”", "3 variante, alegi una și o salvezi ca „Iness”.", "Test: un text de 15 s în română."], "Vocea „Iness” e salvată."]
         ]},
         { theme: "Video și editare", blocks: [
           [1, 85, "prod", "Imaginile săptămânii, în lot", ["Pod: 12 imagini cu LoRA v2 pentru postările din săptămânile 2 și 3.", "Scenele din calendarul aprobat."], "12 imagini aprobate în folderul „postări”."],
           [2, 60, "cont", "Textele și programarea", ["Textele pentru miercuri, vineri și sâmbătă.", "Le programezi la 19:00, cu eticheta AI."], "Postările săptămânii sunt programate."],
-          [2, 60, "prod", "Primul reel vorbit", ["Un text de 10–15 s: cine e Daria și de ce e AI.", "Vocea „Daria” și sincronizarea buzelor (HeyGen sau LatentSync)."], "Un reel vorbit, gata de programat."],
-          [3, 120, "tech", "LoRA video (Wan): ce ne trebuie", ["Setul v2 și 6–10 clipuri scurte cu Daria (din I2V).", "Îi ceri agentului ce lipsește pentru Wan 2.1 14B LoRA și cât spațiu ocupă."], "Lista cu ce lipsește pentru LoRA video."],
+          [2, 60, "prod", "Primul reel vorbit", ["Un text de 10–15 s: cine e Iness și de ce e AI.", "Vocea „Iness” și sincronizarea buzelor (HeyGen sau LatentSync)."], "Un reel vorbit, gata de programat."],
+          [3, 120, "tech", "LoRA video (Wan): ce ne trebuie", ["Setul v2 și 6–10 clipuri scurte cu Iness (din I2V).", "Îi ceri agentului ce lipsește pentru Wan 2.1 14B LoRA și cât spațiu ocupă."], "Lista cu ce lipsește pentru LoRA video."],
           [3, 45, "inv", "Primele 24 de ore, în cifre", ["Insights: reach, vizite pe profil, urmăritori noi.", "Le notezi în tabelul de rezultate."], "Primele cifre sunt notate."]
         ]},
         { theme: "Pregătirea vânzărilor", blocks: [
           [1, 85, "vanz", "Alegi cele 5 branduri pentru mostre", ["Din reclamele salvate în săptămâna 1, alegi 5 branduri românești care rulează reclame acum.", "Salvezi pozele produselor de pe site-ul lor.", "Le notezi în tabel: brand, produs, link."], "5 branduri, fiecare cu 1–2 produse alese."],
           [2, 60, "vanz", "Lista N1: firmele 1–10", ["Criteriile din fișa N1.", "Biblioteca de reclame Meta și Instagram: branduri care rulează reclame.", "Le notezi în tabelul de vânzări."], "10 firme în tabel."],
           [2, 45, "cont", "Răspunsuri-tip la comentarii", ["„Ești reală?”, „Cine te-a făcut?”, „De unde e rochia?”.", "Le salvezi ca răspunsuri rapide în Instagram."], "5 răspunsuri rapide salvate."],
-          [3, 120, "prod", "Al doilea reel, din imagini", ["I2V din 3 imagini noi, montaj de 8–12 s.", "Text pe ecran cu un hook din fișa Dariei."], "Reel gata pentru săptămâna 3."],
+          [3, 120, "prod", "Al doilea reel, din imagini", ["I2V din 3 imagini noi, montaj de 8–12 s.", "Text pe ecran cu un hook din fișa lui Iness."], "Reel gata pentru săptămâna 3."],
           [3, 60, "inv", "Studiu: reclamele cu actori AI", ["Te uiți la exemplele publice ale unor studiouri ca Arcads.", "Notezi hook-ul, durata, formatul 9:16 și îndemnul."], "3 idei pentru mostrele noastre."]
         ]},
         { theme: "Video și liste", blocks: [
           [1, 85, "prod", "Reels din imagini, în lot", ["4 clipuri I2V de 3–5 s, pe pod.", "Le montezi în 2 reels."], "2 reels gata."],
-          [2, 60, "cont", "Carusel: „Cine e Daria”", ["5 slide-uri: cine e, ce face, de ce e AI, ce urmează, o întrebare.", "Textul îl scrii cu skill-ul carousel-builder."], "Caruselul e programat."],
+          [2, 60, "cont", "Carusel: „Cine e Iness”", ["5 slide-uri: cine e, ce face, de ce e AI, ce urmează, o întrebare.", "Textul îl scrii cu skill-ul carousel-builder."], "Caruselul e programat."],
           [2, 60, "vanz", "Lista N1: firmele 11–20", ["Aceleași criterii.", "Pentru fiecare: persoana de contact și canalul (DM sau email)."], "20 de firme în tabel."],
           [3, 120, "tech", "SCAIL-2, al doilea test", ["Altă filmare: mai multă mișcare, alt unghi.", "Notezi ce merge și ce nu: fața, mâinile, mișcarea."], "Știi când SCAIL-2 e destul de bun pentru clienți."],
           [3, 60, "inv", "Creatorii AI de top, partea a doua", ["Ce postează în weekend, cum răspund la comentarii.", "Ce colaborări fac și cum le marchează."], "3 lucruri noi de preluat."]
@@ -146,7 +146,7 @@ window.PLAN = {
         { theme: "Cifre și public", blocks: [
           [1, 85, "cont", "Analiza primei săptămâni", ["Ce postare a avut cel mai mare reach și ce postare cele mai multe salvări.", "Ce întrebări se repetă în comentarii.", "Notezi 3 concluzii."], "3 concluzii în jurnal."],
           [2, 60, "vanz", "Lista N1: firmele 21–30", ["Completezi lista până la 30.", "Marchezi cu „mostră” cele 5 branduri alese miercuri."], "30 de firme în tabel."],
-          [2, 45, "cont", "Build in public: săptămâna 2", ["Post pe LinkedIn: lansarea Dariei și primele cifre.", "O imagine din culise."], "Postat."],
+          [2, 45, "cont", "Build in public: săptămâna 2", ["Post pe LinkedIn: lansarea lui Iness și primele cifre.", "O imagine din culise."], "Postat."],
           [3, 120, "prod", "Imaginile pentru săptămâna 3", ["8 imagini noi, după calendar.", "Variante de telefon, pentru realism."], "8 imagini gata."],
           [3, 60, "admin", "Facturarea și forma juridică", ["Vorbești cu un contabil: PFA sau SRL, facturare în euro, TVA.", "Notezi decizia în jurnal."], "Știi cum facturezi primul client."]
         ]},
@@ -162,22 +162,22 @@ window.PLAN = {
     {
       title: "Mostrele N1 și lista de 30",
       goal: "5 mostre N1 (3 imagini și un reel fiecare), mesajele personalizate pregătite, oferta și contractul în ciornă.",
-      kpi: ["5 / 5 mostre", "30 de mesaje personalizate", "5 postări Daria"],
+      kpi: ["5 / 5 mostre", "30 de mesaje personalizate", "5 postări Iness"],
       live: true,
       post: [1, 2, 4, 5, 6],
       eu: ["Oferta N1: o pagină sau un PDF cu pachetele", "Ciorna de contract și anexa „conținut AI”", "Scriptul apelului de 15 minute", "Mesajele personalizate pentru primele 10 firme"],
       days: [
         { theme: "Producție: mostre", blocks: [
-          [1, 85, "prod", "Mostra 1: 3 imagini", ["Referința: poza produsului de pe site-ul brandului.", "Krea 2 + LoRA v2 sau Nano Banana: Daria cu produsul.", "Produsul identic: culoare, logo, formă, text."], "3 imagini care arată ca o reclamă reală."],
+          [1, 85, "prod", "Mostra 1: 3 imagini", ["Referința: poza produsului de pe site-ul brandului.", "Krea 2 + LoRA v2 sau Nano Banana: Iness cu produsul.", "Produsul identic: culoare, logo, formă, text."], "3 imagini care arată ca o reclamă reală."],
           [2, 45, "eu", "Sesiune cu Claude: săptămâna 3", ["Îmi arăți mostra 1.", "Îmi ceri oferta, contractul și scriptul apelului."], "Ai oferta și ciorna de contract."],
-          [2, 75, "prod", "Lotul de imagini al Dariei", ["Pod: 8 imagini pentru postările săptămânii.", "Oprești podul imediat după."], "8 imagini gata."],
+          [2, 75, "prod", "Lotul de imagini al lui Iness", ["Pod: 8 imagini pentru postările săptămânii.", "Oprești podul imediat după."], "8 imagini gata."],
           [3, 90, "vanz", "Mesajele personalizate: firmele 1–10", ["Pornești de la mesajele mele.", "Pentru fiecare: produsul lor, numele persoanei, linkul la mostră."], "10 mesaje gata de trimis."],
           [3, 60, "inv", "Reclamele celor 5 branduri", ["Ce reclame rulează, de cât timp, în ce format.", "Mostra ta trebuie să arate mai bine decât reclama lor de acum."], "Știi ce să le spui fiecăruia."]
         ]},
         { theme: "Producție: mostre", blocks: [
           [1, 85, "prod", "Mostra 2: 3 imagini", ["Aceeași rețetă ca la mostra 1.", "Verifici produsul cu poza originală, detaliu cu detaliu."], "3 imagini pentru brandul 2."],
           [2, 60, "prod", "Reel pentru mostra 1", ["2 clipuri I2V din cele mai bune imagini.", "Montaj de 8–10 s, 9:16, cu beneficiul produsului pe ecran."], "Mostra 1 e completă."],
-          [2, 45, "cont", "Reel vorbit pentru Daria", ["Un hook din fișa ei, 10 s, cu vocea „Daria”.", "Îl programezi pentru joi."], "Reel programat."],
+          [2, 45, "cont", "Reel vorbit pentru Iness", ["Un hook din fișa ei, 10 s, cu vocea „Iness”.", "Îl programezi pentru joi."], "Reel programat."],
           [3, 90, "vanz", "Mesajele personalizate: firmele 11–20", ["Aceeași structură.", "Le notezi în tabel ca „gata de trimis”."], "20 de mesaje gata."],
           [3, 60, "admin", "Citești oferta și contractul", ["Notezi ce nu e clar sau ce ai schimba.", "Mi le trimiți în sesiunea următoare."], "Lista de întrebări e gata."]
         ]},
@@ -199,7 +199,7 @@ window.PLAN = {
           [2, 60, "prod", "Reel pentru mostra 4", ["2 clipuri I2V, montaj de 8–10 s, 9:16."], "Mostra 4 e completă."],
           [2, 30, "cont", "Build in public: săptămâna 3", ["„Am făcut 5 reclame fără ședință foto.” O mostră, cu acordul brandului sau cu produsul ascuns."], "Postat."],
           [3, 60, "prod", "Reel pentru mostra 5", ["2 clipuri I2V, montaj de 8–10 s, 9:16."], "Mostra 5 e completă."],
-          [3, 60, "admin", "Calendarul săptămânii 4", ["Programezi postările Dariei pentru săptămâna 4.", "Îți blochezi orele pentru mesaje în calendar."], "Săptămâna 4 e programată."]
+          [3, 60, "admin", "Calendarul săptămânii 4", ["Programezi postările lui Iness pentru săptămâna 4.", "Îți blochezi orele pentru mesaje în calendar."], "Săptămâna 4 e programată."]
         ]},
         { theme: "Verificare", blocks: [
           [1, 85, "prod", "Verificarea celor 5 mostre", ["Lista de verificare: fața, mâinile, produsul, textul, formatul.", "Refaci orice imagine cu dubii."], "5 mostre fără greșeli."],
@@ -221,7 +221,7 @@ window.PLAN = {
       days: [
         { theme: "Vânzări", blocks: [
           [1, 85, "vanz", "Mesaje: firmele 1–6", ["Mesajul personalizat și linkul la mostra lor (sau la cea mai apropiată).", "DM pe Instagram și email, în aceeași zi.", "Notezi în tabel data și canalul."], "6 firme contactate."],
-          [2, 75, "prod", "Lotul de imagini al Dariei", ["Pod: 8 imagini pentru săptămână.", "Oprești podul imediat după."], "8 imagini gata."],
+          [2, 75, "prod", "Lotul de imagini al lui Iness", ["Pod: 8 imagini pentru săptămână.", "Oprești podul imediat după."], "8 imagini gata."],
           [2, 45, "eu", "Sesiune cu Claude: săptămâna 4", ["Îmi trimiți primele răspunsuri, dacă există.", "Lucrăm împreună răspunsurile la obiecții."], "Ai răspunsurile pregătite."],
           [3, 90, "vanz", "Pregătești firmele 7–18", ["Verifici contactele: emailul, numele persoanei, contul de Instagram.", "Ajustezi mesajele."], "12 mesaje verificate."],
           [3, 60, "inv", "Obiecțiile: le exersezi", ["„E prea scump”, „Mă mai gândesc”, „E fals”.", "Răspunsurile din skill-ul sales-call, cu voce tare."], "Știi ce răspunzi la fiecare."]
@@ -231,11 +231,11 @@ window.PLAN = {
           [2, 60, "prod", "Reel-ul săptămânii", ["Din imaginile de luni, 8–12 s.", "Îl programezi pentru joi."], "Reel programat."],
           [2, 45, "vanz", "Răspunzi la ce a venit", ["Răspunzi în aceeași zi.", "Cine vrea să vorbească: propui 2 intervale pentru apel."], "Toate răspunsurile au primit răspuns."],
           [3, 90, "prod", "Mostră nouă pentru cine a răspuns", ["Dacă un brand a răspuns cu interes, mai faci 2 imagini pe alt produs de-al lor.", "Le duci la apel."], "Mostra extra e gata."],
-          [3, 60, "cont", "Comunitate", ["Comentarii utile la 10 conturi din nișă.", "Răspunsuri la toate mesajele Dariei."], "Gata."]
+          [3, 60, "cont", "Comunitate", ["Comentarii utile la 10 conturi din nișă.", "Răspunsuri la toate mesajele lui Iness."], "Gata."]
         ]},
         { theme: "Vânzări", blocks: [
           [1, 85, "vanz", "Mesaje: firmele 13–18", ["Aceeași rețetă.", "Notezi în tabel."], "18 firme contactate."],
-          [2, 60, "prod", "Reel vorbit pentru Daria", ["Un hook din fișa ei, 10 s, cu vocea „Daria”."], "Reel gata."],
+          [2, 60, "prod", "Reel vorbit pentru Iness", ["Un hook din fișa ei, 10 s, cu vocea „Iness”."], "Reel gata."],
           [2, 45, "vanz", "Răspunsuri și apeluri", ["Răspunzi la tot ce a venit.", "Programezi apelurile în săptămâna 5."], "Apelurile sunt în calendar."],
           [3, 120, "tech", "LoRA video: pregătirea datelor", ["Agentul pregătește clipurile pentru antrenarea Wan.", "Verifici că totul încape pe volum."], "Datele pentru LoRA video sunt gata."]
         ]},
@@ -244,7 +244,7 @@ window.PLAN = {
           [1, 35, "vanz", "Revenirea 1: firmele 1–6", ["Mesajul de revenire din Anexa A, ziua 3.", "Oferi varianta 9:16 a mostrei."], "6 reveniri trimise."],
           [2, 60, "cont", "Carusel cu sfaturi de stil", ["5 slide-uri, textul cu skill-ul carousel-builder.", "Programat pentru sâmbătă."], "Carusel programat."],
           [2, 45, "vanz", "Răspunsuri și apeluri", ["Răspunzi la tot.", "Programezi apelurile."], "Toate mesajele au răspuns."],
-          [3, 120, "prod", "Imagini pentru săptămâna 5", ["8 imagini noi pentru Daria.", "Alegi scene care au mers bine până acum."], "8 imagini gata."]
+          [3, 120, "prod", "Imagini pentru săptămâna 5", ["8 imagini noi pentru Iness.", "Alegi scene care au mers bine până acum."], "8 imagini gata."]
         ]},
         { theme: "Vânzări și public", blocks: [
           [1, 50, "vanz", "Mesaje: firmele 25–30", ["Aceeași rețetă."], "30 de firme contactate."],
@@ -275,7 +275,7 @@ window.PLAN = {
         { theme: "Vânzări", blocks: [
           [1, 50, "vanz", "Revenirea 1: firmele 19–30", ["Mesajul de revenire, ziua 3 (pentru cei de joi și vineri)."], "Toate primele reveniri trimise."],
           [1, 35, "vanz", "Revenirea 2: firmele 1–6", ["Mesajul din Anexa A, ziua 7: scurt, fără presiune."], "6 reveniri finale trimise."],
-          [2, 75, "prod", "Lotul de imagini al Dariei", ["Pod: 8 imagini.", "Oprești podul imediat după."], "8 imagini gata."],
+          [2, 75, "prod", "Lotul de imagini al lui Iness", ["Pod: 8 imagini.", "Oprești podul imediat după."], "8 imagini gata."],
           [2, 45, "eu", "Sesiune cu Claude: săptămâna 5", ["Pregătim fiecare apel: ce știm despre firmă, ce ofertă prezinți întâi."], "Fiecare apel are o fișă."],
           [3, 120, "vanz", "Repetiția apelului", ["Faci apelul de probă cu un prieten sau cu voce tare.", "Ai mostra deschisă pe ecran, oferta pregătită, linkul de plată sau factura."], "Ești pregătit."]
         ]},
@@ -290,11 +290,11 @@ window.PLAN = {
           [1, 35, "vanz", "Apeluri", ["Aceeași structură de 15 minute."], "Rezultatele notate."],
           [2, 60, "vanz", "Oferte scrise pentru cine a zis „da”", ["Contractul de pilot și factura.", "Condițiile scrise înainte de plată."], "Ofertele trimise."],
           [2, 45, "cont", "Comunitate", ["Răspunsuri și comentarii utile."], "Gata."],
-          [3, 120, "prod", "Imagini pentru săptămâna 6", ["8 imagini noi pentru Daria."], "8 imagini gata."]
+          [3, 120, "prod", "Imagini pentru săptămâna 6", ["8 imagini noi pentru Iness."], "8 imagini gata."]
         ]},
         { theme: "Clienți", blocks: [
           [1, 85, "vanz", "Apeluri și piloți", ["Apelurile rămase.", "Cine a semnat: îi trimiți formularul de brief (Anexa B)."], "Piloții semnați au brief-ul."],
-          [2, 60, "prod", "Pilotul 1: primele idei", ["Din brief: 10 idei, alegem 5 cu clientul.", "Folosești Content Brain din site."], "Ideile aprobate."],
+          [2, 60, "prod", "Pilotul 1: primele idei", ["Din brief: 10 idei, alegem 5 cu clientul.", "Folosești zona „Idei de conținut” de pe site."], "Ideile aprobate."],
           [2, 45, "vanz", "Revenirea 2: firmele 19–30", ["Mesajul de revenire, ziua 7."], "Toate reveniri trimise."],
           [3, 120, "tech", "Verifici LoRA video", ["Testezi checkpoint-urile pe 2 clipuri.", "Notezi ce merge."], "Știi dacă LoRA video e folosibil."]
         ]},
@@ -303,7 +303,7 @@ window.PLAN = {
           [1, 25, "eu", "Raportul sprintului, cu Claude", ["Îmi trimiți tabelul de vânzări.", "Scriu raportul și actualizez planul."], "Raportul e în repo."],
           [2, 60, "prod", "Pilotul 1: imaginile", ["Lotul 1: 6 imagini din ideile aprobate."], "6 imagini gata de verificare."],
           [2, 30, "cont", "Build in public: rezultatele sprintului", ["Cifrele, fără nume de firme."], "Postat."],
-          [3, 120, "prod", "Reels pentru săptămâna 6", ["2 reels pentru Daria."], "2 reels gata."]
+          [3, 120, "prod", "Reels pentru săptămâna 6", ["2 reels pentru Iness."], "2 reels gata."]
         ]},
         { theme: "Jumătate de zi", blocks: [
           [1, 85, "prod", "Pilotul 1: planul pe 14 zile", ["Ce livrăm, când, cum măsurăm.", "Îl trimiți clientului spre aprobare."], "Planul e aprobat."],
@@ -333,7 +333,7 @@ window.PLAN = {
         { theme: "Clienți și N2", blocks: [
           [1, 85, "vanz", "N2: profilul clientului ideal", ["Pornești de la fișa N2 de la mine.", "Dezvoltatori premium și agenții de top: ce postează, cine decide."], "Profilul e clar, cu 3 criterii."],
           [2, 45, "eu", "Sesiune cu Claude: săptămâna 6", ["Feedback-ul clientului la lotul 1.", "Îmi ceri fișa N2 și mesajele."], "Ai fișa N2."],
-          [2, 75, "prod", "Lotul de imagini al Dariei", ["Pod: 8 imagini."], "8 imagini gata."],
+          [2, 75, "prod", "Lotul de imagini al lui Iness", ["Pod: 8 imagini."], "8 imagini gata."],
           [3, 60, "inv", "Studiu: imobiliarele pe Instagram", ["10 conturi de dezvoltatori și agenții din România.", "Cine face video, cine nu, ce tip de video."], "Știi ce lipsește în nișă."],
           [3, 90, "prod", "Matei: fișa și primele 20 de fețe", ["Doar dacă N2 cere un prezentator bărbat.", "Fișa de pe site, pagina Matei."], "20 de fețe pentru Matei."],
           [3, 45, "tech", "F1: conturile tehnice", ["Supabase și Vercel pe numele tău.", "Cheile nu le pui în chat."], "Conturile există."]
@@ -348,7 +348,7 @@ window.PLAN = {
           [1, 85, "vanz", "Lista N2: firmele 16–30", ["Aceleași surse.", "Persoana de contact pentru fiecare."], "30 de firme N2 în tabel."],
           [2, 60, "prod", "Pilotul 1: lotul 2, planificare", ["Ce a mers în lotul 1, ce schimbăm.", "Ideile pentru lotul 2."], "Lotul 2 e planificat."],
           [2, 30, "cont", "Build in public", ["Ce am învățat din primul pilot."], "Postat."],
-          [3, 120, "prod", "Imagini pentru săptămâna 7", ["8 imagini pentru Daria."], "8 imagini gata."]
+          [3, 120, "prod", "Imagini pentru săptămâna 7", ["8 imagini pentru Iness."], "8 imagini gata."]
         ]},
         { theme: "Jumătate de zi", blocks: [
           [1, 85, "prod", "Pilotul 1: lotul 2, imaginile", ["6 imagini noi."], "6 imagini gata."],
@@ -365,37 +365,37 @@ window.PLAN = {
       kpi: ["5 / 5 mostre N2", "Lotul 2 livrat", "30 de mesaje N2 gata"],
       live: true,
       post: [1, 2, 4, 5, 6],
-      eu: ["Content Brain în cod (F1)", "Scripturile pentru mostrele N2", "Raportul de la jumătatea pilotului"],
+      eu: ["Platforma internă (F1): biblioteca de caractere și de idei", "Scripturile pentru mostrele N2", "Raportul de la jumătatea pilotului"],
       days: [
         { theme: "Producție: mostre N2", blocks: [
-          [1, 85, "prod", "Mostra N2 #1", ["Pozele publice ale unei proprietăți de la firma respectivă (doar pentru mostra trimisă lor).", "Video de 15–20 s: imagini animate și prezentatorul AI (Daria sau Matei), declarat AI."], "Mostra 1 e gata."],
+          [1, 85, "prod", "Mostra N2 #1", ["Pozele publice ale unei proprietăți de la firma respectivă (doar pentru mostra trimisă lor).", "Video de 15–20 s: imagini animate și prezentatorul AI (Iness sau Matei), declarat AI."], "Mostra 1 e gata."],
           [2, 45, "eu", "Sesiune cu Claude: săptămâna 7", ["Scripturile pentru mostrele N2.", "Raportul de la jumătatea pilotului."], "Ai scripturile."],
-          [2, 75, "prod", "Lotul de imagini al Dariei", ["Pod: 8 imagini."], "8 imagini gata."],
+          [2, 75, "prod", "Lotul de imagini al lui Iness", ["Pod: 8 imagini."], "8 imagini gata."],
           [3, 120, "prod", "Matei: setul de antrenare, partea 1", ["Pozele 01–17 după structura v2."], "17 poze gata."]
         ]},
         { theme: "Producție: mostre N2", blocks: [
           [1, 85, "prod", "Mostra N2 #2", ["Aceeași rețetă."], "Mostra 2 e gata."],
           [2, 60, "prod", "Pilotul 1: lotul 2, reels", ["2 reels."], "Reels gata."],
-          [2, 45, "cont", "Reel-ul Dariei", ["Din imaginile de luni."], "Programat."],
+          [2, 45, "cont", "Reel-ul lui Iness", ["Din imaginile de luni."], "Programat."],
           [3, 120, "prod", "Matei: setul de antrenare, partea 2", ["Pozele 18–34."], "Setul lui Matei e complet."]
         ]},
         { theme: "Producție: mostre N2", blocks: [
           [1, 85, "prod", "Mostra N2 #3", ["Aceeași rețetă."], "Mostra 3 e gata."],
           [2, 60, "prod", "Pilotul 1: verificarea și livrarea lotului 2", ["Lista de verificare, apoi livrarea."], "Lotul 2 livrat."],
           [2, 45, "vanz", "Mesajele N2: firmele 1–15", ["Personalizate, cu linkul la mostră."], "15 mesaje gata."],
-          [3, 120, "tech", "Matei: antrenarea LoRA", ["Agentul pornește antrenarea, ca la Daria."], "LoRA Matei se antrenează."]
+          [3, 120, "tech", "Matei: antrenarea LoRA", ["Agentul pornește antrenarea, ca la Iness."], "LoRA Matei se antrenează."]
         ]},
         { theme: "Producție: mostre N2", blocks: [
           [1, 85, "prod", "Mostra N2 #4", ["Aceeași rețetă."], "Mostra 4 e gata."],
           [2, 60, "vanz", "Mesajele N2: firmele 16–30", ["Personalizate."], "30 de mesaje gata."],
-          [2, 45, "cont", "Carusel pentru Daria", ["5 slide-uri."], "Programat."],
-          [3, 120, "tech", "Matei: alegi checkpoint-ul", ["Același test ca la Daria."], "Checkpoint ales."]
+          [2, 45, "cont", "Carusel pentru Iness", ["5 slide-uri."], "Programat."],
+          [3, 120, "tech", "Matei: alegi checkpoint-ul", ["Același test ca la Iness."], "Checkpoint ales."]
         ]},
         { theme: "Producție și public", blocks: [
           [1, 85, "prod", "Mostra N2 #5", ["Aceeași rețetă."], "Toate cele 5 mostre N2 sunt gata."],
           [2, 60, "admin", "Pilotul 1: cifrele de la jumătate", ["Statisticile reclamelor sau ale postărilor, de la client.", "Notezi în tabel."], "Cifrele sunt notate."],
           [2, 30, "cont", "Build in public", ["Primul video cu un prezentator AI pentru imobiliare (fără numele firmei)."], "Postat."],
-          [3, 120, "prod", "Imagini pentru săptămâna 8", ["8 imagini pentru Daria."], "8 imagini gata."]
+          [3, 120, "prod", "Imagini pentru săptămâna 8", ["8 imagini pentru Iness."], "8 imagini gata."]
         ]},
         { theme: "Jumătate de zi", blocks: [
           [1, 85, "prod", "Verificarea mostrelor N2", ["Lista de verificare.", "Linkuri private pentru fiecare."], "5 mostre gata de trimis."],
@@ -417,8 +417,8 @@ window.PLAN = {
         { theme: "Vânzări", blocks: [
           [1, 85, "vanz", "Mesaje N2: firmele 1–8", ["DM, email sau LinkedIn, cu linkul la mostră."], "8 firme contactate."],
           [2, 45, "eu", "Sesiune cu Claude: săptămâna 8", ["Raportul pilotului și propunerea de abonament."], "Ai raportul."],
-          [2, 75, "prod", "Lotul de imagini al Dariei", ["Pod: 8 imagini, cu tematică de iarnă."], "8 imagini gata."],
-          [3, 120, "prod", "Conținutul de sărbători al Dariei", ["Imagini pentru săptămânile 9 și 10: decembrie, cadouri, Revelion.", "Pregătești totul acum, ca să ai liber de sărbători."], "Conținutul de sărbători e gata."]
+          [2, 75, "prod", "Lotul de imagini al lui Iness", ["Pod: 8 imagini, cu tematică de iarnă."], "8 imagini gata."],
+          [3, 120, "prod", "Conținutul de sărbători al lui Iness", ["Imagini pentru săptămânile 9 și 10: decembrie, cadouri, Revelion.", "Pregătești totul acum, ca să ai liber de sărbători."], "Conținutul de sărbători e gata."]
         ]},
         { theme: "Vânzări", blocks: [
           [1, 85, "vanz", "Mesaje N2: firmele 9–16", ["Aceeași rețetă."], "16 firme contactate."],
@@ -430,7 +430,7 @@ window.PLAN = {
           [1, 85, "vanz", "Mesaje N2: firmele 17–24", ["Aceeași rețetă."], "24 de firme contactate."],
           [2, 60, "vanz", "Apelul de raport cu clientul N1", ["Ce am livrat, cifrele, ce am învățat.", "Propunerea de abonament, la momentul nevoii."], "Clientul are propunerea."],
           [2, 45, "vanz", "Revenirea 1: firmele N2 1–8", ["Mesajul de revenire, ziua 3."], "Reveniri trimise."],
-          [3, 120, "tech", "F1: Content Brain, testat", ["Testezi ce am construit în repo.", "Notezi ce lipsește."], "Feedback-ul e notat."]
+          [3, 120, "tech", "Zonele de generare: ce cer clienții", ["Te uiți ce au generat vizitatorii (din mesajele primite) și ce întreabă.", "Notezi ce zonă lipsește sau ce trebuie îmbunătățit."], "Lista de îmbunătățiri e notată."]
         ]},
         { theme: "Vânzări", blocks: [
           [1, 85, "vanz", "Mesaje N2: firmele 25–30 și reveniri", ["Ultimele mesaje.", "Revenirea 1 pentru firmele 9–16."], "Toate cele 30 contactate."],
@@ -465,7 +465,7 @@ window.PLAN = {
           [1, 85, "vanz", "Lista N3: locațiile 1–15", ["Booking și Google Maps: rating mare și Instagram slab.", "Hoteluri boutique, pensiuni premium, rooftop-uri, spa-uri."], "15 locații în tabel."],
           [2, 45, "eu", "Sesiune cu Claude: săptămâna 9", ["Îmi ceri fișa N3 și fișa Ilincăi."], "Ai fișele."],
           [2, 60, "vanz", "Răspunsuri N2", ["Răspunzi la tot ce a venit."], "Gata."],
-          [3, 120, "tech", "LoRA video: test complet", ["Un clip de 5 s cu Daria din LoRA video.", "Compari cu SCAIL-2 și cu I2V simplu."], "Știi ce folosești pentru video."]
+          [3, 120, "tech", "LoRA video: test complet", ["Un clip de 5 s cu Iness din LoRA video.", "Compari cu SCAIL-2 și cu I2V simplu."], "Știi ce folosești pentru video."]
         ]},
         { theme: "Liste", blocks: [
           [1, 85, "vanz", "Lista N3: locațiile 16–30", ["Aceleași surse."], "30 de locații în tabel."],
@@ -516,7 +516,7 @@ window.PLAN = {
         { theme: "Anul Nou", blocks: [] },
         { theme: "Anul Nou", blocks: [] },
         { theme: "Recenzie și odihnă", blocks: [
-          [1, 45, "cont", "Programarea săptămânii 11", ["Postările Dariei pentru prima săptămână din ianuarie.", "6 și 7 ianuarie sunt sărbători legale."], "Săptămâna 11 e programată."]
+          [1, 45, "cont", "Programarea săptămânii 11", ["Postările lui Iness pentru prima săptămână din ianuarie.", "6 și 7 ianuarie sunt sărbători legale."], "Săptămâna 11 e programată."]
         ]}
       ]
     },
@@ -534,14 +534,14 @@ window.PLAN = {
         { theme: "Vânzări", blocks: [
           [1, 85, "vanz", "Mesaje N3: locațiile 1–10", ["DM și email, cu linkul la mostră."], "10 locații contactate."],
           [2, 45, "eu", "Sesiune cu Claude: săptămâna 11", ["Tabelul N2: pregătim decizia."], "Decizia N2 e pregătită."],
-          [2, 75, "prod", "Lotul de imagini al Dariei", ["Pod: 8 imagini de ianuarie."], "8 imagini gata."],
+          [2, 75, "prod", "Lotul de imagini al lui Iness", ["Pod: 8 imagini de ianuarie."], "8 imagini gata."],
           [3, 120, "tech", "Ilinca: antrenarea LoRA", ["Agentul pornește antrenarea."], "LoRA Ilinca se antrenează."]
         ]},
         { theme: "Vânzări", blocks: [
           [1, 85, "vanz", "Mesaje N3: locațiile 11–20", ["Aceeași rețetă."], "20 de locații contactate."],
           [2, 60, "admin", "Decizia pentru nișa 2", ["Pragurile: ≥ 15% răspunsuri, ≥ 3 apeluri, ≥ 1 pilot plătit.", "Scrii decizia în jurnal."], "Decizia N2 e scrisă."],
           [2, 45, "cont", "Reel-ul săptămânii", ["Din imaginile de luni."], "Programat."],
-          [3, 120, "tech", "Ilinca: alegi checkpoint-ul", ["Același test ca la Daria."], "Checkpoint ales."]
+          [3, 120, "tech", "Ilinca: alegi checkpoint-ul", ["Același test ca la Iness."], "Checkpoint ales."]
         ]},
         { theme: "Sărbătoare (Boboteaza)", blocks: [
           [1, 60, "prod", "Producție ușoară", ["Imagini pentru săptămâna 12, fără mesaje către firme."], "Gata."]
@@ -576,7 +576,7 @@ window.PLAN = {
         { theme: "Apeluri N3", blocks: [
           [1, 85, "vanz", "Apeluri N3 și revenirea 2", ["Apelurile programate.", "Revenirea 2 pentru locațiile 1–20."], "Rezultatele notate."],
           [2, 45, "eu", "Sesiune cu Claude: bilanțul", ["Îmi trimiți toate tabelele.", "Pregătim raportul pe 12 săptămâni."], "Raportul e în lucru."],
-          [2, 75, "prod", "Lotul de imagini al Dariei", ["Pod: 8 imagini."], "8 imagini gata."]
+          [2, 75, "prod", "Lotul de imagini al lui Iness", ["Pod: 8 imagini."], "8 imagini gata."]
         ]},
         { theme: "Bilanț: cifre", blocks: [
           [1, 85, "admin", "Cifrele celor 12 săptămâni", ["Contacte, răspunsuri, apeluri, piloți, clienți, venit, costuri.", "Pe fiecare nișă."], "Tabelul final e complet."],
@@ -589,7 +589,7 @@ window.PLAN = {
         ]},
         { theme: "Bilanț: platforma", blocks: [
           [1, 85, "admin", "Decizia pentru F1", ["Ce module construim primele, după ce a cerut lumea.", "Cât costă și cât durează."], "Decizia F1 e scrisă."],
-          [2, 60, "tech", "F1: ce e deja făcut", ["Testezi tot ce e în repo: Content Brain, image-to-prompt, generarea."], "Lista de buguri și de idei."]
+          [2, 60, "tech", "F1: ce e deja făcut", ["Testezi tot ce e pe site și în repo: cele 5 zone de generare și platforma internă."], "Lista de buguri și de idei."]
         ]},
         { theme: "Planul pe lunile 4–6", blocks: [
           [1, 85, "eu", "Planul pe lunile 4–6, cu Claude", ["Nișele câștigătoare, caracterele, platforma, prețurile.", "Actualizăm PLAN_COMPLET.md și pagina asta."], "Planul nou e în repo."],
