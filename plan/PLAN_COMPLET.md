@@ -1,6 +1,6 @@
 # PLAN COMPLET: studio și platformă de marketing cu caractere AI
 
-*Nume de lucru: „Studio”. Versiunea 1, octombrie 2026. E un document viu: îl actualizăm după fiecare etapă. Deciziile și progresul se notează în `plan/JURNAL.md`.*
+*Numele: **MUSQAI** (Marketing Universe Studio · Quantum AI). Versiunea 1, octombrie 2026. E un document viu: îl actualizăm după fiecare etapă. Deciziile și progresul se notează în `plan/JURNAL.md`. Planul zi cu zi și site-ul sunt în `musqai/`.*
 
 ---
 
@@ -464,7 +464,7 @@ Cu ele aflăm ce tip de caracter, format și hook merge, pe ce nișă și la ce 
 
 ## 17. Întrebări deschise (le decizi tu)
 
-1. Numele studioului / platformei + domeniul.
+1. ~~Numele~~ ✅ **MUSQAI**. Rămâne domeniul: musqai.com părea liber pe 20 octombrie 2026.
 2. PFA sau SRL?
 3. Bugetul lunar maxim pentru început?
 4. Câte ore pe zi poți lucra la asta?

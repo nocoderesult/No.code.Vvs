@@ -4,6 +4,21 @@
 
 ---
 
+## 2026-10-20 (seara)
+
+**Decizii:**
+- Numele: **MUSQAI**, adică **Marketing Universe Studio · Quantum AI**. „Quantum” e doar în nume; nu promitem calcul cuantic.
+- Caracterele casei au nume: **Daria** (lifestyle și lux), **Matei** (business și imobiliare), **Ilinca** (travel și food), **Ioana** (produse de zi cu zi), **Mira** (fața platformei). Fișele complete sunt în `musqai/site/data.js`.
+- Planul începe **luni, 26 octombrie 2026** și are 12 săptămâni, zi cu zi și oră cu oră, în modurile de 2, 4 sau 8 ore.
+
+**Ce s-a făcut:**
+- Planul interactiv: https://claude.ai/artifact/PxsV2fLh32QkoKwrvYGqW2 (fișierele în `musqai/plan/`).
+- Site-ul MUSQAI, prototip pe mai multe pagini, cu Studio demo (Content Brain și Image → Prompt merg live): https://claude.ai/artifact/Pfw75NmdRWfk1g54VUmsi1 (fișierele în `musqai/site/`).
+
+**Pasul următor:** săptămâna 0 din plan: domeniul musqai.com, numele @musqai, contul Dariei, cele 6 întrebări, volumul RunPod.
+
+---
+
 ## 2026-10-20
 
 **Decizii:**
