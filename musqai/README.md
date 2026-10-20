@@ -21,7 +21,7 @@ După orice schimbare în `content.mjs` sau `static/`, rulezi `node musqai/web/b
 ## Publicarea pe Cloudflare Workers (o singură dată)
 1. Cloudflare → Workers & Pages → Create application → importă repo-ul `nocoderesult/No.code.Vvs`.
 2. Project name: `musqai` (trebuie să fie exact numele din `wrangler.toml`). Build command: gol. Deploy command: `npx wrangler deploy`.
-3. Deploy. Primul build pică, pentru că Cloudflare ia branch-ul `main`, unde e alt proiect, cu alt nume.
+3. Deploy. Atenție: primul build folosește branch-ul `main`, unde e alt proiect; Cloudflare îl publică sub numele `musqai` până schimbi branch-ul.
 4. În Worker-ul `musqai`: Settings → Build → Branch control → Production branch: `comfy-ui-rr` → Save. Următorul push pe `comfy-ui-rr` publică site-ul.
 
 Root directory poate rămâne gol: în rădăcina repo-ului e un `wrangler.toml` care trimite la `musqai/web`. Merge și cu Root directory `musqai/web`, unde e un `wrangler.toml` echivalent.
