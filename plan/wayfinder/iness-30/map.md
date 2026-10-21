@@ -29,6 +29,8 @@ Contul **@inessofficial** (Instagram + TikTok, în română) a publicat **30 de 
 
 <!-- un rând pe tichet închis: [titlu](issues/NN-...md): esența răspunsului -->
 
+- [Ce voce română are Iness?](issues/04-vocea.md): ElevenLabs v4 + Voice Design, lip-sync din audio în Kling. Netestat pe română încă.
+
 ## Not yet specified
 
 - **Calendarul celor 30 de zile:** ce postare în ce zi. Se poate face după ce sunt stabilite seriile și rețeta primului reel.
