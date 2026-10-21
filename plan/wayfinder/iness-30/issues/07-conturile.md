@@ -1,7 +1,7 @@
 # Configurăm conturile @ines.s.official pe Instagram și TikTok
 
 Type: task
-Status: open
+Status: claimed
 Blocked by: 06
 
 ## Question
