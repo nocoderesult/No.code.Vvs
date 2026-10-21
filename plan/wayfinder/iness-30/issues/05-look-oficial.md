@@ -1,7 +1,7 @@
 # Aliniem fișa lui Iness la poza oficială
 
 Type: task
-Status: open
+Status: claimed
 Blocked by: —
 
 ## Question
