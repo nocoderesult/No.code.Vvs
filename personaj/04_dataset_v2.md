@@ -20,7 +20,7 @@ De aici încolo folosești DOAR `ref_fata.png` și `ref_corp.png`.
 
 **ÎNCEPUT** (copiezi la fiecare poză):
 ```
-Use the reference images. Keep the exact same woman: same face, same jet-black jaw-length bob with a side part, same green-hazel eyes, same warm tan skin, same athletic hourglass figure. She is 25 years old. No tattoos anywhere on her body.
+Use the reference images. Keep the exact same woman: same face, same jet-black jaw-length bob with a center part, same light green-hazel eyes, same fine freckles, same thin silver hoop earrings, same warm tan skin, same athletic hourglass figure. She is 25 years old. No tattoos anywhere on her body.
 ```
 
 **SFÂRȘIT** (copiezi la fiecare poză):
@@ -29,7 +29,7 @@ Real smartphone photo, natural skin texture, not airbrushed, realistic light. 3:
 ```
 
 ## Verificare (fiecare poză, înainte s-o păstrezi)
-- [ ] fața seamănă 100% cu ref_fata (ochi verde-alune, cărare laterală, bob la maxilar)
+- [ ] fața seamănă 100% cu ref_fata (ochi verde-alune, **cărare pe mijloc**, bob la maxilar, pistrui fini, cercei rotunzi argintii)
 - [ ] fără tatuaj, fără alunițe/semne noi pe gât
 - [ ] mâini corecte (5 degete), unghii nude-roz migdală
 - [ ] fără text, logo, steluța Gemini în colț

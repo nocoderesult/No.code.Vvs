@@ -2,20 +2,24 @@
 
 Personaj 100% fictiv, generat cu AI. Nu seamănă intenționat cu nicio persoană reală.
 
+**Referința oficială a look-ului:** poza de pe site, `musqai/web/static/assets/img/iness-960.jpg` (decizia din 21.10.2026). Când textul și poza nu se potrivesc, are dreptate poza.
+
 ## Identitate
-- Nume: **Iness** · vârstă aparentă 25 · nișă: lifestyle & lux (mașini, hoteluri, călătorii, outfit-uri)
+- Nume: **Iness** · vârstă aparentă 25 · Ambasador AI · conținut: 60% umor „o AI care trăiește în România”, 20% culise, 20% lifestyle (vezi `plan/wayfinder/iness-30/map.md`)
+- Conturi: **@inessofficial** pe Instagram și TikTok, în română
 - Cuvânt-declanșator LoRA: **d4ria**
 
 ## Descrierea fixă (se copiază identic în fiecare prompt — căsuța „Personaj (fix)”)
 ```
-d4ria, a 25-year-old woman with radiant warm tan skin, a sleek jet-black bob haircut ending at her jawline with a sharp side part, piercing almond-shaped green-hazel eyes, long voluminous dark eyelashes, dark sculpted eyebrows, full dusty-pink lips, high cheekbones with a soft natural glow, small diamond stud earrings, clear smooth neck, athletic hourglass figure with a narrow toned waist, full proportionate bust and rounded hips, toned legs, medium almond-shaped nude-pink nails, natural skin texture with visible pores
+d4ria, a 25-year-old woman with radiant warm tan skin, a sleek straight jet-black blunt bob ending just below her jawline with a center part, piercing almond-shaped light green-hazel eyes, long voluminous dark eyelashes, dark sculpted eyebrows, full dusty-pink lips, high cheekbones with a soft natural glow, fine light freckles across her nose and cheeks, thin silver hoop earrings and a tiny silver stud in her upper ear, clear smooth neck, athletic hourglass figure with a narrow toned waist, full proportionate bust and rounded hips, toned legs, medium almond-shaped nude-pink nails, natural skin texture with visible pores
 ```
 
 ## Semne care NU se schimbă niciodată (checklist la fiecare poză)
-- [ ] bob negru-corb până la maxilar, cărare laterală
-- [ ] ochi verzi-alune, migdalați
+- [ ] bob drept negru-corb, puțin sub maxilar, **cărare pe mijloc**
+- [ ] ochi verzi-alune deschiși, migdalați
+- [ ] pistrui fini pe nas și pomeți
 - [ ] ten bronzat cald
-- [ ] cercei mici cu diamant
+- [ ] cercei rotunzi subțiri, argintii (+ un mic cercel argintiu sus pe ureche)
 - [ ] gât curat (fără alunițe/semne)
 - [ ] FĂRĂ tatuaje (încheieturi și corp curate)
 - [ ] unghii medii migdală, nude-roz
@@ -33,8 +37,8 @@ machiaj (natural ↔ smoky de seară), coafură (bob drept, bob ondulat, după u
 6. **Verificare** – fiecare poză nouă se compară cu fața de referință; ce nu seamănă se șterge.
 
 ## Instagram
-- Look 100% realist, dar contul e marcat ca AI: în bio „AI creator ✨” + eticheta „AI info” la postări
-  (regula Meta pentru conținut fotorealist AI + AI Act în UE).
+- Look 100% realist, dar contul e marcat ca AI: în bio „Creator AI · făcută de MUSQAI”, toggle-ul de profil AI pe Instagram
+  și etichetă AI vizibilă pe fiecare postare (AI Act art. 50 + regulile Meta/TikTok). Checklistul: `plan/wayfinder/iness-30/research/02-eticheta-ai.md`.
 - Înainte de lansare: 9–12 postări gata, ca grila să arate plină din prima zi.
 
 ## Note de consistență
