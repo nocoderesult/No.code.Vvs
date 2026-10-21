@@ -29,6 +29,7 @@ Contul **@inessofficial** (Instagram + TikTok, în română) a publicat **30 de 
 
 <!-- un rând pe tichet închis: [titlu](issues/NN-...md): esența răspunsului -->
 
+- [Ce unealtă video AI folosim pentru reels-urile lui Iness?](issues/01-unealta-video.md): Kling Premier (Avatar 2.0 Pro pentru vorbit, 3.0 Omni pentru restul) + ElevenLabs; rezervă HeyGen; româna de testat.
 - [Ce trebuie bifat ca Iness să fie etichetată corect ca AI?](issues/02-eticheta-ai.md): etichetă vizibilă pe fiecare postare (AI Act din 2.08.2026), toggle de profil AI pe IG, eticheta TikTok obligatorie, checklist de 10 pași.
 - [Cu ce facem DM-ul automat la comentariul „INESS”?](issues/03-dm-automat.md): ManyChat pe Instagram; pe TikTok nu se poate din UE, deci „scrie-mi INESS în mesaj”.
 - [Ce voce română are Iness?](issues/04-vocea.md): ElevenLabs v4 + Voice Design, lip-sync din audio în Kling. Netestat pe română încă.
