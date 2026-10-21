@@ -1,7 +1,7 @@
 # Cum arată și sună contul @inessofficial?
 
 Type: grilling
-Status: open
+Status: claimed
 Blocked by: 02
 
 ## Question
