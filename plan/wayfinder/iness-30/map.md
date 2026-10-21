@@ -19,7 +19,7 @@ Contul **@inessofficial** (Instagram + TikTok, în română) a publicat **30 de 
   - Omul: video în Kling/Seedance din browser și postarea.
 - **Buget:** 150–300 €/lună pentru unelte.
 - **Reguli fixe:**
-  - etichetă AI în bio („Creator AI · făcută de MUSQAI”) și „AI info” pe fiecare postare;
+  - etichetă AI în bio („Creator AI · făcută de MUSQAI”), toggle de profil AI pe IG și etichetă vizibilă pe fiecare postare, după checklistul din [research/02-eticheta-ai.md](research/02-eticheta-ai.md);
   - fără nuditate, fără persoane reale, fără mărturii false;
   - parolele nu se dau în chat.
 - **Skill-uri de consultat:** `reel-script`, `prompt-builder`, `caption-writer`, `carousel-builder`, `content-calendar`, `niche-research`, `grilling`, `domain-modeling`.
@@ -29,6 +29,7 @@ Contul **@inessofficial** (Instagram + TikTok, în română) a publicat **30 de 
 
 <!-- un rând pe tichet închis: [titlu](issues/NN-...md): esența răspunsului -->
 
+- [Ce trebuie bifat ca Iness să fie etichetată corect ca AI?](issues/02-eticheta-ai.md): etichetă vizibilă pe fiecare postare (AI Act din 2.08.2026), toggle de profil AI pe IG, eticheta TikTok obligatorie, checklist de 10 pași.
 - [Cu ce facem DM-ul automat la comentariul „INESS”?](issues/03-dm-automat.md): ManyChat pe Instagram; pe TikTok nu se poate din UE, deci „scrie-mi INESS în mesaj”.
 - [Ce voce română are Iness?](issues/04-vocea.md): ElevenLabs v4 + Voice Design, lip-sync din audio în Kling. Netestat pe română încă.
 
