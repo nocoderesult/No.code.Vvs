@@ -29,6 +29,7 @@ Contul **@inessofficial** (Instagram + TikTok, în română) a publicat **30 de 
 
 <!-- un rând pe tichet închis: [titlu](issues/NN-...md): esența răspunsului -->
 
+- [Cu ce facem DM-ul automat la comentariul „INESS”?](issues/03-dm-automat.md): ManyChat pe Instagram; pe TikTok nu se poate din UE, deci „scrie-mi INESS în mesaj”.
 - [Ce voce română are Iness?](issues/04-vocea.md): ElevenLabs v4 + Voice Design, lip-sync din audio în Kling. Netestat pe română încă.
 
 ## Not yet specified
