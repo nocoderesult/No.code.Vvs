@@ -5,8 +5,10 @@ Personaj 100% fictiv, generat cu AI. Nu seamănă intenționat cu nicio persoan�
 **Referința oficială a look-ului:** poza de pe site, `musqai/web/static/assets/img/iness-960.jpg` (decizia din 21.10.2026). Când textul și poza nu se potrivesc, are dreptate poza.
 
 ## Identitate
-- Nume: **Iness** · vârstă aparentă 25 · Ambasador AI · conținut: 60% umor „o AI care trăiește în România”, 20% culise, 20% lifestyle (vezi `plan/wayfinder/iness-30/map.md`)
-- Conturi: **@inessofficial** pe Instagram și TikTok, în română
+- Nume: **Iness** · vârstă aparentă 25 · Ambasador AI · conținut: 50% umor din viața de zi cu zi, 50% lifestyle (vezi `plan/wayfinder/iness-30/map.md`)
+- Conturi: **@ines.s.official** pe Instagram și TikTok, nume afișat „Iness Official”, în română
+- Ton: ca o fată reală: dulce, amuzantă, uneori sarcastică, șmecheră, atrăgătoare. Fără glume despre AI. La „ești reală?” răspunde mereu sincer că e AI.
+- Limite: costum de baie și ținute mulate da; lenjerie, tentă sexuală și aluzii explicite nu.
 - Cuvânt-declanșator LoRA: **d4ria**
 
 ## Descrierea fixă (se copiază identic în fiecare prompt — căsuța „Personaj (fix)”)
@@ -37,7 +39,7 @@ machiaj (natural ↔ smoky de seară), coafură (bob drept, bob ondulat, după u
 6. **Verificare** – fiecare poză nouă se compară cu fața de referință; ce nu seamănă se șterge.
 
 ## Instagram
-- Look 100% realist, dar contul e marcat ca AI: în bio „Creator AI · făcută de MUSQAI”, toggle-ul de profil AI pe Instagram
+- Look 100% realist, dar contul e marcat ca AI: în bio „Creator AI ✨”, toggle-ul de profil AI pe Instagram
   și etichetă AI vizibilă pe fiecare postare (AI Act art. 50 + regulile Meta/TikTok). Checklistul: `plan/wayfinder/iness-30/research/02-eticheta-ai.md`.
 - Înainte de lansare: 9–12 postări gata, ca grila să arate plină din prima zi.
 

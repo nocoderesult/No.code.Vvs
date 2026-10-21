@@ -14,4 +14,4 @@ Facem cap-coadă un reel real, ca rețetă care se repetă:
 - montajul (subtitrare, durată);
 - captionul.
 
-Rezultatul e clipul plus rețeta scrisă pas cu pas, cu timpul și costul pentru fiecare pas. Pornim de la analiza reelului matrixlabai (sesiunea din 21.10.2026).
+Rezultatul e clipul plus rețeta scrisă pas cu pas, cu timpul și costul pentru fiecare pas. Pornim de la analiza reelului matrixlabai (sesiunea din 21.10.2026), dar **fără poanta „Sunt AI”**: poanta vine din viața de zi cu zi, ca la o fată reală.
