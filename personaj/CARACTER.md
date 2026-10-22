@@ -39,7 +39,7 @@ machiaj (natural ↔ smoky de seară), coafură (bob drept, bob ondulat, după u
 6. **Verificare** – fiecare poză nouă se compară cu fața de referință; ce nu seamănă se șterge.
 
 ## Instagram
-- Look 100% realist, dar contul e marcat ca AI: în bio „Creator AI ✨”, toggle-ul de profil AI pe Instagram
+- Look 100% realist, dar contul e marcat ca AI: în bio „Ambasador AI ✨ 100% virtuală, 0% filtre”, toggle-ul de profil AI pe Instagram
   și etichetă AI vizibilă pe fiecare postare (AI Act art. 50 + regulile Meta/TikTok). Checklistul: `plan/wayfinder/iness-30/research/02-eticheta-ai.md`.
 - Înainte de lansare: 9–12 postări gata, ca grila să arate plină din prima zi.
 
