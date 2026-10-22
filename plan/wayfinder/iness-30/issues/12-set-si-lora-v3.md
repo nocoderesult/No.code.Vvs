@@ -1,7 +1,7 @@
 # Refacem setul de antrenare și LoRA-ul lui Iness după metoda Mickmumpitz
 
 Type: task
-Status: open
+Status: resolved
 Blocked by: 05
 
 ## Question
@@ -19,3 +19,14 @@ Setul v2 trebuie refăcut după poza oficială (vezi [Aliniem fișa lui Iness la
 Ce nu rezolvă: vocea în română și lip-sync-ul rămân pe ElevenLabs + Kling, după [Ce unealtă video AI folosim pentru reels-urile lui Iness?](01-unealta-video.md).
 
 Gata când avem setul v3 aprobat de om, LoRA-ul ales (checkpoint-ul) și 3 poze de test care trec checklistul din `personaj/CARACTER.md`. Agentul de pe pod nu șterge nimic fără să întrebe și cere voie pentru download-uri peste 2 GB. LoRA-urile existente nu se ating.
+
+## Answer
+
+**Nu e nevoie.** Omul are deja **LoRA v2** (`d4ria`) pentru **Krea 2** (poze) și pentru **Wan** (video). Poza oficială e chiar din LoRA v2, iar look-ul oficial iese stabil: cărare pe mijloc, cercei argintii, pistrui. Nu refacem setul și nu antrenăm din nou.
+
+Din metoda Mickmumpitz rămân utile, dacă vreodată facem un v3:
+- descrieri lungi, în stilul Krea 2;
+- prim-planuri pe detaliile care alunecă;
+- alegerea checkpoint-ului între pașii 1250 și 2000, nu ultimul.
+
+Clipurile fără vorbit se pot face cu LoRA-ul Wan existent.

@@ -30,7 +30,7 @@ Ce nu am schimbat:
 - Site-ul: era deja după poză.
 - Numele tehnice (`d4ria`, `daria_v2_*.png`, `DARIA_CONTEXT.md`) rămân.
 
-**De știut:** pozele din setul v2 care s-au generat deja cu cărare laterală sau cercei cu diamant nu mai intră în setul LoRA. Se refac cu noul prefix, pornind de la poza oficială ca referință de față.
+**De știut:** ~~pozele v2 vechi se refac~~ Corectat pe 22.10: LoRA v2 e deja antrenat și dă look-ul oficial stabil (poza oficială e din el), deci nu refacem nimic. Prompturile actualizate contează doar pentru seturi viitoare.
 
 **Mesaj pentru agentul de pe pod** (de lipit în chat-ul lui):
 
@@ -38,6 +38,6 @@ Ce nu am schimbat:
 Update /workspace/persist/DARIA_CONTEXT.md — add a section "Official look (decided 21 Oct 2026)":
 - The official reference is the Iness photo (center part). Old descriptions with "side part" and "diamond stud earrings" are obsolete.
 - Look: sleek straight jet-black blunt bob just below the jawline, CENTER part, light green-hazel eyes, fine light freckles on nose and cheeks, thin silver hoop earrings + tiny silver stud in the upper ear, warm tan skin, no tattoos.
-- Dataset v2 prompts in the repo (personaj/04_dataset_v2.md, 02_dataset_edit.txt) are updated. Any v2 images already made with a side part or diamond studs must be excluded from LoRA training and regenerated.
+- Dataset v2 prompts in the repo (personaj/04_dataset_v2.md, 02_dataset_edit.txt) are updated for any future dataset. LoRA v2 (Krea 2 + Wan) already produces the official look — keep using it, nothing to retrain.
 - Do not delete any files without asking me first.
 ```
