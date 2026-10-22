@@ -29,10 +29,9 @@ Decis cu omul, în sesiunea de grilling din 21.10.2026.
 
 | Platformă | Text |
 |---|---|
-| Instagram (125/150 caractere) | `Ambasador AI ✨ 100% virtuală, 0% filtre` / `Dulce, dar nu mereu 😏 Lifestyle & umor din RO 🇷🇴` / `Colaborări ➜ DM · Comentează INESS 👇`, plus toggle-ul de profil „AI-generated profile” |
-| TikTok (56/80 caractere) | `Ambasador AI ✨ 🇷🇴` / `Dulce, dar nu mereu 😏` / `Scrie-mi INESS 💌` |
+| Instagram și TikTok (același text, 56 de caractere) | `Ambasador AI ✨` / `Dulce. Uneori. 😏` / `Colab ➜ DM 👇 Scrie-mi "INESS"`, plus pe Instagram toggle-ul de profil „AI-generated profile” |
 
-Bio-ul a fost refăcut pe 22.10, la cererea omului, mai bogat și cu „Ambasador AI” (prima variantă era „Creator AI ✨”). Eticheta AI rămâne pe primul rând, ca să se vadă fără „mai mult”.
+Ales de om pe 22.10, după mai multe runde de variante (prima era „Creator AI ✨”). Cuvântul „INESS” vine **în DM**: pe Instagram îl prinde automat ManyChat, cu trigger pe cuvânt cheie în DM; pe TikTok răspundem manual. Eticheta AI rămâne pe primul rând, ca să se vadă fără „mai mult”.
 
 **Imaginea**
 - Poză de profil: **nouă**, fața lui Iness mare, pe fundal **coral / roz cald plin**.

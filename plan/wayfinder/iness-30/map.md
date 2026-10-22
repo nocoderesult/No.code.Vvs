@@ -30,7 +30,7 @@ Contul **@ines.s.official** (Instagram + TikTok, în română) a publicat **30 d
 <!-- un rând pe tichet închis: [titlu](issues/NN-...md): esența răspunsului -->
 
 - [Refacem setul de antrenare și LoRA-ul lui Iness după metoda Mickmumpitz](issues/12-set-si-lora-v3.md): nu e nevoie, LoRA v2 (Krea 2 + Wan) dă deja look-ul oficial stabil.
-- [Cum arată și sună contul @ines.s.official?](issues/06-identitatea-contului.md): „Iness Official”, bio „Ambasador AI ✨ 100% virtuală, 0% filtre / Dulce, dar nu mereu 😏”, poză pe coral, ton de fată reală fără glume de AI, mix 50/50, costum de baie da, lenjerie nu.
+- [Cum arată și sună contul @ines.s.official?](issues/06-identitatea-contului.md): „Iness Official”, bio „Ambasador AI ✨ / Dulce. Uneori. 😏 / Colab ➜ DM 👇 Scrie-mi "INESS"”, poză pe coral, ton de fată reală fără glume de AI, mix 50/50, costum de baie da, lenjerie nu.
 - [Aliniem fișa lui Iness la poza oficială](issues/05-look-oficial.md): fișa și setul v2 urmează poza (cărare pe mijloc, pistrui, cercei argintii); LoRA v2 dă deja look-ul oficial.
 - [Ce unealtă video AI folosim pentru reels-urile lui Iness?](issues/01-unealta-video.md): Kling Premier (Avatar 2.0 Pro pentru vorbit, 3.0 Omni pentru restul) + ElevenLabs; rezervă HeyGen; româna de testat.
 - [Ce trebuie bifat ca Iness să fie etichetată corect ca AI?](issues/02-eticheta-ai.md): etichetă vizibilă pe fiecare postare (AI Act din 2.08.2026), toggle de profil AI pe IG, eticheta TikTok obligatorie, checklist de 10 pași.
