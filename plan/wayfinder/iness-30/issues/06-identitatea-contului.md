@@ -21,7 +21,7 @@ Decis cu omul, în sesiunea de grilling din 21.10.2026.
 
 **Contul**
 - Handle: **@ines.s.official** pe Instagram (deja creat) și pe TikTok.
-- Nume afișat: **„Iness Official”**.
+- Nume afișat: **„Iness Official”** pe Instagram, **„Iness baby”** pe TikTok (ales de om pe 23.10; handle-ul rămâne @ines.s.official pe ambele).
 - Link în bio: **slt.bio**. Contul nu se leagă de site deocamdată.
 - Highlights: niciunul la start.
 
