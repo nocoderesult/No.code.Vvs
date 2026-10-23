@@ -37,6 +37,8 @@ Contul **@ines.s.official** (Instagram + TikTok, în română) a publicat **30 d
 - [Cu ce facem DM-ul automat la comentariul „INESS”?](issues/03-dm-automat.md): ManyChat pe Instagram; pe TikTok nu se poate din UE, deci „scrie-mi INESS în mesaj”.
 - [Ce voce română are Iness?](issues/04-vocea.md): ElevenLabs v4 + Voice Design, lip-sync din audio în Kling. Netestat pe română încă.
 
+- ⚠️ **MiniMax H3 (greutăți deschise) nu e licențiat în UE** fără aprobare separată de la MiniMax. Nu publicăm nimic făcut cu H3 până nu se închide [Putem folosi MiniMax H3 (local, pe pod) pentru postările lui Iness?](issues/13-licenta-minimax-h3.md).
+
 ## Not yet specified
 
 - **Calendarul celor 30 de zile:** ce postare în ce zi. Se poate face după ce sunt stabilite seriile și rețeta primului reel.
