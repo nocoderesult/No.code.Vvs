@@ -18,6 +18,7 @@ Omul e în România, iar contul e făcut pentru colaborări plătite. Alegem una
    - Wan, cu LoRA-ul v2 existent (licență Apache-2.0, de verificat versiunea);
    - Kling, decis în [Ce unealtă video AI folosim pentru reels-urile lui Iness?](01-unealta-video.md);
    - API-ul oficial MiniMax/Hailuo (termenii API, nu licența greutăților).
+   - **LTX-2 / LTX-2.3** (Lightricks), local pe pod. Licența „LTX-2 Community License” e **worldwide** și gratuită pentru firmele cu venit anual sub 10 milioane USD (§2, verificat pe 23.10.2026 în https://github.com/Lightricks/LTX-2/blob/main/LICENSE-2). Cere ca orice conținut public să fie marcat ca generat de mașină (Attachment A pct. 5) și interzice deepfake-urile fără consimțământ (pct. 7). Calitatea pe română și lip-sync-ul se testează.
 3. **Ambele:** cerem licența, iar între timp producem cu 2.
 
 **Textul complet din `LICENSE`, verificat pe 23.10.2026** (https://huggingface.co/MiniMaxAI/MiniMax-H3/raw/main/LICENSE):
