@@ -20,4 +20,10 @@ Omul e în România, iar contul e făcut pentru colaborări plătite. Alegem una
    - API-ul oficial MiniMax/Hailuo (termenii API, nu licența greutăților).
 3. **Ambele:** cerem licența, iar între timp producem cu 2.
 
-Rămâne de verificat textul complet din `LICENSE`. Pagina nu s-a putut citi integral, deci condițiile exacte de uz comercial sunt încă necunoscute.
+**Textul complet din `LICENSE`, verificat pe 23.10.2026** (https://huggingface.co/MiniMaxAI/MiniMax-H3/raw/main/LICENSE):
+- Def. 3 și 5: „Applicable Territory” înseamnă „worldwide, excluding the Excluded Territories”. „Excluded Territories” sunt „the European Union, the United Kingdom, the Republic of Korea and the United States of America”.
+- §II: dreptul de folosire se dă „**Solely within the Applicable Territory**”.
+- §V.4: „You may not use, reproduce, modify, distribute, or display the MiniMax H3 Works **or any of their Outputs** or results outside the Applicable Territory.” Așadar și clipurile generate intră sub regulă, nu doar modelul.
+- §IV.1: pragul de bani e de **20 de milioane USD venit anual**, nu de 1 milion. Peste prag îți trebuie aprobare scrisă. **Pragul se aplică doar în teritoriul permis**, deci nu ajută pe cineva din UE.
+- AUP pct. 12: orice conținut public trebuie marcat „clearly and prominently” ca generat de mașină (bifat deja prin etichetele AI).
+- La Pod-ul RunPod contează și unde e serverul: SUA e tot teritoriu exclus.
