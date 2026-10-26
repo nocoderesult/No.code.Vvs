@@ -88,6 +88,10 @@ impact hits, glitch/whip transitions, animated emoji, badges, animated CTA, laye
 captions and build the overlay in Remotion with the template in `remotion/` (steps and asset sources in
 `remotion/README.md`). Show the user key frames before the full render.
 
+For the six signature effects (text behind the head, over the shoulder, glass graph, tier list, freeze-frame
+sticker, colour-grade wipe), a custom Apple Log grade, or a 4K upscaled master, follow
+`recipes/six-effects/README.md`.
+
 ## 4. Self-QC (mandatory before delivery)
 
 `pipeline.py` runs `qc.py`. After any manual render, run it yourself:
@@ -227,6 +231,7 @@ Details and sources are in `reference/craft.md` and `reference/platforms.md`.
 - `reference/ffmpeg-recipes.md`: verified recipes and measurements
 - `reference/davinci-resolve.md`: handoff
 - `reference/testing.md`: test results and limitations
+- `recipes/six-effects/README.md`: the six signature effects, Apple Log grade, 4K compositor (templates in `tools/`, `remotion/`)
 
 **Models and fonts:**
 - Bundled: `assets/models/` holds YuNet (MIT) and RNNoise `sh.rnnn` (stated not subject to copyright). If missing, they are downloaded and checked by sha256.
