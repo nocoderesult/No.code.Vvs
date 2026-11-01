@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evaluare anxietate și dispoziție</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,650&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout: o coloană de lectură, module numerotate (scalele reale), rezultate cu benzi de severitate */
+:root{
+  --bg:#f4f6f6; --surface:#ffffff; --ink:#1c2526; --muted:#5b6869; --line:#d8dfdf;
+  --accent:#2f6f73; --accent-soft:#e2eeee;
+  --ok:#3d7a4a; --warn:#a8741a; --high:#b4472f; --crit:#8f1f2c;
+  --ok-bg:#e6f1e8; --warn-bg:#f6eedc; --high-bg:#f6e3dd; --crit-bg:#f5dde0;
+  --display:"Literata", Georgia, "Times New Roman", serif;
+  --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121718; --surface:#1a2122; --ink:#e3eaea; --muted:#9aa8a9; --line:#2c3637;
+    --accent:#6fb3b6; --accent-soft:#1f3233;
+    --ok:#7cc08a; --warn:#e0b25a; --high:#e88b72; --crit:#f08a98;
+    --ok-bg:#1c2e21; --warn-bg:#33291a; --high-bg:#36221d; --crit-bg:#3a1c22;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121718; --surface:#1a2122; --ink:#e3eaea; --muted:#9aa8a9; --line:#2c3637;
+  --accent:#6fb3b6; --accent-soft:#1f3233;
+  --ok:#7cc08a; --warn:#e0b25a; --high:#e88b72; --crit:#f08a98;
+  --ok-bg:#1c2e21; --warn-bg:#33291a; --high-bg:#36221d; --crit-bg:#3a1c22;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:760px;margin:0 auto;padding:32px 18px 80px;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--display);font-weight:650;line-height:1.2;text-wrap:balance;margin:0}
+h1{font-size:2rem}
+h2{font-size:1.4rem}
+h3{font-size:1.08rem}
+p{margin:0}
+.lede{color:var(--muted);max-width:62ch}
+.stack{display:flex;flex-direction:column;gap:12px}
+.note{border-left:3px solid var(--accent);background:var(--accent-soft);padding:12px 14px;border-radius:0 6px 6px 0;font-size:.95rem}
+.crisis{border-left:4px solid var(--crit);background:var(--crit-bg);padding:14px 16px;border-radius:0 6px 6px 0}
+.crisis strong{color:var(--crit)}
+section.mod{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px 20px;display:flex;flex-direction:column;gap:16px}
+.mod-head{display:flex;flex-direction:column;gap:4px}
+.tag{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.src{font-size:.82rem;color:var(--muted)}
+.q{display:flex;flex-direction:column;gap:8px;padding-top:14px;border-top:1px solid var(--line)}
+.q:first-of-type{border-top:0;padding-top:0}
+.q-text{font-weight:500}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opts label{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;font-size:.92rem;background:var(--bg)}
+.opts input{accent-color:var(--accent);margin:0}
+.opts label:has(input:checked){border-color:var(--accent);background:var(--accent-soft)}
+.opts label:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+.hidden{display:none !important}
+.bar{position:sticky;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:12px 18px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.bar-inner{max-width:760px;margin:0 auto;width:100%;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.progress{font-size:.9rem;color:var(--muted);font-variant-numeric:tabular-nums}
+button{font-family:var(--body);font-size:.95rem;font-weight:600;border-radius:8px;padding:10px 18px;cursor:pointer;border:1px solid var(--accent)}
+button.primary{background:var(--accent);color:var(--surface)}
+button.ghost{background:transparent;color:var(--accent)}
+button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+#results{display:flex;flex-direction:column;gap:20px}
+.res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}
+.res{border:1px solid var(--line);border-left-width:5px;border-radius:8px;padding:12px 14px;background:var(--surface);display:flex;flex-direction:column;gap:4px}
+.res .score{font-family:var(--display);font-size:1.5rem;font-variant-numeric:tabular-nums}
+.res .lvl{font-size:.85rem;font-weight:600;padding:2px 8px;border-radius:999px;align-self:flex-start}
+.s-ok{border-left-color:var(--ok)} .s-ok .lvl{background:var(--ok-bg);color:var(--ok)}
+.s-warn{border-left-color:var(--warn)} .s-warn .lvl{background:var(--warn-bg);color:var(--warn)}
+.s-high{border-left-color:var(--high)} .s-high .lvl{background:var(--high-bg);color:var(--high)}
+.s-crit{border-left-color:var(--crit)} .s-crit .lvl{background:var(--crit-bg);color:var(--crit)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:10px}
+ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px}
+.small{font-size:.88rem;color:var(--muted)}
+a{color:var(--accent)}
+@media (prefers-reduced-motion: no-preference){ html{scroll-behavior:smooth} }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="stack">
+    <span class="tag">Autoevaluare · ~10 minute · 6 module</span>
+    <h1>Evaluare anxietate și dispoziție</h1>
+    <p class="lede">Chestionarele de mai jos sunt instrumentele de screening folosite de medici de familie, psihiatri și în studii clinice. Răspunde pentru <strong>ultimele 2 săptămâni</strong>, dacă nu scrie altfel. Răspunsurile rămân doar în browserul tău.</p>
+    <div class="note">Rezultatul este un <strong>screening</strong>, nu un diagnostic. Diagnosticul îl pune un psihiatru sau psiholog clinician, după interviu. Testul îți arată unde să cauți și cât de urgent.</div>
+    <div class="crisis"><strong>Dacă ai gânduri să-ți faci rău acum:</strong> sună la <strong>112</strong> sau la linia de prevenție a suicidului <strong>0800 801 200</strong> (gratuit, Alianța Română de Prevenție a Suicidului).</div>
+  </header>
+
+  <form id="f" class="stack" style="gap:20px" novalidate></form>
+
+  <div id="results" class="hidden" aria-live="polite"></div>
+</main>
+
+<div class="bar">
+  <div class="bar-inner">
+    <span class="progress" id="prog">0 din 0 răspunsuri</span>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button type="button" class="ghost" id="reset">Șterge răspunsurile</button>
+      <button type="button" class="primary" id="go">Vezi rezultatul</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const F4 = ["Deloc","Câteva zile","Mai mult de jumătate din zile","Aproape în fiecare zi"];
+const YN = ["Nu","Da"];
+const SPIN = ["Deloc","Puțin","Moderat","Mult","Extrem"];
+
+const MODULES = [
+ {id:"gad", tag:"Modul 1 · Anxietate generalizată", title:"GAD-7",
+  src:"Spitzer et al., 2006. Sensibilitate ~89%, specificitate ~82% la pragul 10.",
+  intro:"În ultimele 2 săptămâni, cât de des te-au deranjat următoarele?",
+  opts:F4, items:[
+   "Te-ai simțit nervos, anxios sau „cu nervii întinși”",
+   "Nu ai reușit să oprești sau să controlezi îngrijorările",
+   "Te-ai îngrijorat prea mult despre lucruri diferite",
+   "Ai avut dificultăți să te relaxezi",
+   "Ai fost atât de agitat încât îți era greu să stai locului",
+   "Te-ai enervat sau iritat ușor",
+   "Ți-a fost frică, de parcă ceva groaznic urma să se întâmple"]},
+ {id:"phq", tag:"Modul 2 · Dispoziție, apatie, „nepăsare”", title:"PHQ-9",
+  src:"Kroenke et al., 2001. Apatia și „nu-mi mai pasă” sunt adesea semne de depresie, care apare împreună cu anxietatea la aproximativ jumătate din oameni.",
+  intro:"În ultimele 2 săptămâni, cât de des te-au deranjat următoarele?",
+  opts:F4, items:[
+   "Puțin interes sau plăcere în a face lucruri",
+   "Te-ai simțit trist, deprimat sau fără speranță",
+   "Probleme cu somnul: adormi greu, te trezești des sau dormi prea mult",
+   "Te-ai simțit obosit sau fără energie",
+   "Poftă de mâncare scăzută sau mâncat în exces",
+   "Te-ai simțit rău în legătură cu tine, ca un ratat, sau că i-ai dezamăgit pe ceilalți",
+   "Dificultăți de concentrare (la citit, la un film, la lucru)",
+   "Te-ai mișcat sau ai vorbit atât de încet încât au observat alții, sau invers: neliniștit, agitat",
+   "Gânduri că ar fi mai bine să fii mort sau să-ți faci rău într-un fel"]},
+ {id:"pan", tag:"Modul 3 · Atacuri de panică", title:"PHQ – modulul de panică",
+  src:"Spitzer et al., 1999 (PHQ). Pozitiv dacă toate cele 5 răspunsuri sunt „Da”.",
+  intro:"Gândește-te la ultimele 4 săptămâni.",
+  opts:YN, items:[
+   "Ai avut un atac de anxietate: frică sau panică apărute brusc?",
+   "S-a mai întâmplat asta și înainte?",
+   "Unele atacuri apar „din senin”, fără un motiv evident?",
+   "Atacurile te deranjează mult sau îți e frică să nu mai ai unul?",
+   "La ultimul atac rău ai avut simptome fizice: inimă bătând tare, respirație grea, transpirații, tremur, amețeală, furnicături?"]},
+ {id:"spin", tag:"Modul 4 · Anxietate socială", title:"Mini-SPIN",
+  src:"Connor et al., 2001. Pragul 6 are sensibilitate ~89% și specificitate ~90%.",
+  intro:"În ultima săptămână, cât de mult se potrivesc afirmațiile cu tine?",
+  opts:SPIN, items:[
+   "Frica de a mă face de rușine mă face să evit lucruri sau să nu vorbesc cu oamenii",
+   "Evit activitățile în care sunt în centrul atenției",
+   "Să mă fac de rușine sau să par prost se numără printre cele mai mari temeri ale mele"]},
+ {id:"ptsd", tag:"Modul 5 · Traumă", title:"PC-PTSD-5",
+  src:"Prins et al., 2016 (VA, SUA). Pozitiv la 3 sau mai multe „Da”. Răspunde doar dacă ai trăit un eveniment grav: accident, agresiune, abuz, moartea bruscă a cuiva apropiat, război, dezastru.",
+  intro:"Dacă ai trecut printr-un astfel de eveniment, în ultima lună:",
+  gate:"Ai trăit vreodată un eveniment neobișnuit de înfricoșător, îngrozitor sau traumatic?",
+  opts:YN, items:[
+   "Ai avut coșmaruri despre eveniment sau te-ai gândit la el când nu voiai?",
+   "Te-ai străduit să nu te gândești la el sau ai evitat situații care ți-l aminteau?",
+   "Ai fost tot timpul în gardă, alert sau te-ai speriat ușor?",
+   "Te-ai simțit amorțit sau detașat de oameni, activități sau ce e în jurul tău?",
+   "Te-ai simțit vinovat sau nu te-ai putut opri din a te învinovăți pe tine sau pe alții?"]},
+ {id:"ctx", tag:"Modul 6 · Context și factori fizici", title:"De cât timp și ce o întreține",
+  src:"Factori care cresc sau imită anxietatea, din ghidurile NICE CG113 și literatura de diagnostic diferențial.",
+  intro:"Răspunsuri scurte, contează pentru interpretare.",
+  custom:[
+   {k:"dur", t:"De cât timp te simți așa?", o:["Sub o lună","1–6 luni","6 luni – 2 ani","Peste 2 ani / de când mă știu"]},
+   {k:"imp", t:"Cât de greu ți-au făcut aceste probleme munca, casa sau relațiile?", o:["Deloc","Puțin","Destul de greu","Extrem de greu"]},
+   {k:"caf", t:"Câtă cafeină consumi pe zi (cafea, energizante, cola)?", o:["Deloc / 1 cafea","2–3 cafele","4+ cafele sau energizante"]},
+   {k:"alc", t:"Alcool, cannabis sau alte substanțe ca să te calmezi sau să adormi?", o:["Nu","Uneori","Des / aproape zilnic"]},
+   {k:"slp", t:"Cât dormi de obicei?", o:["7–9 ore","6–7 ore","Sub 6 ore sau foarte neregulat"]},
+   {k:"mov", t:"Mișcare (mers alert, sport) pe săptămână?", o:["150+ minute","Ceva, sub 150 minute","Aproape deloc"]},
+   {k:"med", t:"Ți-ai făcut analize de sânge (inclusiv tiroidă, TSH) în ultimul an?", o:["Da, totul normal","Nu","Da, am avut ceva ieșit din normal"]},
+   {k:"fam", t:"Rude apropiate cu anxietate, depresie sau alte probleme psihice?", o:["Nu / nu știu","Da"]}
+  ]}
+];
+
+const form = document.getElementById("f");
+let total = 0;
+function radioGroup(name, options, values){
+  return `<div class="opts" role="radiogroup">` + options.map((o,i)=>
+    `<label><input type="radio" id="${name}-${i}" name="${name}" value="${values?values[i]:i}">${o}</label>`).join("") + `</div>`;
+}
+MODULES.forEach(m=>{
+  let h = `<section class="mod" id="m-${m.id}"><div class="mod-head"><span class="tag">${m.tag}</span><h2>${m.title}</h2><p class="src">${m.src}</p></div><p>${m.intro}</p>`;
+  if(m.gate){ h += `<div class="q"><span class="q-text">${m.gate}</span>${radioGroup(m.id+"-gate",YN)}</div><div id="${m.id}-body" class="stack hidden">`; }
+  if(m.items){ m.items.forEach((it,i)=>{ total++; h += `<div class="q" data-count="${m.id}"><span class="q-text">${i+1}. ${it}</span>${radioGroup(m.id+"-"+i,m.opts)}</div>`; }); }
+  if(m.custom){ m.custom.forEach(c=>{ total++; h += `<div class="q" data-count="ctx"><span class="q-text">${c.t}</span>${radioGroup("ctx-"+c.k,c.o)}</div>`; }); }
+  if(m.gate){ h += `</div>`; }
+  if(m.id==="pan"){ h += `<p class="small" id="pan-skip">Dacă la prima întrebare răspunzi „Nu”, poți sări peste restul modulului.</p>`; }
+  h += `</section>`;
+  form.insertAdjacentHTML("beforeend", h);
+});
+
+const val = n => { const e = form.querySelector(`input[name="${n}"]:checked`); return e ? +e.value : null; };
+function updateProgress(){
+  const gateYes = val("ptsd-gate")===1;
+  document.getElementById("ptsd-body").classList.toggle("hidden", !gateYes);
+  let need=0, done=0;
+  form.querySelectorAll(".q[data-count]").forEach(q=>{
+    const mod=q.dataset.count;
+    if(mod==="ptsd" && !gateYes) return;
+    if(mod==="pan" && val("pan-0")===0 && !q.querySelector('[name="pan-0"]')) return;
+    need++; if(q.querySelector("input:checked")) done++;
+  });
+  document.getElementById("prog").textContent = `${done} din ${need} răspunsuri`;
+  return {need,done};
+}
+form.addEventListener("change", ()=>{ updateProgress(); save(); });
+
+function save(){ try{ const d={}; form.querySelectorAll("input:checked").forEach(i=>d[i.name]=i.value); localStorage.setItem("anx-test",JSON.stringify(d)); }catch(e){} }
+function load(){ try{ const d=JSON.parse(localStorage.getItem("anx-test")||"{}"); Object.entries(d).forEach(([k,v])=>{ const e=form.querySelector(`input[name="${k}"][value="${v}"]`); if(e) e.checked=true; }); }catch(e){} }
+load(); updateProgress();
+
+document.getElementById("reset").addEventListener("click", ()=>{
+  form.querySelectorAll("input:checked").forEach(i=>i.checked=false);
+  try{ localStorage.removeItem("anx-test"); }catch(e){}
+  document.getElementById("results").classList.add("hidden");
+  updateProgress(); window.scrollTo(0,0);
+});
+
+function sum(prefix,n){ let s=0, miss=0; for(let i=0;i<n;i++){ const v=val(prefix+"-"+i); if(v===null) miss++; else s+=v; } return {s,miss}; }
+
+function score(){
+  const r = {};
+  const g = sum("gad",7); r.gad = g;
+  g.band = g.s>=15?["Severă","s-crit"]:g.s>=10?["Moderată","s-high"]:g.s>=5?["Ușoară","s-warn"]:["Minimă","s-ok"];
+  const p = sum("phq",9); r.phq = p;
+  p.band = p.s>=20?["Severă","s-crit"]:p.s>=15?["Moderat-severă","s-crit"]:p.s>=10?["Moderată","s-high"]:p.s>=5?["Ușoară","s-warn"]:["Minimă","s-ok"];
+  r.suic = (val("phq-8")||0) > 0;
+  const pa=[0,1,2,3,4].map(i=>val("pan-"+i)); r.pan = {pos: pa.every(v=>v===1), any: pa[0]===1, s: pa.filter(v=>v===1).length};
+  const sp = sum("spin",3); sp.pos = sp.s>=6; r.spin = sp;
+  r.ptsdGate = val("ptsd-gate")===1;
+  const pt = sum("ptsd",5); pt.pos = r.ptsdGate && pt.s>=3; r.ptsd = pt;
+  r.ctx = {}; ["dur","imp","caf","alc","slp","mov","med","fam"].forEach(k=>r.ctx[k]=val("ctx-"+k));
+  return r;
+}
+
+function tile(name, scoreTxt, band, cls, note){
+  return `<div class="res ${cls}"><span class="small">${name}</span><span class="score">${scoreTxt}</span><span class="lvl">${band}</span><span class="small">${note}</span></div>`;
+}
+
+function render(){
+  const {need,done}=updateProgress();
+  const r = score();
+  const out = document.getElementById("results");
+  let h = `<div class="stack"><span class="tag">Rezultat</span><h2>Ce arată răspunsurile tale</h2>`;
+  if(done<need) h += `<p class="note">Ai ${need-done} întrebări fără răspuns; au fost numărate ca 0, deci scorurile pot fi subestimate.</p>`;
+  h += `</div>`;
+
+  if(r.suic){
+    h += `<div class="crisis"><strong>Ai spus că ai avut gânduri de moarte sau de a-ți face rău.</strong> Asta contează mai mult decât orice scor. Vorbește azi cu cineva: <strong>0800 801 200</strong> (gratuit, Alianța Română de Prevenție a Suicidului), <strong>112</strong> dacă e urgent, sau mergi la camera de gardă a unui spital de psihiatrie. Nu ești obligat să treci prin asta singur, iar starea asta se tratează.</div>`;
+  }
+
+  h += `<div class="res-grid">`;
+  h += tile("Anxietate generalizată · GAD-7", `${r.gad.s}<span class="small"> / 21</span>`, r.gad.band[0], r.gad.band[1], r.gad.s>=10?"Peste pragul clinic (10).":"Sub pragul clinic (10).");
+  h += tile("Depresie / apatie · PHQ-9", `${r.phq.s}<span class="small"> / 27</span>`, r.phq.band[0], r.phq.band[1], r.phq.s>=10?"Peste pragul clinic (10).":"Sub pragul clinic (10).");
+  h += tile("Panică · PHQ-PD", `${r.pan.s}<span class="small"> / 5</span>`, r.pan.pos?"Screening pozitiv":r.pan.any?"Atacuri izolate":"Negativ", r.pan.pos?"s-high":r.pan.any?"s-warn":"s-ok", r.pan.pos?"Tipar compatibil cu tulburarea de panică.":"Nu îndeplinește criteriile de screening.");
+  h += tile("Anxietate socială · Mini-SPIN", `${r.spin.s}<span class="small"> / 12</span>`, r.spin.pos?"Screening pozitiv":"Negativ", r.spin.pos?"s-high":"s-ok", "Prag: 6.");
+  h += tile("Traumă · PC-PTSD-5", r.ptsdGate?`${r.ptsd.s}<span class="small"> / 5</span>`:"–", !r.ptsdGate?"Neaplicabil":r.ptsd.pos?"Screening pozitiv":"Negativ", r.ptsd.pos?"s-high":"s-ok", "Prag: 3.");
+  h += `</div>`;
+
+  // Interpretare
+  const c = r.ctx, chronic = c.dur>=2, impaired = c.imp>=2;
+  const flags = [];
+  if(r.gad.s>=10) flags.push(`anxietate generalizată ${r.gad.band[0].toLowerCase()}`);
+  if(r.phq.s>=10) flags.push(`simptome depresive ${r.phq.band[0].toLowerCase()}`);
+  if(r.pan.pos) flags.push("atacuri de panică");
+  if(r.spin.pos) flags.push("anxietate socială");
+  if(r.ptsd.pos) flags.push("simptome posttraumatice");
+  let interp = flags.length
+    ? `Scorurile tale indică <strong>${flags.join(", ")}</strong>.`
+    : (r.gad.s>=5||r.phq.s>=5) ? `Ai simptome ușoare, sub pragurile clinice. Merită urmărite, mai ales dacă persistă.`
+    : `Scorurile sunt în zona minimă. Dacă totuși te simți rău, discută cu un specialist: chestionarele nu prind tot.`;
+  if(chronic && flags.length) interp += ` Durează de ${c.dur===3?"peste 2 ani":"peste 6 luni"}, deci intuiția ta că „nu e de azi” se confirmă: nu e o stare trecătoare și nu ține de caracter.`;
+  if(r.phq.s>=10 && (val("phq-0")||0)>=2) interp += ` „Nepăsarea” pe care o descrii poate fi <strong>anhedonie</strong> (pierderea interesului și a plăcerii), un simptom de bază al depresiei, nu o trăsătură de personalitate.`;
+  if(impaired) interp += ` Spui că îți afectează viața de zi cu zi, ceea ce face evaluarea de specialitate cu atât mai utilă.`;
+  h += `<div class="card"><h3>Interpretare</h3><p>${interp}</p></div>`;
+
+  // Ce să faci: nivel de urgență
+  const severe = r.gad.s>=15 || r.phq.s>=15 || r.suic;
+  const moderate = !severe && (r.gad.s>=10 || r.phq.s>=10 || r.pan.pos || r.spin.pos || r.ptsd.pos);
+  let step;
+  if(severe) step = `<strong>Programează-te la un medic psihiatru în următoarele zile.</strong> La scoruri severe, ghidurile (NICE CG113, APA) recomandă tratament combinat: psihoterapie plus, de regulă, medicație. Biletul de trimitere de la medicul de familie îți dă consultația decontată de CNAS.`;
+  else if(moderate) step = `<strong>Caută o evaluare de specialitate în următoarele 2–4 săptămâni</strong>: psiholog clinician sau psihoterapeut acreditat (verifică în registrul Colegiului Psihologilor din România) sau psihiatru. Psihoterapia cognitiv-comportamentală (CBT) este tratamentul de primă linie.`;
+  else step = `<strong>Începe cu măsurile de autoajutor de mai jos și refă testul peste 4 săptămâni.</strong> Dacă scorul crește sau nu scade, mergi la un specialist.`;
+  h += `<div class="card"><h3>Pasul următor recomandat</h3><p>${step}</p></div>`;
+
+  // Tratamente cu dovezi
+  let tx = `<ul>`;
+  if(r.gad.s>=5 || !flags.length) tx += `<li><strong>Anxietate generalizată:</strong> CBT, 12–16 ședințe (restructurarea îngrijorărilor, toleranța la incertitudine, „timp de îngrijorare” programat). Ca autoajutor ghidat, ghidurile NICE îl pun pe primul treaptă. Medicație, dacă e nevoie: antidepresive ISRS/IRSN (ex. sertralină, escitalopram, venlafaxină), prescrise de psihiatru; efectul apare după 2–6 săptămâni.</li>`;
+  if(r.phq.s>=5) tx += `<li><strong>Depresie / apatie:</strong> CBT sau <em>activare comportamentală</em> (programezi activități mici înainte să ai chef, pentru că motivația vine după acțiune, nu înainte). La forme moderate-severe, antidepresiv plus terapie dă cele mai bune rezultate.</li>`;
+  if(r.pan.any) tx += `<li><strong>Panică:</strong> CBT cu <em>expunere interoceptivă</em> (provoci controlat senzațiile, de ex. alergi pe loc ca să-ți crească pulsul, ca creierul să învețe că nu sunt periculoase). Are una dintre cele mai mari rate de succes din psihoterapie. Benzodiazepinele (Xanax, Rivotril) ajută pe moment, dar nu sunt recomandate pe termen lung: dau dependență și întrețin evitarea.</li>`;
+  if(r.spin.pos) tx += `<li><strong>Anxietate socială:</strong> CBT specifică (modelul Clark &amp; Wells): renunți la „comportamentele de siguranță” și faci experimente sociale gradate.</li>`;
+  if(r.ptsd.pos) tx += `<li><strong>Traumă:</strong> terapii centrate pe traumă: CBT focusată pe traumă, terapie prin procesare cognitivă (CPT), expunere prelungită sau EMDR. Merită făcută cu un terapeut format pe traumă.</li>`;
+  tx += `</ul><p class="small">Nicio metodă nu e garantată. Cu CBT, aproximativ 50–60% dintre oameni se îmbunătățesc semnificativ; cu tratament combinat sau ajustat, procentul crește. Dacă prima variantă nu merge, a doua sau a treia de obicei merge. Nu renunța după prima încercare.</p>`;
+  h += `<div class="card"><h3>Tratamente cu cele mai solide dovezi pentru profilul tău</h3>${tx}</div>`;
+
+  // Factori fizici / stil de viață
+  const life = [];
+  if(c.caf===2) life.push(`<strong>Cafeina:</strong> peste ~400 mg/zi (4 cafele) poate produce singură palpitații, tremur și neliniște. Redu treptat, cu o cafea la câteva zile, ca să eviți durerea de cap de sevraj.`);
+  else if(c.caf===1) life.push(`<strong>Cafeina:</strong> încearcă 2 săptămâni fără cafea după ora 12 și vezi dacă scade tensiunea.`);
+  if(c.alc>=1) life.push(`<strong>Alcool / cannabis:</strong> calmează pe moment, dar a doua zi cresc anxietatea („rebound”) și strică somnul. Folosirea lor ca să te liniștești e un semn important de discutat cu medicul.`);
+  if(c.slp>=1) life.push(`<strong>Somnul:</strong> sub 6–7 ore crește reactivitatea la stres. Oră fixă de trezire, fără ecran cu 30–60 minute înainte, pat doar pentru somn. Dacă ai insomnie cronică, CBT-I este tratamentul de primă linie, înaintea somniferelor.`);
+  if(c.mov>=1) life.push(`<strong>Mișcarea:</strong> 150 de minute pe săptămână de efort moderat (30 minute de mers alert, 5 zile) reduc anxietatea și depresia cu un efect comparabil cu cel al tratamentelor ușoare, conform meta-analizelor recente.`);
+  if(c.med!==0) life.push(`<strong>Analize:</strong> cere medicului de familie hemoleucogramă, glicemie, <strong>TSH</strong> (tiroida hiperactivă imită anxietatea), feritină, vitamina B12 și, dacă ai palpitații, un <strong>EKG</strong>. Excluzi cauzele fizice înainte de a pune totul pe seama psihicului.`);
+  if(c.fam===1) life.push(`<strong>Istoric familial:</strong> crește predispoziția (anxietatea are o componentă ereditară de ~30–40%), dar nu înseamnă că tratamentul funcționează mai slab. Spune-i specialistului.`);
+  if(life.length) h += `<div class="card"><h3>Ce întreține simptomele, din răspunsurile tale</h3><ul>${life.map(x=>`<li>${x}</li>`).join("")}</ul></div>`;
+
+  // Tehnici imediate
+  h += `<div class="card"><h3>Ce poți face de azi</h3><ul>
+   <li><strong>Respirație lentă:</strong> inspiri 4 secunde, expiri 6 secunde, 5 minute. Expirul mai lung activează sistemul parasimpatic și scade pulsul.</li>
+   <li><strong>„Timp de îngrijorare”:</strong> 15 minute pe zi, la oră fixă, scrii tot ce te îngrijorează. În restul zilei, când apare o grijă, o notezi și o amâni pentru acel moment.</li>
+   <li><strong>Nu evita:</strong> evitarea scade anxietatea pe moment și o crește pe termen lung. Alege o situație pe care o eviți și fă o versiune mică a ei săptămâna asta.</li>
+   <li><strong>O activitate mică pe zi</strong> care îți plăcea înainte, chiar fără chef (10 minute ajung). Contra apatiei funcționează acțiunea, nu așteptarea motivației.</li>
+   <li><strong>Refă testul la 4 săptămâni.</strong> O scădere de 5 puncte la GAD-7 sau PHQ-9 înseamnă o îmbunătățire reală.</li>
+  </ul></div>`;
+
+  h += `<div class="card"><h3>Ce să duci la medic</h3><p class="small">Copiază rezumatul și arată-l medicului de familie, psihiatrului sau psihologului. Scorurile GAD-7 și PHQ-9 sunt recunoscute de orice specialist.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="primary" id="copy">Copiază rezumatul</button><span class="small" id="copied" aria-live="polite"></span></div></div>`;
+  h += `<p class="small">Surse: Spitzer et al. 2006 (GAD-7); Kroenke et al. 2001 (PHQ-9); Spitzer et al. 1999 (PHQ, modulul de panică); Connor et al. 2001 (Mini-SPIN); Prins et al. 2016 (PC-PTSD-5); NICE CG113 – Generalised anxiety disorder and panic disorder in adults; NICE NG222 – Depression in adults; NICE CG159 – Social anxiety disorder; NICE NG116 – Post-traumatic stress disorder.</p>`;
+
+  out.innerHTML = h;
+  out.classList.remove("hidden");
+  out.scrollIntoView();
+
+  const summary = [
+    `Autoevaluare (${new Date().toLocaleDateString("ro-RO")})`,
+    `GAD-7: ${r.gad.s}/21 (${r.gad.band[0]})`,
+    `PHQ-9: ${r.phq.s}/27 (${r.phq.band[0]})${r.suic?" — item 9 pozitiv":""}`,
+    `Panică (PHQ-PD): ${r.pan.pos?"pozitiv":"negativ"} (${r.pan.s}/5)`,
+    `Mini-SPIN: ${r.spin.s}/12 (${r.spin.pos?"pozitiv":"negativ"})`,
+    `PC-PTSD-5: ${r.ptsdGate?r.ptsd.s+"/5 ("+(r.ptsd.pos?"pozitiv":"negativ")+")":"neaplicabil"}`,
+    `Durată: ${["sub o lună","1–6 luni","6 luni – 2 ani","peste 2 ani"][c.dur]??"nespecificat"}; impact funcțional: ${["deloc","puțin","destul de greu","extrem de greu"][c.imp]??"nespecificat"}`
+  ].join("\n");
+  document.getElementById("copy").addEventListener("click", async ()=>{
+    try{ await navigator.clipboard.writeText(summary); document.getElementById("copied").textContent="Copiat."; }
+    catch(e){ document.getElementById("copied").textContent="Copierea nu a mers. Notează scorurile de mai sus."; }
+  });
+}
+document.getElementById("go").addEventListener("click", render);
+</script>
+</body>
+</html>
