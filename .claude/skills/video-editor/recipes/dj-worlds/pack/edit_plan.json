@@ -1,0 +1,22 @@
+{
+  "fps": 30, "frames": 285, "w": 1080, "h": 1920,
+  "song": {"file": "src/music_src.mov", "start_s": 3.9976, "bpm": 126.045, "beat_frames": 14.2806,
+           "note": "reel frame 0 = song beat 8 (start of the break); drop = beat 12 = frame 57.12; 5 bars = 285.6 frames, loop-safe"},
+  "geometry": {"raw_face": [487, 879], "ai_face": [540, 862], "raw_to_ai_scale": 0.571, "raw_to_ai_t": [262, 360]},
+  "shots": [
+    {"id": "S1", "from": 0,   "to": 28,  "src": "raw", "in": 715, "step": 2.0, "look": "bw",        "role": "reality, slow motion 0.5x"},
+    {"id": "S2", "from": 28,  "to": 55,  "src": "raw", "in": 771, "step": 1.4, "look": "bw",        "role": "hero-on-black void, 0.35x, zoom-out to AI framing", "void": true},
+    {"id": "BO", "from": 55,  "to": 57,  "src": "black",                                          "role": "pre-drop blackout"},
+    {"id": "S3", "from": 57,  "to": 114, "src": "ai",  "in": 16,  "step": 1, "look": "w1_foc",    "label": ["01", "FOC"],    "bloom": [0.85, 3.2]},
+    {"id": "S4", "from": 114, "to": 143, "src": "ai",  "in": 77,  "step": 1, "look": "w2_noapte", "label": ["02", "NOAPTE"], "bloom": [0.45, 2.2]},
+    {"id": "S5", "from": 143, "to": 171, "src": "ai",  "in": 117, "step": 1, "look": "w2_noapte", "label": ["02", "NOAPTE"], "bloom": [0.30, 1.8], "role": "handstand jump cut"},
+    {"id": "S6", "from": 171, "to": 228, "src": "ai",  "in": 214, "step": 1, "look": "w3_ceata",  "label": ["03", "CEAȚĂ"],  "bloom": [0.45, 2.2], "role": "fog rises to a whiteout on the next downbeat"},
+    {"id": "S7", "from": 228, "to": 257, "src": "ai",  "in": 296, "step": 1, "look": "w4_ocean",  "label": ["04", "OCEAN"],  "bloom": [0.60, 2.6]},
+    {"id": "S8", "from": 257, "to": 285, "src": "ai",  "in": 380, "step": 1, "look": "w5_apus",   "label": ["05", "APUS"],   "bloom": [0.45, 2.2]}
+  ],
+  "text": {
+    "hook1": {"from": 0,  "to": 28, "text": "Asta am filmat."},
+    "hook2": {"from": 28, "to": 55, "text": "Restul e AI.", "accent_word": "AI", "accent_from": 43},
+    "cta":   {"from": 228, "to": 285, "text": "În ce lume îl duc data viitoare?"}
+  }
+}

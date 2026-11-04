@@ -1,0 +1,74 @@
+{
+ "fps": 30,
+ "bpm": 126.045,
+ "beat_frames": 14.2806,
+ "bars": 5,
+ "loop": true,
+ "pattern_beats": "reality 2 | void 2 (incl. 2-frame blackout) | 4 | 2 2 | 4 | 2 2",
+ "rule": "every cut on a beat (visual leads audio by 0-17 ms); world changes on downbeats; jump cut inside a world on beat 3",
+ "shots": [
+  {
+   "id": "S1",
+   "frames": 28,
+   "beats": 1.96,
+   "cut_at_frame": 0,
+   "cut_at_beat": 0.0
+  },
+  {
+   "id": "S2",
+   "frames": 27,
+   "beats": 1.89,
+   "cut_at_frame": 28,
+   "cut_at_beat": 1.96
+  },
+  {
+   "id": "BO",
+   "frames": 2,
+   "beats": 0.14,
+   "cut_at_frame": 55,
+   "cut_at_beat": 3.85
+  },
+  {
+   "id": "S3",
+   "frames": 57,
+   "beats": 3.99,
+   "cut_at_frame": 57,
+   "cut_at_beat": 3.99
+  },
+  {
+   "id": "S4",
+   "frames": 29,
+   "beats": 2.03,
+   "cut_at_frame": 114,
+   "cut_at_beat": 7.98
+  },
+  {
+   "id": "S5",
+   "frames": 28,
+   "beats": 1.96,
+   "cut_at_frame": 143,
+   "cut_at_beat": 10.01
+  },
+  {
+   "id": "S6",
+   "frames": 57,
+   "beats": 3.99,
+   "cut_at_frame": 171,
+   "cut_at_beat": 11.97
+  },
+  {
+   "id": "S7",
+   "frames": 29,
+   "beats": 2.03,
+   "cut_at_frame": 228,
+   "cut_at_beat": 15.97
+  },
+  {
+   "id": "S8",
+   "frames": 28,
+   "beats": 1.96,
+   "cut_at_frame": 257,
+   "cut_at_beat": 18.0
+  }
+ ]
+}

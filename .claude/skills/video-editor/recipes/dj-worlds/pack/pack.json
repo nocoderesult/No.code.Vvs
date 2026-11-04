@@ -1,0 +1,70 @@
+{
+ "name": "dj-worlds",
+ "version": 1,
+ "taste": {
+  "family": "întunecat / club (abstract tech)",
+  "accent": "ember, o singură dată pe cadru",
+  "palette": {
+   "ink": "#121212",
+   "bone": "#F4F1EA",
+   "black": "#000000",
+   "accent": "#FF6A1A"
+  },
+  "mood": "realitatea e alb-negru și înfundată; lumile AI sunt color și pline; între ele, golul negru",
+  "motion": "încetinitor 0.5x/0.35x în break (sursă 120 fps), timp real de la drop; punch 5% + puls 0.8% pe beat"
+ },
+ "type": {
+  "voice": {
+   "font": "Instrument Serif Italic",
+   "size_px": 124,
+   "top_px": 448,
+   "ink_on_light": "#121212",
+   "bone_on_dark": "#F4F1EA"
+  },
+  "labels": {
+   "font": "JetBrains Mono 500",
+   "size_px": 30,
+   "tracking_em": 0.34,
+   "top_px": 236,
+   "format": "NN  NUME",
+   "typed": "1.7 caractere/cadru + cursor"
+  },
+  "cta": {
+   "font": "Instrument Serif Italic",
+   "size_px": 88,
+   "top_px": 1296,
+   "sub": "JetBrains Mono 25px, tracking .3em"
+  }
+ },
+ "grammar": [
+  "00 REAL: take-ul real alb-negru, text cu cerneală pe perete",
+  "lumini stinse pe beat (flicker 30/0/10/0 %) -> DJ pe negru",
+  "zoom-out până la încadrarea din AI (scara 0.571)",
+  "blackout 2 cadre înainte de drop",
+  "bloom reveal pe fiecare lume (drop 0.85, restul 0.3-0.6)",
+  "lumile se schimbă pe downbeat; jump cut în lume pe beat 3",
+  "tranziție motivată din conținut (ceața se albește -> ocean)",
+  "CTA în ultima măsură, peste zona întunecată a pupitrului",
+  "final = început: buclă de 5 măsuri"
+ ],
+ "dont": [
+  "fără crossfade pe tempo",
+  "fără emoji și fără glitch-uri de șablon",
+  "un singur accent de culoare pe cadru",
+  "nu ține un cadru peste fraza muzicală",
+  "nu aplica LUT-urile pe cadrele deja graduate (dublă gradare)",
+  "nu folosi cadrele de morph dintre lumi (blur)"
+ ],
+ "audio": {
+  "lufs": -14,
+  "true_peak_max_dbtp": -1.0,
+  "filter": "low-pass rezonant 1.5 kHz pe realitate, sweep 1.5->18 kHz în gol, bypass pe drop",
+  "sfx_db": "impact -10, whoosh -21..-23"
+ },
+ "files": {
+  "edit_plan": "edit_plan.json",
+  "cadence": "cadence.json",
+  "grade": "grade.json",
+  "luts": "luts/*.cube (33^3, Rec.709 in/out)"
+ }
+}
