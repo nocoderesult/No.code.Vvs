@@ -92,6 +92,11 @@ For the six signature effects (text behind the head, over the shoulder, glass gr
 sticker, colour-grade wipe), a custom Apple Log grade, or a 4K upscaled master, follow
 `recipes/six-effects/README.md`.
 
+For a music reel that pairs a real take with an AI vid2vid version of it (one performer, several AI worlds), or
+any edit where the look and cut rhythm must come from measurement rather than taste words, follow
+`recipes/dj-worlds/README.md`: song-first beat grid, a measured style pack per world, hero-on-black transition,
+beat-locked loop, typography layer, editable timeline.
+
 ## 4. Self-QC (mandatory before delivery)
 
 `pipeline.py` runs `qc.py`. After any manual render, run it yourself:
@@ -232,6 +237,7 @@ Details and sources are in `reference/craft.md` and `reference/platforms.md`.
 - `reference/davinci-resolve.md`: handoff
 - `reference/testing.md`: test results and limitations
 - `recipes/six-effects/README.md`: the six signature effects, Apple Log grade, 4K compositor (templates in `tools/`, `remotion/`)
+- `recipes/dj-worlds/README.md`: real take + AI worlds music reel, measured style pack, beat-locked loop (templates in `tools/`, `remotion/`, `pack/`)
 
 **Models and fonts:**
 - Bundled: `assets/models/` holds YuNet (MIT) and RNNoise `sh.rnnn` (stated not subject to copyright). If missing, they are downloaded and checked by sha256.
