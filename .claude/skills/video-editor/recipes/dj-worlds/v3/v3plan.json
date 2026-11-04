@@ -1,0 +1,102 @@
+{
+  "fps": 30,
+  "w": 1080,
+  "h": 1920,
+  "frames": 400,
+  "song": {
+    "file": "v3/song_v3.wav",
+    "start_in_song_s": 0.1894,
+    "bpm": 126.045,
+    "beat_frames": 14.2806,
+    "note": "one continuous passage of the track, static gain only; reel frame 0 = song beat 0 (bar A downbeat), drop = beat 12 = frame 171.4, end = beat 28 = frame 399.9"
+  },
+  "variants": {
+    "accent": {
+      "touch": 57
+    },
+    "touch": {
+      "touch": 50
+    }
+  },
+  "white": {
+    "file": "v3/white_plate.mp4",
+    "frames": 57,
+    "last_raw120": 1194,
+    "note": "white take, 120 fps source at real time, placed on the AI deck axis"
+  },
+  "segments": [
+    {
+      "id": "fire",
+      "from": "touch",
+      "to": 100,
+      "ai_in": 8,
+      "note": "match on the right hand landing on the mixer (white raw 9.95 s -> AI 8)"
+    },
+    {
+      "id": "blue",
+      "from": 100,
+      "to": 171,
+      "ai_in": 76,
+      "note": "enters before the lift: prep ~AI 85, full silhouette ~AI 128-130, top held >1 beat, cut on the drop"
+    },
+    {
+      "id": "red",
+      "from": 171,
+      "to": 328,
+      "ai_in": 182,
+      "note": "standing in red smoke on the first kick of the drop; the source's own fog -> water transition runs uncut"
+    },
+    {
+      "id": "rails",
+      "from": 328,
+      "to": 400,
+      "ai_in": 351,
+      "note": "vanishing point behind, deck centred; last shot breathes to the bar-H downbeat"
+    }
+  ],
+  "sfx": [
+    {
+      "id": "ignition",
+      "file": "v3/sfx/ignition.wav",
+      "at": "touch",
+      "offset_frames": 0,
+      "volume": 0.22
+    },
+    {
+      "id": "click",
+      "file": "v3/sfx/click.wav",
+      "at": "touch",
+      "offset_frames": 0,
+      "volume": 0.0
+    },
+    {
+      "id": "rustle",
+      "file": "v3/sfx/rustle.wav",
+      "at": 97,
+      "offset_frames": 0,
+      "volume": 0.3
+    },
+    {
+      "id": "water",
+      "file": "v3/sfx/water.wav",
+      "at": 266,
+      "offset_frames": 0,
+      "volume": 0.13
+    }
+  ],
+  "text": {
+    "lines": [
+      "Știi unde mă duce",
+      "piesa asta?"
+    ],
+    "font": "Bricolage Grotesque",
+    "weight": 800,
+    "size": 86,
+    "color": "#E2500C",
+    "tracking": "-0.025em",
+    "shadow": "0 2px 14px rgba(120,40,0,0.18)",
+    "top": 392,
+    "note": "static, two lines, upper third, gone on the cut; orange ties the question to the fire that follows"
+  },
+  "chosen_variant": "accent"
+}

@@ -57,3 +57,22 @@ the music) was judged weak. The taste skills drove the rebuild: `taste` (directi
 - **The AI framing is ~1.75x wider than the take**: scale the real performer down on black to match it (the 1080p
   take stays sharp), never scale the 720p AI frame up.
 - **Cut 0-17 ms early**: the floor of `beat_frame + 0.25` keeps every cut on or just before the beat.
+
+## V3: locked track, match cuts, one question (`v3/`)
+
+A stricter brief: the creator's track is locked (one continuous passage, static gain only, no filters, no loops),
+no flashes, a single static question on frame 0, every junction checked at slow speed. Templates in `v3/`.
+
+- **Song source check**: cross-correlate the delivered reel's audio with every source before choosing the master;
+  the identical track here existed only for 13.9 s, which capped the reel (ask for the song file when the brief
+  wants more).
+- **White room on the AI deck axis** (`white_plate.py`): solve scale/offset from the booth's side edges and deck
+  edge, extend the wall by confidence-weighted normalized convolution (no dark halo), continue the cabinet from its
+  last real row, contact shadow, neutral white wall.
+- **Match cuts by silhouette** (`sil.py`): RVM silhouettes of the take (placed on the AI axis) and of the AI clip,
+  IoU in the upper body + hand-palm distance; pick the pair where the hand is still descending in the take and has
+  landed in the AI frame. Blue enters before the lift (silhouette top profile finds prep, full extension, descent).
+- **Remotion**: editable timeline (one `<Video>` node per clip with literal `trimBefore/from/durationInFrames`,
+  `premountFor={fps}`), local OFL fonts via `@remotion/fonts` (the render browser cannot reach fonts.gstatic.com
+  through the proxy), `TypeBoard` to audition faces on the real frame. Remotion tags output as sRGB: retag BT.709
+  with `h264_metadata` (no re-encode).
