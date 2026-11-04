@@ -76,3 +76,19 @@ no flashes, a single static question on frame 0, every junction checked at slow 
   `premountFor={fps}`), local OFL fonts via `@remotion/fonts` (the render browser cannot reach fonts.gstatic.com
   through the proxy), `TypeBoard` to audition faces on the real frame. Remotion tags output as sRGB: retag BT.709
   with `h264_metadata` (no re-encode).
+
+## V4: real and AI intercut, comparison-slider ending (`v4/`)
+
+The creator's take and the AI worlds cut together on the beat, with simulated camera angles (punch-ins, close-up
+"second cameras" from the 120 fps take) in both. `MAP.md` records every decision and the review that changed the ending.
+
+- **End on a phrase, not on a bar count.** An 8-bar cut that stopped as the track's main drop began sounded to the
+  creator as if the song had been swapped. Scan the track in 8th notes per band (sub, mid, high) to find the fills and
+  accents; the reel now ends on the main drop's first accent, with the note's tail.
+- **A comparison slider reads as draggable when it moves like a finger** (`Slider.tsx`): spring drags with a small
+  overshoot, a pressed state on the handle, and motion blur on the line and handle (an SVG `feGaussianBlur` with
+  `stdDeviation="x 0"`, x scaled to the speed). Both pictures stay still; only the reveal moves.
+- **Short AI takes**: when the destination world is too short for the ending, the AI half visits the other worlds one
+  per kick and lands on the destination.
+- **Remotion stills in parallel** on one project break the rspack cache: bundle once (`npx remotion bundle`) and render
+  the stills from the bundle.

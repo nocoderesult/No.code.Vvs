@@ -4,8 +4,10 @@ import { lightLeak } from "@remotion/effects/light-leak";
 import { zoomBlur } from "@remotion/effects/zoom-blur";
 import { AbsoluteFill, Easing, interpolate, Sequence, Solid, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { QuestionV2 } from "./TypeV2";
+import { ComparisonHandle, Drag, Press, pressAt, sliderX } from "./Slider";
 
-// DJ reel V4 - real take and AI worlds intercut on the track, simulated camera angles in both, 15.23 s = 8 bars.
+// DJ reel V4 - real take and AI worlds intercut on the track, simulated camera angles in both, 17.4 s: the track runs
+// on through its main drop and the reel ends on the drop's first accent (beat 36) and the tail of that note.
 // 126.045 BPM -> 14.2806 frames/beat; frame 0 = song beat 0. One continuous passage of the creator's track.
 // Sources at 1620x2880 so punch-ins stay sharp. The rules of the V3 brief still hold: direct white -> fire cut,
 // the lift is one locked shot with only the track, the drop's kick is the only impact, the song is not processed
@@ -20,9 +22,23 @@ import { QuestionV2 } from "./TypeV2";
 //   228-327 AI    red fog -> the source's own whiteout -> water, slow push       beat 16
 //   328-370 AI    rails: settle + warm light leak                                beat 23
 //   371-399 REAL  close-up on the face, third camera                             beat 26
-//   400-456 REAL | AI  split: reality slides in on the main drop, rails on the right   beat 28 -> 32
+//   400-521 REAL | AI  comparison slider, reality on the left:                   beat 28 (main drop) -> 36
+//           400 a finger pulls the handle in from the left edge; the AI half visits the worlds, one per kick
+//               (fire, blue, red, water), and lands on the rails on beat 32
+//           457 pulled left (more rails), 485 pulled right (more reality), 504 back to the centre on the accent
 
 const BEAT = 14.2806;
+const WE = "v4/white_end_30.mp4";  // raw 120 fps frames 1176..1664 (real time, native framing); trimBefore = (raw - 1176) / 4
+
+// the slider: where each drag goes and when the finger is down
+const DRAGS: Drag[] = [
+  { at: 400, to: 540 },  // grabbed at the left edge on the main drop's downbeat, pulled to the centre
+  { at: 457, to: 300 },  // beat 32: the rails land, pulled left to show more of them
+  { at: 485, to: 780 },  // beat 34: pulled right, back to reality
+  { at: 504, to: 540 },  // the fill -> the centre, landing on the final accent (beat 36 = frame 514)
+];
+const PRESSES: Press[] = [[397, 400, 412, 416], [454, 457, 468, 472], [482, 485, 514, 518]];
+const HANDLE_Y = 1000;
 const W = "v4/white120_15x.mp4";   // raw 120 fps frames 700..1200 (real time); trimBefore = (raw - 700) / 4
 const AI = "v4/ai_master15.mp4";   // AI frames 0..422; trimBefore = AI frame
 const full = { width: "100%", height: "100%" } as const;
@@ -61,8 +77,14 @@ const MATCH = { s: 1 / 0.5815, tx: -228.1 / 0.5815, ty: -347.3 / 0.5815 };
 export const ReelV4: React.FC = () => {
   const { fps } = useVideoConfig();
   const f = useCurrentFrame();
-  const div = interpolate(f, [400, 407], [0, 540], { ...clamp, easing: ease });            // split divider x
-  const sp = interpolate(f, [400, 407], [0, 1], { ...clamp, easing: ease });
+  const x = sliderX(f, fps, DRAGS);                                         // the divider, where the finger has it
+  const vx = (sliderX(f + 0.25, fps, DRAGS) - sliderX(f - 0.25, fps, DRAGS)) * 2;
+  const cut = Math.min(1080, Math.max(0, x));
+  // the AI picture moves into its half while reality is pulled in, then stays put (a comparison slider only reveals)
+  const aiHalf = (a: number): Cam => {
+    const sp = a < 430 ? Math.min(1, Math.max(0, sliderX(a, fps, DRAGS) / 540)) : 1;
+    return { s: 1 + 0.75 * sp, ox: 540, oy: 1080, tx: 270 * sp, ty: 181 * sp };
+  };
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
       <Sequence name="REAL alb + întrebarea" from={0} durationInFrames={57} premountFor={fps}>
@@ -122,22 +144,42 @@ export const ReelV4: React.FC = () => {
         </Shot>
       </Sequence>
 
-      <Sequence name="Final: AI șine (dreapta)" from={400} durationInFrames={57} premountFor={fps}>
-        <Shot from={400} cam={() => ({ s: 1 + 0.75 * sp, ox: 540, oy: 1080, tx: 270 * sp, ty: 181 * sp })}>
-          <Video src={staticFile(AI)} trimBefore={366} muted style={full} />
+      <Sequence name="Final AI: foc" from={400} durationInFrames={14} premountFor={fps}>
+        <Shot from={400} cam={aiHalf}>
+          <Video src={staticFile(AI)} trimBefore={60} muted style={full} />
         </Shot>
       </Sequence>
-      <Sequence name="Final: REAL (stânga, slide)" from={400} durationInFrames={57} premountFor={fps}>
-        <Shot from={400} clip={`inset(0px ${1080 - div}px 0px 0px)`} cam={() => ({ s: 1, ox: 540, oy: 1000, tx: -270 })}>
-          <Video src={staticFile(W)} trimBefore={17} muted style={full} />
+      <Sequence name="Final AI: albastru" from={414} durationInFrames={14} premountFor={fps}>
+        <Shot from={414} cam={aiHalf}>
+          <Video src={staticFile(AI)} trimBefore={80} muted style={full} />
         </Shot>
-        <div style={{
-          position: "absolute", top: 0, left: div - 2, width: 4, height: 1920, background: "#FFF6EC",
-          boxShadow: "0 0 18px rgba(255,255,255,0.9), 0 0 46px rgba(255,140,60,0.55)", opacity: div > 2 ? 1 : 0,
-        }} />
+      </Sequence>
+      <Sequence name="Final AI: roșu" from={428} durationInFrames={14} premountFor={fps}>
+        <Shot from={428} cam={aiHalf}>
+          <Video src={staticFile(AI)} trimBefore={200} muted style={full} />
+        </Shot>
+      </Sequence>
+      <Sequence name="Final AI: apă" from={442} durationInFrames={15} premountFor={fps}>
+        <Shot from={442} cam={aiHalf}>
+          <Video src={staticFile(AI)} trimBefore={305} muted style={full} />
+        </Shot>
+      </Sequence>
+      <Sequence name="Final AI: șine" from={457} durationInFrames={65} premountFor={fps}>
+        <Shot from={457} cam={aiHalf}>
+          <Video src={staticFile(AI)} trimBefore={358} muted style={full} />
+        </Shot>
+      </Sequence>
+      <Sequence name="Final REAL (stânga, slider)" from={400} durationInFrames={122} premountFor={fps}>
+        <Shot from={400} clip={`inset(0px ${1080 - cut}px 0px 0px)`} cam={() => ({ s: 1, ox: 540, oy: 1000, tx: -270 })}>
+          <Video src={staticFile(WE)} trimBefore={0} muted style={full} />
+        </Shot>
+      </Sequence>
+      <Sequence name="Slider: linie + mâner" from={400} durationInFrames={122} layout="none">
+        <ComparisonHandle x={x} vx={vx} y={HANDLE_Y} press={pressAt(f, PRESSES)}
+          appear={interpolate(f, [400, 404], [0, 1], { ...clamp, easing: ease })} />
       </Sequence>
 
-      <Audio name="Piesa (pasaj continuu, 8 măsuri)" src={staticFile("v4/song_v4.wav")} />
+      <Audio name="Piesa (pasaj continuu, până la accentul din drop-ul mare)" src={staticFile("v4/song_v4b.wav")} />
       <Audio name="SFX click" src={staticFile("v4/sfx/click.wav")} from={57} volume={0.1} />
       <Audio name="SFX aprindere" src={staticFile("v4/sfx/ignition.wav")} from={57} volume={0.22} />
       <Audio name="SFX retragere" src={staticFile("v4/sfx/swish.wav")} from={57} volume={0.07} />
@@ -146,7 +188,9 @@ export const ReelV4: React.FC = () => {
       <Audio name="SFX apă" src={staticFile("v4/sfx/water.wav")} from={266} volume={0.13} />
       <Audio name="SFX aer șine" src={staticFile("v4/sfx/air_lr.wav")} from={319} volume={0.1} />
       <Audio name="SFX swish față" src={staticFile("v4/sfx/swish.wav")} from={363} volume={0.1} />
-      <Audio name="SFX slide final" src={staticFile("v4/sfx/swish.wav")} from={392} volume={0.13} />
+      <Audio name="SFX slider intră" src={staticFile("v4/sfx/swish.wav")} from={395} volume={0.13} />
+      <Audio name="SFX slider stânga" src={staticFile("v4/sfx/swish.wav")} from={453} volume={0.07} />
+      <Audio name="SFX slider dreapta" src={staticFile("v4/sfx/swish.wav")} from={481} volume={0.07} />
     </AbsoluteFill>
   );
 };
