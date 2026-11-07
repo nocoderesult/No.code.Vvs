@@ -1,0 +1,31 @@
+# Unde caută ComfyUI modelele pe Network Volume (montat la /runpod-volume pe Serverless).
+# 1) Volumul pod-ului de acum, dacă e Network Volume: ComfyUI stă în runpod-slim/ComfyUI.
+volum_pod:
+  base_path: /runpod-volume/runpod-slim/ComfyUI
+  checkpoints: models/checkpoints/
+  diffusion_models: models/diffusion_models/
+  unet: models/unet/
+  text_encoders: models/text_encoders/
+  clip: models/clip/
+  vae: models/vae/
+  loras: models/loras/
+  upscale_models: models/upscale_models/
+  sams: models/sams/
+  ultralytics: models/ultralytics/
+  ultralytics_bbox: models/ultralytics/bbox/
+  ultralytics_segm: models/ultralytics/segm/
+# 2) Un Network Volume nou, cu modelele direct în models/.
+volum_nou:
+  base_path: /runpod-volume
+  checkpoints: models/checkpoints/
+  diffusion_models: models/diffusion_models/
+  unet: models/unet/
+  text_encoders: models/text_encoders/
+  clip: models/clip/
+  vae: models/vae/
+  loras: models/loras/
+  upscale_models: models/upscale_models/
+  sams: models/sams/
+  ultralytics: models/ultralytics/
+  ultralytics_bbox: models/ultralytics/bbox/
+  ultralytics_segm: models/ultralytics/segm/
