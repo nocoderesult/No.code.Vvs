@@ -10,12 +10,12 @@ la viteză mare, cu stropi înghețați în aer, detaliu macro pe pulpă, lumin�
 
 ## 1. Legătura cu montajul
 
-- **Cadrul de pornire:** cadrul 193 din montaj (8,04 s), curățat de subtitrare: capacul tocmai a ieșit, mâna îl duce în
-  dreapta sus, iar sticla e ținută de cealaltă mână.
+- **Cadrul de pornire:** cadrul 185 din montaj (7,71 s), curățat de subtitrare. Capacul e încă pus și mâna îl răsucește,
+  ca sticla să se poată umfla puțin înainte să se deschidă: așa se vede presiunea din ea.
 - **Cadrul de final:** cadrul 214 (8,92 s), curățat de subtitrarea „să-l ignori!”. E ultimul cadru cu sticla ținută
   lângă fereastră, chiar înaintea tăieturii la gura care bea (cadrul 215).
-- **Ce înlocuiește insertul:** cadrele 193–214 din montaj, adică crossfade-ul și cadrul de la fereastră (0,9 s), cu
-  ~5 s de explozie. După insert, montajul continuă cu cadrul 215, exact ca acum.
+- **Ce înlocuiește insertul:** cadrele 185–214 din montaj, adică ridicarea capacului, crossfade-ul și cadrul de la
+  fereastră (1,25 s), cu ~5 s de presiune și explozie. După insert, montajul continuă cu cadrul 215, exact ca acum.
 - **De ce merge:** Kling a respectat ambele capete în proba anterioară (diferență 1,1 și 1,4 din 255). Explozia
   acoperă trecerea de la fundalul verde închis al macro-ului la fereastra luminoasă, ca o tranziție naturală.
 
@@ -42,14 +42,15 @@ răsfiră. Așa rămâne credibil, nu desen animat.
 
 ## 3. Momentele (5 s)
 
-1. **0–0,6 s:** mâna duce capacul afară din cadru, în dreapta sus (continuă mișcarea reală). Din gâtul deschis țâșnește
-   un prim spray fin de picături.
-2. **0,6–2,6 s:** cu încetinitorul, feliile de măr, rotițele de lămâie și bucățile de ghimbir ies din gât într-o coroană
-   de picături de suc. Se rotesc încet și umplu partea de sus a cadrului, iar camera se retrage ușor până se vede toată
-   sticla.
-3. **2,6–4,2 s:** bucățile se răsfiră în arc și cad pe lângă sticlă, afară din cadru. Picăturile plutesc, iar lumina se
+1. **0–0,8 s, presiunea:** mâna răsucește capacul, iar sticla se umflă foarte puțin: pereții de plastic se bombează abia
+   vizibil, bule mici urcă repede prin suc și se aude un scârțâit fin și un șuierat care crește.
+2. **0,8–1 s, deschiderea:** mâna ridică capacul și presiunea se eliberează dintr-odată.
+3. **1–2,8 s, explozia:** pornește imediat și frumos, cu încetinitorul. Feliile de măr, rotițele de lămâie și bucățile de
+   ghimbir ies din gât într-o coroană de picături de suc și se rotesc încet. Camera se retrage ușor până se vede toată
+   sticla și trece prin cadrul-cheie al exploziei.
+4. **2,8–4,2 s:** bucățile se răsfiră în arc și cad pe lângă sticlă, afară din cadru. Picăturile plutesc, iar lumina se
    încălzește spre fereastra luminoasă.
-4. **4,2–5 s:** aerul se limpezește. Sticla, ținută de mâna din dreapta, ajunge în cadrul final de lângă fereastră, cu
+5. **4,2–5 s:** aerul se limpezește. Sticla, ținută de mâna din dreapta, ajunge în cadrul final de lângă fereastră, cu
    eticheta spre cameră.
 
 ## 4. Prompturile compilate
@@ -71,7 +72,7 @@ literă cu literă.
 
 ### 4.2 Nano Banana Pro edit: cadrul-cheie al exploziei (2K, 9:16, PNG)
 
-Intrări: cadrul de final curat, cadrul de referință pentru etichetă și cadrul de pornire curat. Încadrarea e cea din
+Intrări: cadrul de final curat, cadrul de referință pentru etichetă și cadrul de pornire curat (8,04 s). Încadrarea e cea din
 cadrul de final, ca a doua jumătate a clipului să fie doar bucățile care cad.
 
 > Using the provided images, show the peak moment of the shot in the framing and light of the first image: a small
@@ -95,27 +96,29 @@ Parametri: `start_image_url` = cadrul de pornire curat, `middle_image_urls` = [c
 cadrul de final curat, `duration: 5`, `resolution: "1080p"`. Structura e cea din ghidul Kling: rolurile cadrelor,
 setările, momentele, apoi sunetul.
 
-> Begin exactly on the supplied start frame: in a café, a hand has just lifted the white cap off a small 100 ml clear
-> plastic bottle of pale yellow, cloudy ginger juice, with a white tamper ring on its open threaded neck and a round
-> orange label on the front, held by another hand. Pass through the supplied middle frame at the peak of the burst. End
-> exactly on the supplied end frame, matching its framing and lighting: the bottle held by the hand on the right, by a
-> bright café window.
-> One continuous shot, with no cuts, angle changes, or scene changes. Photorealistic high-speed product commercial, macro
-> detail, shallow depth of field.
-> 0-0.6 s: the hand carries the cap out of frame to the top right, and a first fine spray of juice droplets bursts from
-> the open neck.
-> 0.6-2.6 s: in slow motion, thin crisp apple slices with red-blushed skin and pale, juicy flesh, small lemon wheels and
-> wedges with translucent, glistening pulp and bright yellow rind, and small coins and knobs of fresh ginger root with
-> beige skin and fibrous pale-yellow flesh burst up out of the neck in a crown of juice droplets, spinning slowly, while
-> the camera eases back to show the whole bottle.
-> 2.6-4.2 s: the pieces arc outward and fall past the bottle and out of frame, droplets drift and sparkle, and the light
-> warms into bright backlight from the café window.
+> Begin exactly on the supplied start frame: in a café, a hand grips the white cap of a small 100 ml clear plastic
+> bottle of pale yellow, cloudy ginger juice, with a white tamper ring on its threaded neck and a round orange label
+> on the front, held by another hand. Pass through the supplied middle frame at the peak of the burst. End exactly on
+> the supplied end frame, matching its framing and lighting: the bottle held by the hand on the right, by a bright
+> café window.
+> One continuous shot, with no cuts, angle changes, or scene changes. Photorealistic high-speed product commercial,
+> macro detail, shallow depth of field.
+> 0-0.8 s: the hand twists the cap while pressure builds inside: the bottle swells very slightly, its plastic walls
+> bulging just visibly, and tiny bubbles race up through the juice.
+> 0.8-1 s: the hand lifts the cap off to the top right and the pressure releases at once.
+> 1-2.8 s: instantly and beautifully, in slow motion, thin crisp apple slices with red-blushed skin and pale, juicy
+> flesh, small lemon wheels and wedges with translucent, glistening pulp and bright yellow rind, and small coins and
+> knobs of fresh ginger root with beige skin and fibrous pale-yellow flesh burst up out of the open neck in an elegant
+> crown of juice droplets, spinning slowly, while the camera eases back to show the whole bottle.
+> 2.8-4.2 s: the pieces arc outward and fall past the bottle and out of frame, droplets drift and sparkle, and the
+> light warms into bright backlight from the café window.
 > 4.2-5 s: the air clears and the bottle settles into the end frame, the label facing the camera.
 > Every droplet is round and catches specular highlights, and the pieces follow real gravity and momentum. The bottle
 > shape, the clear plastic, the pale yellow cloudy juice and the round orange label stay the same; the label reads
 > "SNOOZZ" and "Ginger Energy", correctly spelled and stable.
-> Sound: the soft click of the cap, a short fizzy hiss, a juicy burst, crisp airy whooshes as the slices fly, and fine
-> droplets pattering. SFX only, no music, no score, no song, no soundtrack. No subtitles.
+> Sound: a faint creak and a rising hiss as the pressure builds, the cap popping off, a juicy burst, crisp airy
+> whooshes as the slices fly, and fine droplets pattering. SFX only, no music, no score, no song, no soundtrack. No
+> subtitles.
 
 ### 4.4 Seedance 2.5: varianta pentru final (1080p, 5 s; doar start + final)
 
@@ -123,16 +126,16 @@ Parametri: `image_url` = cadrul de pornire curat, `end_image_url` = cadrul de fi
 `resolution: "1080p"`, `codec: "H264"`, `generate_audio: true`. Seedance nu are cadru-cheie la mijloc. Fiindcă
 cuvintele despre apă și plescăit îi strică sunetul, aici scriem doar „droplets”, „spray” și „burst”.
 
-> No subtitles. No BGM, no music, no score, no instrumental, no melody; only action sounds. A small 100 ml clear plastic
-> bottle of pale yellow, cloudy ginger juice, with a white tamper ring on its open threaded neck and a round orange
-> label on the front, held by a hand in a café. 0-1s: the other hand carries the white cap out of frame to the top
-> right <the cap clicks off> and a fine spray of droplets bursts from the open neck <a short fizzy hiss>. 1-3s: thin
-> crisp apple slices, small lemon wheels and small coins of fresh ginger burst up out of the neck in a crown of
-> droplets and spin slowly in the air <a soft juicy burst> <crisp airy whooshes>. 3-5s: the pieces arc outward and fall
-> out of frame, the light warms into bright backlight from a large café window with plants, and the bottle settles,
-> the label facing the camera, reading "SNOOZZ" and "Ginger Energy". Photorealistic high-speed product commercial,
-> slow motion, macro detail, shallow depth of field, the camera eases back slightly. No subtitles. No BGM, no music; only
-> action sounds.
+> No subtitles. No BGM, no music, no score, no instrumental, no melody; only action sounds. A small 100 ml clear
+> plastic bottle of pale yellow, cloudy ginger juice, with a white tamper ring on its threaded neck and a round orange
+> label on the front, held by a hand in a café. 0-1s: the other hand twists the white cap while pressure builds and
+> the bottle swells very slightly, its plastic walls bulging just visibly <a faint creak> <a rising hiss>, then lifts
+> the cap off to the top right <the cap pops off>. 1-3s: instantly, thin crisp apple slices, small lemon wheels and
+> small coins of fresh ginger burst up out of the open neck in an elegant crown of droplets and spin slowly in the air
+> <a soft juicy burst> <crisp airy whooshes>. 3-5s: the pieces arc outward and fall out of frame, the light warms into
+> bright backlight from a large café window with plants, and the bottle settles, the label facing the camera, reading
+> "SNOOZZ" and "Ginger Energy". Photorealistic high-speed product commercial, slow motion, macro detail, shallow depth
+> of field, the camera eases back slightly. No subtitles. No BGM, no music; only action sounds.
 
 ## 5. Variații de testat
 
