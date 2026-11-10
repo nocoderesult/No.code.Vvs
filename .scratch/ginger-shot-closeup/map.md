@@ -31,6 +31,8 @@ reel-ului îl faci tu, în Premiere sau DaVinci.
 
 ## Decisions so far
 
+- [Regulile modelelor pentru prompturi](issues/01-regulile-modelelor.md): cadrul de vârf păstrează încadrarea, camera aproape fixă, un singur plan, sunet fără muzică, Seedance fără fețe și cu H.264; API-ul Kling pe fal e neconfirmat.
+
 ## Not yet specified
 
 - Formatul de livrare: 24 fps ca montajul, 1080×1920, H.264 sau ProRes, sunetul inclus sau pe pistă separată.
