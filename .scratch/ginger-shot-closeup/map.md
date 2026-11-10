@@ -39,6 +39,7 @@ reel-ului îl faci tu, în Premiere sau DaVinci.
 - [Credit pe contul fal](issues/03-credit-fal.md): contul are credit, iar upload-ul în stocarea fal merge.
 - [Clipurile sursă fără subtitrări](issues/04-clipuri-fara-subtitrari.md): nu există; cadrul de pornire se curăță cu o editare de imagine, doar în zona subtitrării.
 - [Cadrul de pornire curat](issues/09-cadrul-de-pornire.md): ambele cadre (7,83 s și 8,04 s) curățate cu Nano Banana Pro, doar în zona subtitrării; restul e cadrul filmat.
+- [Cadrul de vârf: variante de imagine](issues/06-cadrul-de-varf.md): v1 (în mână) și v3 (plutind) merg la probe; v2 a căzut din cauza etichetei („lămâle”).
 
 ## Not yet specified
 

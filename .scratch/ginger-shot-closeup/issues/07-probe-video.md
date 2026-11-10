@@ -1,7 +1,7 @@
 # Probe video: Gemini Omni Flash 1.2 și Kling 4.0
 
 Type: prototype
-Status: open
+Status: claimed
 Blocked by: 06
 
 ## Question

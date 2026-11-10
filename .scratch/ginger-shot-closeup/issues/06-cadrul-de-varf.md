@@ -1,7 +1,7 @@
 # Cadrul de vârf: variante de imagine
 
 Type: prototype
-Status: claimed
+Status: resolved
 Blocked by: 01, 05, 09
 
 ## Question
@@ -18,3 +18,9 @@ cadrul de pornire, din care alegi una.
   - v2, pe masă: `01a1c5ba-2f18-70d0-a8d9-d77ccdca1295`. Scrie „lămâle” în loc de „lămâie”.
   - v3, plutind: `01a1c5ba-b514-7473-b007-7954c8fac03c`. Eticheta e corectă.
   - La toate trei eticheta iese ceva mai mare pe sticlă decât cea reală și perfect rotundă.
+
+## Answer
+
+Ai ales să mergem mai departe cu două variante: v1, sticla în mână, și v3, sticla plutind deasupra mesei. Ambele au
+eticheta corectă. v2 a căzut, fiindcă scrie „lămâle”. Fișierele: `peak_v1_hand.png` și `peak_v3_float.png` (1080×1920),
+în folderul de lucru al sesiunii.
