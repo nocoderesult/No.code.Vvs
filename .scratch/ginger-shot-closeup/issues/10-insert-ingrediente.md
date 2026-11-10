@@ -25,3 +25,7 @@ curățat), ca montajul să continue cu cadrul 215. Prompturile sunt în [metapr
 - Cadrul-cheie al exploziei: Nano Banana Pro, `01a1c5ef-4f5f-7190-82f2-ba1f88e7550f`, 2 variante, $0,30.
   - Varianta 0 are mai multe bucăți și sticla mai mică, dar eticheta scrie „lămâle”.
   - Varianta 1 are eticheta corectă și sticla aproape de mărimea din cadrul de final. Pe ea o recomand.
+- Cadrul de pornire de la 7,71 s (cadrul 185, capacul încă pus) e curățat: Nano Banana Pro,
+  `01a1c5f4-2d45-7343-92fe-1d1eac361f35`, $0,15. ECC 0,9906. Modelul a refăcut toată banda subtitrării ca plastic
+  ceva mai limpede pe umărul sticlei, așa că am lipit înapoi toată banda: decât litere fantomă, mai bine așa.
+- Clipul Kling 4.0 e trimis: 1080p, 5 s, cadrele 185 → varianta 1 a exploziei → 214. L-ai aprobat ($1,18).
