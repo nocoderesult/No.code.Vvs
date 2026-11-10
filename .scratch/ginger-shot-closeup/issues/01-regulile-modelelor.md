@@ -25,7 +25,7 @@ Detaliile și sursele sunt în [research/01-regulile-modelelor.md](../research/0
 - Cadrul de vârf trebuie să păstreze încadrarea și poziția sticlei din cadrul de pornire. Se schimbă doar lumina și
   particulele: Kling avertizează că schimbările mari simultane fac tranziția dificilă. Camera stă aproape fixă, ca
   eticheta să nu fie redesenată din alt unghi.
-- Româna („ghimbir, lămâie, miere”) nu apare printre limbile în care modelele randează text. Promptul cere „keep the
+- Româna („ghimbir, lămâie, măr”) nu apare printre limbile în care modelele randează text. Promptul cere „keep the
   label exactly as in the first frame”, iar eticheta se verifică la fiecare take, cu refacere în post ca rezervă.
 - Seedance 2.5 respinge fețele reale din cadre. Îi setăm `duration: "4"` (string) și `codec: "H264"`, fiindcă 1080p
   vine implicit pe 10 biți H.265. Draftul la 480p se completează doar la 1080p și costă cât un 1080p direct (total

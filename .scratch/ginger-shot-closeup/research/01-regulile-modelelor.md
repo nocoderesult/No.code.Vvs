@@ -575,7 +575,7 @@ FAQ-uri relevante pentru noi [bp-sd25-pg]:
 - **Eticheta se păstrează, nu se regenerează.** Cere „keep the label exactly as in the first frame”. Kling, Seedream și
   Nano Banana nu listează româna printre limbile în care randează text [k-guide] [bp-sdr5] [g-nb]. Omni declară complet
   suportată doar engleza [g-omni], iar pentru Seedance n-am găsit o listă de limbi pentru text (**neconfirmat**).
-  **Inferență:** rândul „ghimbir, lămâie, miere” e cel mai expus. Verifică eticheta la fiecare take și ține camera
+  **Inferență:** rândul „ghimbir, lămâie, măr” e cel mai expus. Verifică eticheta la fiecare take și ține camera
   aproape fixă, ca eticheta să nu fie redesenată din alt unghi.
 - **Prompturi în engleză**, singura limbă complet suportată de Omni [g-omni].
 - **Numește produsul „100 ml ginger juice bottle”, nu „ginger shot”.** **Inferență:** „shot” e termen de cameră în

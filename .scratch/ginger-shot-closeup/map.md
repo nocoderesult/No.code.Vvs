@@ -15,6 +15,8 @@ reel-ului îl faci tu, în Premiere sau DaVinci.
   îl răsucește până la 7,7 s, capacul iese din gât la 7,7–8,0 s, apoi urmează un crossfade spre sticla ținută lângă
   fereastră (8,1–8,9 s). Subtitrările sunt peste sticlă în toate aceste cadre. Singurul cadru curat cu toată sticla e
   sticla pe masă (5,9–6,4 s).
+- Eticheta, citită din cadrul curat de pe masă: „SNOOZZ” (cei doi O plini), „Ginger Energy”, „ghimbir, lămâie, măr”,
+  „100 ml”, pe un cerc portocaliu.
 - Skill-uri de consultat: fal-ai-media (modele, cost), prompt-builder (prompturi în engleză, pe structura fiecărui
   model), taste (direcție, lumină), video-editor (`scripts/fal_run.py`, `reference/fal.md`, QC), grilling +
   domain-modeling (glosarul din `CONTEXT.md`).
@@ -34,6 +36,8 @@ reel-ului îl faci tu, în Premiere sau DaVinci.
 
 - [Regulile modelelor pentru prompturi](issues/01-regulile-modelelor.md): cadrul de vârf păstrează încadrarea, camera aproape fixă, un singur plan, sunet fără muzică, Seedance fără fețe și cu H.264; API-ul Kling pe fal e neconfirmat.
 - [Structura close-up-ului](issues/05-structura-close-up.md): din macro, la ieșirea capacului, retragere cu orbită completă până la toată sticla; răsărit „The Day Starters” cu fibre de ghimbir și picături de lămâie; 3 momente în ~4 s; cadrul de vârf cu Nano Banana Pro; fără plafon fix, cu întrebare înainte de fiecare generare.
+- [Credit pe contul fal](issues/03-credit-fal.md): contul are credit, iar upload-ul în stocarea fal merge.
+- [Clipurile sursă fără subtitrări](issues/04-clipuri-fara-subtitrari.md): nu există; cadrul de pornire se curăță cu o editare de imagine, doar în zona subtitrării.
 
 ## Not yet specified
 
