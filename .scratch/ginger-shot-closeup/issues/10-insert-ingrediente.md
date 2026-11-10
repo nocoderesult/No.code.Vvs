@@ -81,3 +81,11 @@ Livrate: două versiuni ale videoclipului complet, „SNOOZZ SHOT GHIMBIR (Kling
   cadru-cheie la 25 de cadre, BT.709 tv, AAC-LC 48 kHz stereo 320 kbps, timecode 01:00:00:00, MP4 isom, 18,816 s.
 - **Verificări:** cadrele neatinse au PSNR minim 46,4 dB față de original (media ~51,5 dB). Tăietura de intrare (15,4)
   e cât mișcarea reală. Tăietura de ieșire spre prezentatoare e o tăietură tare, ca celelalte din montaj.
+
+## Comments (după livrare)
+
+- 10 nov: ai observat că versiunile livrate nu mai au secvența cu băutul. Insertul (overwrite pe cadrele 185–303) a
+  acoperit gura care bea, fata din cafenea care bea și începutul cadrului cu prezentatoarea care bea. Am ales singur să
+  acopăr cadrele, fără să te întreb. Lecția e acum în skill: `reference/insert-into-edit.md` și un rând în `SKILL.md`.
+  Refacerea: insert ripple, deci toate cadrele originale rămân, iar sub secundele adăugate muzica originală se prelungește
+  pe beat (~103,4 BPM).

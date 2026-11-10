@@ -208,6 +208,9 @@ Details and sources are in `reference/craft.md` and `reference/platforms.md`.
 - Phone VFR clips drift in Resolve, so the package ships CFR copies (`media/*_CFR.mp4`) without a timecode track.
 
 **Workflow:**
+- When a new shot goes into a finished edit, never cover or drop the creator's shots on your own, AI b-roll included.
+  Show a shot list of what stays, moves or is covered and get an OK first. Default to a ripple insert, with the
+  original audio's music bed extended on the beat. Checklist: `reference/insert-into-edit.md`.
 - auto-editor and other tools write `/tmp/...` paths into timelines. Never ship those.
 - Phrase IDs change with `--pace`.
 - Two-person shots: the tracker follows one face. Use `--reframe blur` or `center`, or cut manually.
@@ -241,6 +244,7 @@ Details and sources are in `reference/craft.md` and `reference/platforms.md`.
 - `reference/davinci-resolve.md`: handoff
 - `reference/testing.md`: test results and limitations
 - `reference/fal.md`: fal.ai key, cost and job rules for generated inserts
+- `reference/insert-into-edit.md`: putting a new shot into a finished edit without losing shots, sync or subtitles
 - `recipes/six-effects/README.md`: the six signature effects, Apple Log grade, 4K compositor (templates in `tools/`, `remotion/`)
 - `recipes/dj-worlds/README.md`: real take + AI worlds music reel, measured style pack, beat-locked loop (templates in `tools/`, `remotion/`, `pack/`)
 
