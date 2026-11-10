@@ -137,6 +137,81 @@ cuvintele despre apă și plescăit îi strică sunetul, aici scriem doar „dro
 > "SNOOZZ" and "Ginger Energy". Photorealistic high-speed product commercial, slow motion, macro detail, shallow depth
 > of field, the camera eases back slightly. No subtitles. No BGM, no music; only action sounds.
 
+### 4.5 Nano Banana Pro edit: cadrul de final cu urmele exploziei (2K, 9:16, PNG)
+
+Intrări: cadrul de final curat, cadrul de referință pentru etichetă și cadrul-cheie al exploziei (varianta 1). Pe masă
+rămân bucățile căzute și stropii, iar pe sticlă câteva picături. Cadrul următor din montaj e gura care bea, deci
+urmele nu strică legătura.
+
+> Using the provided images, show the same moment as the first image a few seconds after the bottle has burst. Keep
+> the framing, the light, the bottle, the hand holding it from the right and the café window exactly as in the first
+> image, and the round orange label reads "SNOOZZ" in bold black letters with the two O's drawn as solid black dots,
+> then "Ginger Energy", then "ghimbir, lămâie, măr" and "100 ml" in smaller black letters, exactly as in the second
+> image. On the wooden table around the base of the bottle now lie the pieces that fell out of it, looking exactly
+> like those in the third image: two or three thin apple slices with red-blushed skin resting on their sides, a lemon
+> wheel and a lemon wedge lying flat with glistening pulp, and two small coins of fresh ginger root, each with a soft
+> contact shadow, plus small beads and splats of pale yellow juice on the wood. A few fine juice droplets still cling
+> to the outside of the bottle and its open neck, one running slowly down the plastic. Photorealistic, with natural
+> gravity: every piece rests where it landed. Match the colours, white balance, focus and fine grain of the first
+> image.
+
+### 4.6 Wan 3.0 Prime: clipul complet (1080p, 8 s; doar pornire + final)
+
+Parametri: `start_image_url` = cadrul 185 curat (capacul pus), `end_image_url` = cadrul de final cu urmele exploziei,
+`duration: 8`, `resolution: "1080p"`, `aspect_ratio: "9:16"`, `audio: true`. Rescrierea promptului rămâne pornită,
+cum recomandă fal. Promptul folosit efectiv vine înapoi în `actual_prompt`, iar seed-ul în `seed`, ca o variantă
+reușită să poată fi repetată. La cererea ta, promptul e scris ca JSON (un text în câmpul `prompt`).
+
+```json
+{
+  "shot": "one continuous photorealistic high-speed product commercial, vertical 9:16, 8 seconds, macro detail, shallow depth of field",
+  "start_frame": "the provided first frame: in a café, a hand grips the white cap, still screwed on, and another hand holds the bottle",
+  "end_frame": "the provided last frame: the bottle held by the hand on the right by a bright café window, apple, lemon and ginger pieces resting on the wooden table, beads of juice on the wood and a few droplets on the bottle",
+  "product": "a small 100 ml clear plastic bottle of pale yellow, cloudy ginger juice with a white screw cap and a round orange label on the front",
+  "label": "reads \"SNOOZZ\" and \"Ginger Energy\", correctly spelled, never changes",
+  "timeline": [
+    {
+      "time": "0-1s",
+      "action": "the hands let go and the closed bottle rises smoothly to the centre of the frame"
+    },
+    {
+      "time": "1-3s",
+      "action": "the bottle spins fast around its vertical axis, two full turns, while the background brightens into the warm light of a large café window with plants"
+    },
+    {
+      "time": "3-4s",
+      "action": "the spin slows, the bottle settles back down into the hand on the right with its label facing the camera, and it shakes slightly"
+    },
+    {
+      "time": "4-5s",
+      "action": "pressure builds: the bottle swells very slightly, its plastic walls bulging just visibly"
+    },
+    {
+      "time": "5-5.5s",
+      "action": "the white cap pops off by itself and flies up out of frame"
+    },
+    {
+      "time": "5.5-7s",
+      "action": "in slow motion, a gentle, elegant burst of apple, lemon and ginger pieces rises out of the open neck in a crown of juice droplets"
+    },
+    {
+      "time": "7-8s",
+      "action": "the pieces fall onto the wooden table, bounce slightly and come to rest; droplets settle as small beads of juice on the wood and a few stay on the bottle"
+    }
+  ],
+  "ingredients": {
+    "apple": "thin crisp slices with red-blushed skin and pale, juicy flesh",
+    "lemon": "small wheels and wedges with translucent, glistening pulp and bright yellow rind",
+    "ginger": "small coins and knobs of fresh root with beige skin and fibrous pale-yellow flesh"
+  },
+  "physics": "real gravity and momentum, natural arcs and small bounces, every droplet round and catching specular highlights, every piece resting where it lands",
+  "camera": "close-up at the height of the bottle, steady, easing back slightly during the burst",
+  "lighting": "warm morning café light turning into bright backlight from the window, rim light on droplets and slices",
+  "audio": "a soft whoosh as it spins, a faint creak and a rising hiss, the pop of the cap, a soft juicy burst, the light patter of slices and drops landing on wood; no music, no dialogue",
+  "avoid": "cuts, extra bottles, a changed or misspelled label, a cartoon or CGI look, added text or watermarks"
+}
+```
+
 ## 5. Variații de testat
 
 - **A (din șablon):** retragere ușoară și lumină din spate de la fereastră.

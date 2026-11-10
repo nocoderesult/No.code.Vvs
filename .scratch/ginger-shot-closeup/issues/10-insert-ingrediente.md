@@ -38,3 +38,10 @@ curățat), ca montajul să continue cu cadrul 215. Prompturile sunt în [metapr
   - Umflarea sticlei nu se vede clar. Kling a transmis presiunea prin bucățile care urcă prin suc.
   - Sunetul ieșea cu TP +1,6 dBFS. L-am coborât static cu 2,6 dB, la −1,0 dBTP (−17,6 LUFS), resamplat la 48 kHz.
     Video-ul e copiat fără re-encodare și etichetat BT.709.
+- 10 nov, direcția nouă, aleasă de tine:
+  - Ordinea: sticla se învârte ca în varianta Kling, se scutură ușor, se umflă puțin, apoi capacul sare și explozia e
+    ușoară.
+  - Realismul: bucățile cad pe masă după gravitație și rămân acolo, stropii rămân pe lemn, iar câteva picături rămân pe
+    sticlă.
+  - Modelul și durata: Wan 3.0 Prime, cu promptul scris ca JSON, 8 s la 1080p.
+  - Cadrul de final: devine cadrul 214 cu urmele exploziei. Merge, fiindcă următorul cadru din montaj e gura care bea.
