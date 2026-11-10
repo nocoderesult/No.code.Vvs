@@ -89,3 +89,18 @@ Livrate: două versiuni ale videoclipului complet, „SNOOZZ SHOT GHIMBIR (Kling
   acopăr cadrele, fără să te întreb. Lecția e acum în skill: `reference/insert-into-edit.md` și un rând în `SKILL.md`.
   Refacerea: insert ripple, deci toate cadrele originale rămân, iar sub secundele adăugate muzica originală se prelungește
   pe beat (~103,4 BPM).
+- 10 nov, refăcut cu insert ripple, după ce ai aprobat lista de cadre:
+  - **Cadrele:** toate cadrele originale sunt păstrate. Insertul înlocuiește doar cadrele 185–214 (ridicarea capacului,
+    crossfade-ul și cadrul de la fereastră). Kling are 141 de cadre (ultima secundă încetinită de 1,83 ori, cu
+    estompare). Wan are 197 de cadre (coada statică prelungită de 1,24 ori).
+  - **Sunetul:** cel original, cu muzica prelungită prin repetarea unei măsuri (4 bătăi, 2,3187 s) din pauza fără voce. La
+    Kling se repetă de 2 ori (+4,637 s), la Wan de 3 ori (+6,956 s). Punctul de lipire e la 11,970 s, cu fade-uri de
+    40 ms. Nu apare nicio pocnitură, bătaia rămâne regulată (~0,58 s), iar după lipituri sunetul e identic eșantion cu
+    eșantion cu originalul.
+  - **Sincronizarea după insert:** Kling +12 ms, Wan −2 ms.
+  - **Subtitrarea „să-l ignori!”:** e pe insert pe cadrele 202–215, ca în original. Pe primul cadru cu gura care bea (215)
+    am pus copia cadrului 216, ca să nu rămână subtitrarea veche, care ar fi clipit o dată.
+  - **Formatul:** H.264 High 4.0, ~16,9 Mbps, 24 fps, BT.709, AAC-LC 48 kHz stereo la ~321 kbps (encoderul în modul
+    `fast` atinge bitrate-ul original), timecode 01:00:00:00.
+  - **Durata:** Kling 23,41 s, Wan 25,73 s. Loudness-ul integrat (−12,5 și −13,0 LUFS față de −11,5) scade doar din cauza
+    secundelor în plus fără voce, câștigul n-a fost schimbat.
