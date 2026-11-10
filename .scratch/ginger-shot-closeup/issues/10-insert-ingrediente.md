@@ -45,3 +45,7 @@ curățat), ca montajul să continue cu cadrul 215. Prompturile sunt în [metapr
     sticlă.
   - Modelul și durata: Wan 3.0 Prime, cu promptul scris ca JSON, 8 s la 1080p.
   - Cadrul de final: devine cadrul 214 cu urmele exploziei. Merge, fiindcă următorul cadru din montaj e gura care bea.
+- Cadrul final cu urmele exploziei: Nano Banana Pro, `01a1c60a-ee95-7f01-8cc4-21e6e4fe1635`, 2 variante, $0,30. L-am
+  aliniat la cadrul 214 (ECC 0,999; partea de sus diferă de cea reală cu ~3/255). Eticheta e corectă la ambele variante.
+  Am ales varianta 1: are toate trei ingredientele pe masă și picături care se scurg pe sticlă.
+- Clipul Wan 3.0 Prime e trimis: 1080p, 8 s, promptul în JSON, cadrele 185 → urmele exploziei. L-ai aprobat ($2,24).
