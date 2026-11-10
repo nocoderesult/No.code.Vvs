@@ -49,3 +49,16 @@ curățat), ca montajul să continue cu cadrul 215. Prompturile sunt în [metapr
   aliniat la cadrul 214 (ECC 0,999; partea de sus diferă de cea reală cu ~3/255). Eticheta e corectă la ambele variante.
   Am ales varianta 1: are toate trei ingredientele pe masă și picături care se scurg pe sticlă.
 - Clipul Wan 3.0 Prime e trimis: 1080p, 8 s, promptul în JSON, cadrele 185 → urmele exploziei. L-ai aprobat ($2,24).
+- 10 nov, clipul Wan 3.0 Prime: `01a1c60c-18cc-7372-a79f-8471ad125268`, seed `1544616857`, 136 s, $2,24. 1080×1920 la
+  **30 fps** (240 de cadre, 8,0 s). `actual_prompt` a venit gol.
+  - Capetele: primul cadru e exact cadrul de pornire (2,5/255), ultimul e exact cadrul cu urmele exploziei (3,3/255).
+  - Ce se vede, pe rând:
+    - 0,6–0,9 s: retragere rapidă, iar fundalul sare la fereastră, ca o mișcare bruscă de cameră;
+    - 0,9–2 s: sticla închisă plutește și se rotește puțin;
+    - 2–4 s: sticla e în mână, dar scuturarea și umflarea nu se văd clar;
+    - 4,4 s: capacul sare;
+    - 4,6–6 s: bucățile ies una după alta, cu stropi;
+    - 6–8 s: bucățile cad pe masă și rămân acolo, cu stropi pe lemn și pe sticlă.
+  - Sunetul ieșea cu TP +1,9 dBFS și l-am coborât cu 3 dB (−1,1 dBTP), la 48 kHz.
+  - Livrare: versiunea originală la 30 fps (video copiat), o versiune la 24 fps pentru montaj și o previzualizare în
+    montaj.
