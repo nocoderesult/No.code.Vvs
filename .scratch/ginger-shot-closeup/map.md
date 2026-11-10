@@ -26,18 +26,22 @@ reel-ului îl faci tu, în Premiere sau DaVinci.
   - respectăm regulile platformelor și ale fiecărui model, ca promptul și rezultatul să iasă cum trebuie.
 - Execuția intră în hartă: harta se termină cu insertul livrat, nu doar cu planul.
 - Cost: prețul se verifică înainte de orice generare (`fal_run.py price` / `estimate`), se trimite doar cu `--yes`,
-  iar ID-ul fiecărui job se păstrează. Plafonul se fixează în „Structura close-up-ului”.
+  iar ID-ul fiecărui job se păstrează. **Înainte de fiecare generare îl întreb pe creator ce model folosesc, pentru ce
+  și cât costă.** Nu există un plafon fix.
 - Cercetările se salvează în `research/`, lângă hartă, pe ramura de lucru.
 
 ## Decisions so far
 
 - [Regulile modelelor pentru prompturi](issues/01-regulile-modelelor.md): cadrul de vârf păstrează încadrarea, camera aproape fixă, un singur plan, sunet fără muzică, Seedance fără fețe și cu H.264; API-ul Kling pe fal e neconfirmat.
+- [Structura close-up-ului](issues/05-structura-close-up.md): din macro, la ieșirea capacului, retragere cu orbită completă până la toată sticla; răsărit „The Day Starters” cu fibre de ghimbir și picături de lămâie; 3 momente în ~4 s; cadrul de vârf cu Nano Banana Pro; fără plafon fix, cu întrebare înainte de fiecare generare.
 
 ## Not yet specified
 
 - Formatul de livrare: 24 fps ca montajul, 1080×1920, H.264 sau ProRes, sunetul inclus sau pe pistă separată.
 - Potrivirea culorii cu cadrele din jur.
-- Ce facem dacă modelul video deformează eticheta: alt take, regenerare sau eticheta refăcută în post.
+- Eticheta în timpul orbitei: cadre de ghidaj din lateral și din spate (Kling acceptă cadre intermediare), alt take,
+  sau eticheta refăcută în post.
+- Ce model de probă înlocuiește Kling dacă API-ul lui nu e deschis pe fal (se decide la „Probe video”).
 - Unde tai exact în timeline și cât stă insertul în montaj.
 
 ## Out of scope
