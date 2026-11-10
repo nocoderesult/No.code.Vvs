@@ -26,6 +26,8 @@ reel-ului îl faci tu, în Premiere sau DaVinci.
   - probe cu Gemini Omni Flash 1.2 și Kling 4.0, finalul cu Seedance 2.5;
   - sunetul îl generează modelul;
   - respectăm regulile platformelor și ale fiecărui model, ca promptul și rezultatul să iasă cum trebuie.
+- **Revizuit pe 10 nov.:** în loc de orbita camerei, sticla levitează fix în centrul cadrului și se învârte repede.
+  Runda de probe se face cu Kling 4.0 (1080p, 5 s). Dacă iese bine, clipul poate fi chiar finalul.
 - Execuția intră în hartă: harta se termină cu insertul livrat, nu doar cu planul.
 - Cost: prețul se verifică înainte de orice generare (`fal_run.py price` / `estimate`), se trimite doar cu `--yes`,
   iar ID-ul fiecărui job se păstrează. **Înainte de fiecare generare îl întreb pe creator ce model folosesc, pentru ce

@@ -26,3 +26,10 @@ mică, pe cele două modele de probă? Ce prompt ducem la Seedance 2.5?
       spre v1 ajunge aproape de cadrul real, la cadrul 8 (diferență medie 13,7/255). Probele din 8,04 s schimbă
       încadrarea și fundalul.
     - Orbita nu apare: camera doar se retrage.
+- 10 nov: tu ai văzut probele și nu ți-au plăcut. Direcția nouă:
+  - sticla levitează fix în mijlocul cadrului și se învârte tare, ca să iasă în evidență;
+  - runda o facem cu Kling 4.0, la 1080p și 5 s;
+  - prețul l-ai aprobat înainte: $1,48, adică 2 cadre finale plus un clip.
+- Cadrele finale noi sunt de la Nano Banana Pro (`01a1c5cd-8897-7590-83ad-328c5b6fc372`, 2 imagini, $0,30). Sticla
+  plutește centrată (eticheta la 0,53 din lățime), cu o spirală de lumină în jur, iar eticheta e corectă la amândouă.
+  Pentru Kling am ales varianta 0.
