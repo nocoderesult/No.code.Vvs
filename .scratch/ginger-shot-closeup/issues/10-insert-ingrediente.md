@@ -29,3 +29,12 @@ curățat), ca montajul să continue cu cadrul 215. Prompturile sunt în [metapr
   `01a1c5f4-2d45-7343-92fe-1d1eac361f35`, $0,15. ECC 0,9906. Modelul a refăcut toată banda subtitrării ca plastic
   ceva mai limpede pe umărul sticlei, așa că am lipit înapoi toată banda: decât litere fantomă, mai bine așa.
 - Clipul Kling 4.0 e trimis: 1080p, 5 s, cadrele 185 → varianta 1 a exploziei → 214. L-ai aprobat ($1,18).
+- 10 nov, clipul Kling 4.0: `01a1c5f5-61f9-7581-87dd-9ac8947ae8ad`, 226 s în coadă, $1,18. 1080×1920, 24 fps, 121 de cadre.
+  - Capetele: primul cadru e exact cadrul de pornire (0,8/255), ultimul exact cadrul de final curat (1,4/255), fără
+    tăieturi. Saltul la intrare (16,6) e cât mișcarea reală dintre cadrele 184 și 185 (16,2). Ieșirea spre cadrul 215
+    (66,6) e aceeași tăietură tare ca în montajul original (~64).
+  - Ce se vede: bucățile de fruct se văd deja în suc, înainte de deschidere, și urcă. La ~1 s capacul iese și ele țâșnesc
+    cu o coroană de suc. Între 3 și 4 s cad, iar lumina trece spre fereastră. Eticheta e corectă în explozie și la final.
+  - Umflarea sticlei nu se vede clar. Kling a transmis presiunea prin bucățile care urcă prin suc.
+  - Sunetul ieșea cu TP +1,6 dBFS. L-am coborât static cu 2,6 dB, la −1,0 dBTP (−17,6 LUFS), resamplat la 48 kHz.
+    Video-ul e copiat fără re-encodare și etichetat BT.709.
