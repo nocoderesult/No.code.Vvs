@@ -17,12 +17,12 @@ if [ ${#missing_apt[@]} -gt 0 ]; then
   apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq "${missing_apt[@]}"
 fi
 
-# Python packages used by the skill's scripts (and piper-tts by scripts/dev/ self-tests).
-if ! python3 -c "import faster_whisper, cv2, scenedetect, numpy, PIL, opentimelineio, piper" 2>/dev/null \
+# Python packages used by the skill's scripts (piper-tts by scripts/dev/ self-tests, fal-client by fal_run.py).
+if ! python3 -c "import faster_whisper, cv2, scenedetect, numpy, PIL, opentimelineio, piper, fal_client" 2>/dev/null \
    || ! python3 -c "import opentimelineio as o; a={x.name for x in o.plugins.ActiveManifest().adapters}; assert {'fcp_xml','fcpx_xml','cmx_3600'} <= a" 2>/dev/null \
    || ! command -v auto-editor >/dev/null 2>&1; then
   $PIP faster-whisper opencv-python-headless scenedetect numpy pillow auto-editor piper-tts \
-       opentimelineio otio-fcp-adapter otio-fcpx-xml-adapter otio-cmx3600-adapter
+       opentimelineio otio-fcp-adapter otio-fcpx-xml-adapter otio-cmx3600-adapter fal-client
 fi
 
 # auto-editor fetches its platform binary on first run.

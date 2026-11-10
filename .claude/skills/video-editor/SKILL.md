@@ -97,6 +97,9 @@ any edit where the look and cut rhythm must come from measurement rather than ta
 `recipes/dj-worlds/README.md`: song-first beat grid, a measured style pack per world, hero-on-black transition,
 beat-locked loop, typography layer, editable timeline.
 
+For a generated insert cut into real footage (an AI macro close-up at the moment a cap opens, say), call fal.ai
+with `scripts/fal_run.py`: price first, dry run, then `--yes`, and keep the request id (`reference/fal.md`).
+
 ## 4. Self-QC (mandatory before delivery)
 
 `pipeline.py` runs `qc.py`. After any manual render, run it yourself:
@@ -227,6 +230,7 @@ Details and sources are in `reference/craft.md` and `reference/platforms.md`.
 | `qc.py` | Technical and caption checks, plus sheets to look at |
 | `normalize.py` | CFR / SDR / upright mezzanine (H.264 or ProRes) |
 | `pipeline.py` | All of the above, with caching and a final WARN summary |
+| `fal_run.py` | fal.ai models: `price`/`estimate`/`schema` (not billed), `upload`, `submit` (dry run unless `--yes`, request ids logged), `resume` |
 | `dev/make_test_media.py`, `dev/selftest.py` | Synthetic Romanian test footage and an end-to-end self-test (`reference/testing.md`) |
 
 **Reference files:**
@@ -236,6 +240,7 @@ Details and sources are in `reference/craft.md` and `reference/platforms.md`.
 - `reference/ffmpeg-recipes.md`: verified recipes and measurements
 - `reference/davinci-resolve.md`: handoff
 - `reference/testing.md`: test results and limitations
+- `reference/fal.md`: fal.ai key, cost and job rules for generated inserts
 - `recipes/six-effects/README.md`: the six signature effects, Apple Log grade, 4K compositor (templates in `tools/`, `remotion/`)
 - `recipes/dj-worlds/README.md`: real take + AI worlds music reel, measured style pack, beat-locked loop (templates in `tools/`, `remotion/`, `pack/`)
 

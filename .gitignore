@@ -1,0 +1,4 @@
+# Local secrets: fal key written by agent-connect (reference/fal.md)
+.env
+# Generated media from fal_run.py
+fal_out/
