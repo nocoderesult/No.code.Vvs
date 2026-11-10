@@ -46,6 +46,13 @@ def is_fal_origin(url: str) -> bool:
     return u.scheme == "https" and (host in ("fal.run", "fal.ai", "fal.media") or host.endswith(FAL_SUFFIXES))
 
 
+def is_fal_media(url: str) -> bool:
+    """Result files: fal's CDN, or fal's own bucket on Google Cloud Storage (used in some model outputs)."""
+    u = urllib.parse.urlparse(url)
+    return is_fal_origin(url) or (u.scheme == "https" and (u.hostname or "").lower() == "storage.googleapis.com"
+                                  and u.path.startswith("/falserverless/"))
+
+
 def load_key() -> str:
     """FAL_KEY from the environment, else from the first .env with a FAL_KEY line, walking up from the cwd and from
     this script (the repository root holds it). The value never leaves this process."""
@@ -206,11 +213,12 @@ def save_result(out: pathlib.Path, request_id: str, result) -> list[pathlib.Path
     saved = []
     with http() as c:
         for where, url, name in media_urls(result):
-            if not is_fal_origin(url):
+            if not is_fal_media(url):
                 print(f"skipped {where}: {url} is not on a fal origin", file=sys.stderr)
                 continue
             ext = pathlib.Path(urllib.parse.urlparse(url).path).suffix or pathlib.Path(name or "").suffix or ".bin"
-            dest = out / f"{request_id[:8]}_{re.sub(r'[^A-Za-z0-9]+', '_', where).strip('_')}{ext}"
+            # the full id: queue ids are time-ordered, so jobs sent close together share their first characters
+            dest = out / f"{request_id}_{re.sub(r'[^A-Za-z0-9]+', '_', where).strip('_')}{ext}"
             with c.stream("GET", url) as r:
                 r.raise_for_status()
                 with open(dest, "wb") as f:

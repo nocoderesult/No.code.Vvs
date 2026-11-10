@@ -26,7 +26,11 @@ close-up at the moment a bottle opens.
   the wait. If the outcome is unclear, `resume` the job: a second submit is a second bill.
 - On a 403, do not retry. With "Exhausted balance", the account needs credits (link above). Pass any other
   "User is locked" reason on to the user unchanged.
-- Results are downloaded only from fal origins (`*.fal.media`, `*.fal.run`, `*.fal.ai`), into `fal_out/`
-  (git-ignored).
+- Results are downloaded only from fal origins (`*.fal.media`, `*.fal.run`, `*.fal.ai`, and fal's
+  `storage.googleapis.com/falserverless/` bucket), into `fal_out/` (git-ignored). Files are named by the full request id:
+  queue ids are time-ordered, so jobs sent close together share their first characters.
+- Image models do not always return the input's exact size or aspect (Nano Banana Pro at 9:16 gives 1536×2752).
+  To put an edit back into a real frame, register it first (affine ECC, with the edited area masked out), then paste
+  in only where it differs from the original.
 - The Python SDK raises a bare `httpx.HTTPStatusError` when the storage token request fails, so its reason never
   shows. `fal_run.py` prints the response body.

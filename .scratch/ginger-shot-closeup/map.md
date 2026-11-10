@@ -38,6 +38,7 @@ reel-ului îl faci tu, în Premiere sau DaVinci.
 - [Structura close-up-ului](issues/05-structura-close-up.md): din macro, la ieșirea capacului, retragere cu orbită completă până la toată sticla; răsărit „The Day Starters” cu fibre de ghimbir și picături de lămâie; 3 momente în ~4 s; cadrul de vârf cu Nano Banana Pro; fără plafon fix, cu întrebare înainte de fiecare generare.
 - [Credit pe contul fal](issues/03-credit-fal.md): contul are credit, iar upload-ul în stocarea fal merge.
 - [Clipurile sursă fără subtitrări](issues/04-clipuri-fara-subtitrari.md): nu există; cadrul de pornire se curăță cu o editare de imagine, doar în zona subtitrării.
+- [Cadrul de pornire curat](issues/09-cadrul-de-pornire.md): ambele cadre (7,83 s și 8,04 s) curățate cu Nano Banana Pro, doar în zona subtitrării; restul e cadrul filmat.
 
 ## Not yet specified
 
