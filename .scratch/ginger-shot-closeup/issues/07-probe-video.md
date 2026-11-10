@@ -33,3 +33,13 @@ mică, pe cele două modele de probă? Ce prompt ducem la Seedance 2.5?
 - Cadrele finale noi sunt de la Nano Banana Pro (`01a1c5cd-8897-7590-83ad-328c5b6fc372`, 2 imagini, $0,30). Sticla
   plutește centrată (eticheta la 0,53 din lățime), cu o spirală de lumină în jur, iar eticheta e corectă la amândouă.
   Pentru Kling am ales varianta 0.
+- 10 nov, proba Kling 4.0 (1080p, 5 s, $1,18, request id `01a1c5ce-cbda-7a22-82ba-53825e474a25`, 277 s în coadă). API-ul
+  Kling pe fal e deschis.
+  - Pornirea și sfârșitul: primul cadru e exact cadrul de pornire (diferență medie 1,1/255), iar ultimul e exact cadrul
+    final centrat (1,4/255). E un singur plan, fără tăieturi, 1080×1920 la 24 fps.
+  - Mișcarea: capacul iese, sticla se desprinde din mână, urcă în centru și se învârte de ~2,5–3 ori (de la 0,9 la
+    2,9 s), cu spirala de lumină în jur. Apoi se oprește cu eticheta spre cameră. În rotire eticheta e mișcată, iar la
+    final e corectă.
+  - Sunetul: stereo la 44,1 kHz, −17,7 LUFS, TP −3,4 dBFS, cu o coborâre în ultima secundă.
+  - În previzualizarea tăieturii (macro-ul real 6,46–8,00 s, apoi insertul), schimbarea la tăietură e 31,9, cât
+    mișcarea reală din cadrele de dinainte (23–30). Subtitrarea arsă dispare la tăietură.
