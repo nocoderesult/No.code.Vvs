@@ -1,7 +1,7 @@
 # Insertul cu ingredientele
 
 Type: prototype
-Status: open
+Status: resolved
 Blocked by: —
 
 ## Question
@@ -62,3 +62,22 @@ curățat), ca montajul să continue cu cadrul 215. Prompturile sunt în [metapr
   - Sunetul ieșea cu TP +1,9 dBFS și l-am coborât cu 3 dB (−1,1 dBTP), la 48 kHz.
   - Livrare: versiunea originală la 30 fps (video copiat), o versiune la 24 fps pentru montaj și o previzualizare în
     montaj.
+
+## Answer
+
+Livrate: două versiuni ale videoclipului complet, „SNOOZZ SHOT GHIMBIR (Kling).mp4” și „SNOOZZ SHOT GHIMBIR (Wan).mp4”.
+- **Montajul:** insertul acoperă imaginea în cadrele 185–303 (7,71–12,63 s). E pauza dintre „...să-l ignori.” (8,98 s) și
+  subtitrarea „Bun, acum putem” (cadrul 304), așa că restul videoclipului e originalul.
+- **Sunetul:** cel original, copiat neatins (pachetele audio sunt identice cu originalul). Sunetul generat de modele nu e
+  folosit.
+- **Subtitrările:** „gust pe care nu” (cadrele 185–193), „ai cum” (194–201) și „să-l ignori!” (202–214) sunt puse la loc cu
+  pixelii originali. Le-am extras printr-un matting pe gri dintre cadrul cu subtitrare și fundalul curățat, din 3 cadre
+  la „gust”, iar la „ai cum” cu fundal reconstruit prin inpainting.
+- **Ce intră din fiecare model:**
+  - Kling: primele 119 cadre din 121.
+  - Wan: cadrele 0–21 normal, 22–71 accelerate de 1,85 ori cu estompare de mișcare, apoi 99–168. Am scos
+    momentul static cu sticla în mână și finalul static.
+- **Formatul:** același ca originalul: H.264 High 4.0, 1080×1920, 24 fps, 450 de cadre, ~16,9 Mbps (2 treceri), un
+  cadru-cheie la 25 de cadre, BT.709 tv, AAC-LC 48 kHz stereo 320 kbps, timecode 01:00:00:00, MP4 isom, 18,816 s.
+- **Verificări:** cadrele neatinse au PSNR minim 46,4 dB față de original (media ~51,5 dB). Tăietura de intrare (15,4)
+  e cât mișcarea reală. Tăietura de ieșire spre prezentatoare e o tăietură tare, ca celelalte din montaj.

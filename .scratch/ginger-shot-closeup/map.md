@@ -45,6 +45,9 @@ reel-ului îl faci tu, în Premiere sau DaVinci.
 - [Clipurile sursă fără subtitrări](issues/04-clipuri-fara-subtitrari.md): nu există; cadrul de pornire se curăță cu o editare de imagine, doar în zona subtitrării.
 - [Cadrul de pornire curat](issues/09-cadrul-de-pornire.md): ambele cadre (7,83 s și 8,04 s) curățate cu Nano Banana Pro, doar în zona subtitrării; restul e cadrul filmat.
 - [Cadrul de vârf: variante de imagine](issues/06-cadrul-de-varf.md): v1 (în mână) și v3 (plutind) merg la probe; v2 a căzut din cauza etichetei („lămâle”).
+- [Probe video: Gemini Omni Flash 1.2 și Kling 4.0](issues/07-probe-video.md): Gemini nu ține cadrul de pornire; Kling și Wan 3.0 Prime țin ambele capete.
+- [Insertul cu ingredientele](issues/10-insert-ingrediente.md): două versiuni complete (Kling, Wan), insert pe cadrele 185–303, sunet original neatins, subtitrări originale puse la loc, același format ca originalul.
+- [Finalul cu Seedance 2.5](issues/08-final-seedance.md): înlocuit, la alegerea ta, de variantele Kling și Wan.
 
 ## Not yet specified
 

@@ -1,7 +1,7 @@
 # Probe video: Gemini Omni Flash 1.2 și Kling 4.0
 
 Type: prototype
-Status: claimed
+Status: resolved
 Blocked by: 06
 
 ## Question
@@ -43,3 +43,8 @@ mică, pe cele două modele de probă? Ce prompt ducem la Seedance 2.5?
   - Sunetul: stereo la 44,1 kHz, −17,7 LUFS, TP −3,4 dBFS, cu o coborâre în ultima secundă.
   - În previzualizarea tăieturii (macro-ul real 6,46–8,00 s, apoi insertul), schimbarea la tăietură e 31,9, cât
     mișcarea reală din cadrele de dinainte (23–30). Subtitrarea arsă dispare la tăietură.
+
+## Answer
+
+Probele s-au făcut pe Gemini Omni Flash 1.2, Kling 4.0 și Wan 3.0 Prime (detaliile sunt în comentarii). Gemini nu ține
+cadrul de pornire. Kling și Wan țin exact ambele capete, iar pe ele le-ai ales pentru variantele finale.
