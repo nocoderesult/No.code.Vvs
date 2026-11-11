@@ -1,0 +1,17 @@
+# chei
+.env
+automatizare/.env
+
+# identitatea personajului: nu se urcă într-un depozit public
+03-referinte-si-dataset/baza/
+03-referinte-si-dataset/fisa-referinta/
+03-referinte-si-dataset/candidate/
+03-referinte-si-dataset/dataset/
+03-referinte-si-dataset/respinse/
+04-antrenare-lora-runpod/*.safetensors
+05-generare-imagini/iesiri/
+05-generare-imagini/acceptate/
+06-video-si-voce/iesiri/
+
+__pycache__/
+*.pyc

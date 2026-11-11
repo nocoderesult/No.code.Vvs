@@ -1,0 +1,116 @@
+# Fișa personajului. Copiază în fisa-personaj.yaml și completează tot.
+# Stânga și dreapta sunt mereu din perspectiva personajului.
+
+identitate:
+  nume: ""
+  nume_cont: ""
+  varsta: 0                 # ani, cel puțin 21
+  zi_de_nastere: ""         # zi și lună, pentru postări aniversare
+  oras: ""
+  tara: ""
+  limbi: []
+  inaltime_cm: 0
+  ocupatie: ""
+  fraza_de_pozitionare: ""
+
+fata:
+  forma: ""                 # ovală, inimă, pătrată, rotundă
+  maxilar: ""
+  pometi: ""
+  nas: ""
+  buze: ""
+  ochi_culoare: ""
+  ochi_forma: ""
+  sprancene: ""
+  urechi: ""
+  dinti: ""                 # contează la zâmbet
+  expresie_obisnuita: ""
+
+semne_fixe:                 # fiecare cu poziție exactă
+  - tip: ""                 # aluniță, pistrui, cicatrice, piercing, tatuaj
+    pozitie: ""
+    marime: ""
+
+par:
+  culoare: ""
+  radacini: ""
+  lungime: ""
+  textura: ""
+  carare: ""
+  coafura_de_zi: ""
+  coafura_la_sala: ""
+  coafura_de_seara: ""
+
+corp:
+  tip: ""
+  proportii: ""
+  postura: ""
+  maini: ""
+  unghii: ""
+
+piele:
+  nuanta: ""
+  textura: ""               # pori, puf fin, luciu natural
+  imperfectiuni: []         # ce și unde
+
+machiaj:
+  de_zi: ""
+  la_sala: ""
+  de_seara: ""
+
+garderoba:
+  culori_permise: []
+  culori_interzise: []
+  bijuterii: ""
+  tinute:
+    - nume: ""              # ex. sala-negru
+      descriere_en: ""      # textul exact folosit în prompt
+      cand: ""
+
+locuri:
+  - nume: ""                # ex. dormitor
+    descriere_en: ""        # textul exact folosit în prompt
+    lumina: ""
+    obiecte_fixe: []
+
+obiecte_personale:
+  telefon: ""
+  husa_telefon: ""
+  geanta: ""
+  cana: ""
+  altele: []
+
+personalitate:
+  trasaturi: []             # exact trei
+  defect: ""
+  o_enerveaza: ""
+  o_amuza: ""
+  pasiuni: []
+
+voce_scrisa:
+  lungime_fraze: ""
+  emoji: ""                 # câte și care
+  cuvinte_proprii: []
+  cuvinte_interzise: []
+  exemple_descrieri: []     # cinci exemple
+
+voce_vorbita:
+  ton: ""
+  ritm: ""
+  accent: ""
+  referinta: ""             # fișierul cu vocea de referință
+
+poveste:
+  de_unde_e: ""
+  ce_face_acum: ""
+  ce_vrea: ""
+  ce_nu_spune: ""
+
+limite:
+  nu_face: []
+  nu_spune: []
+
+dezvaluire_ai:
+  text_bio: ""              # ex. "Personaj creat cu AI"
+  eticheta_profil: true
+  eticheta_postare: true
