@@ -1,0 +1,12 @@
+{
+  "name": "nano-banana-pro-prompts-recommend-skill",
+  "version": "1.5.5",
+  "private": true,
+  "type": "module",
+  "description": "Vendored from YouMind-OpenLab/nano-banana-pro-prompts-recommend-skill (MIT). Prompt data is downloaded by scripts/setup.js into references/.",
+  "scripts": {
+    "setup": "node scripts/setup.js",
+    "sync": "node scripts/setup.js --force"
+  },
+  "license": "MIT"
+}
