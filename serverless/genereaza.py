@@ -44,7 +44,7 @@ def call(method, url, body=None):
 
 
 def info(_):
-    for name in ("networkvolumes", "endpoints", "pods"):
+    for name in ("networkvolumes", "endpoints", "pods"):  # volumele globale apar în consolă, la Storage
         print(f"=== {name} ===")
         data = call("GET", f"{REST}/{name}")
         for x in data if isinstance(data, list) else data.get("items", data.get(name, [])):
@@ -55,7 +55,11 @@ def info(_):
 
 def workflow(a):
     wf = json.loads((HERE / "workflows" / "iness_krea2_raw_api.json").read_text())
-    wf["2"]["inputs"].update(lora_name=a.lora, strength_model=a.forta)
+    if a.lora.lower() in ("", "none", "fara"):
+        wf.pop("2")                       # fără LoRA: modelul merge direct în sampler
+        wf["7"]["inputs"]["model"] = ["1", 0]
+    else:
+        wf["2"]["inputs"].update(lora_name=a.lora, strength_model=a.forta)
     wf["4"]["inputs"]["text"] = f"{INESS}, {a.scena}, {SFARSIT}"
     wf["6"]["inputs"].update(width=a.latime, height=a.inaltime, batch_size=a.bucati)
     wf["7"]["inputs"].update(seed=a.seed if a.seed is not None else random.randint(1, 2**48),

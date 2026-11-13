@@ -1,48 +1,59 @@
-# Pozele lui Iness pe RunPod Serverless (fără pod pornit)
+# Poze prin Runpod Serverless, cu volumul global
 
-Cererea pleacă din chat (sau de oriunde), RunPod pornește singur o placă video, generează, întoarce poza și se oprește. Se plătesc doar secundele de lucru; cu 0 workeri activi, când nu generezi nu plătești nimic pentru GPU (stocarea Network Volume se plătește separat, lunar).
+Cererea pleacă dintr-o pagină, din chat sau din script. Runpod pornește singur o placă video oriunde are una liberă, generează poza, o trimite înapoi și se oprește. Se plătesc doar secundele de lucru. Cu 0 workeri activi, când nu generează nimeni nu plătești nimic pentru GPU. Volumul global se plătește separat, după cât ocupă (~0,09 $/GB pe lună plus cereri).
 
 | Fișier | Ce face |
 |---|---|
 | `Dockerfile` | Worker-ul oficial `runpod/worker-comfyui:5.10.0-base-cuda12.8.1` + nodurile din `krea2_studio` (rgthree, Impact Pack + Subpack, ProPost). Fără modele în imagine. |
-| `extra_model_paths.yaml` | Unde caută ComfyUI modelele pe Network Volume: întâi în `runpod-slim/ComfyUI/models` (volumul pod-ului de acum), apoi în `models/` (volum nou). |
-| `workflows/iness_krea2_raw_api.json` | Workflow-ul de bază în format API: Krea 2 raw + LoRA `d4ria` → poză 896×1152. |
-| `genereaza.py` | `info` (volume, endpoint-uri, pod-uri din cont) și `poza "scena"` (trimite cererea, așteaptă, salvează PNG-ul). Doar biblioteca standard Python. |
+| `extra_model_paths.yaml` | Unde caută ComfyUI modelele: `/runpod-volume/models` (volumul global) sau `runpod-slim/ComfyUI/models` (volum vechi de pod). |
+| `descarca_modele.sh` | Descarcă pe volumul global modelele Krea 2 (~18,6 GB) din `Comfy-Org/Krea-2`. |
+| `workflows/iness_krea2_raw_api.json` | Workflow-ul de bază în format API: Krea 2 raw fp8 + LoRA (opțional) → poză 896×1152. |
+| `genereaza.py` | `info` (volume, endpoint-uri, pod-uri) și `poza "scena"` (trimite cererea, așteaptă, salvează PNG-ul). Doar biblioteca standard Python. |
 
 ## Instalare (o singură dată)
 
-### 1. Modelele pe un Network Volume
-Serverless citește modelele doar de pe un **Network Volume** (montat la `/runpod-volume`).
+### 1. Modelele pe volumul global
+Pe un pod cu volumul global montat la `/workspace-global`, în terminal:
+```
+curl -fsSL https://raw.githubusercontent.com/nocoderesult/No.code.Vvs/comfy-ui-rr/serverless/descarca_modele.sh -o /workspace/descarca_modele.sh
+bash /workspace/descarca_modele.sh
+```
+Modelele ajung în `/workspace-global/models/{diffusion_models,text_encoders,vae}`. LoRA-urile tale (de exemplu `d4ria`) le pui în `/workspace-global/models/loras/`.
 
-- RunPod → **Storage**. Dacă volumul pod-ului de acum apare acolo ca Network Volume, notează-i centrul de date: îl folosim direct, fără copiere (ComfyUI e în `runpod-slim/ComfyUI`).
-- Dacă nu apare: **New Network Volume**, ~80 GB, într-un centru de date cu plăci de 48 GB libere. Pornești un pod mic cu volumul ăsta atașat (montat la `/workspace`) și copiezi doar ce trebuie:
+| Fișier | Folder pe volumul global | Mărime |
+|---|---|---|
+| `krea2_raw_fp8_scaled.safetensors` | `models/diffusion_models/` | 13,1 GB |
+| `qwen3vl_4b_fp8_scaled.safetensors` | `models/text_encoders/` | 5,2 GB |
+| `qwen_image_vae.safetensors` | `models/vae/` | 0,25 GB |
 
-| Fișier | Folder pe volumul nou |
-|---|---|
-| `krea2_raw_bf16.safetensors` | `models/diffusion_models/` |
-| `qwen3vl_4b_fp8_scaled.safetensors` | `models/text_encoders/` |
-| `qwen_image_vae.safetensors` | `models/vae/` |
-| LoRA-ul `d4ria` v2 (Krea 2) | `models/loras/` |
+Folosim varianta fp8 a lui Krea 2 raw (13 GB, nu 26 GB): pornire la rece mai scurtă și jumătate din stocare, cu diferențe mici de calitate.
 
 ### 2. Endpoint-ul Serverless
-RunPod → **Serverless → New Endpoint → GitHub**:
-- Repository `nocoderesult/No.code.Vvs`, branch `comfy-ui-rr`, Dockerfile `serverless/Dockerfile`, build context `serverless`. Prima dată RunPod cere legarea contului GitHub.
-- GPU: 48 GB (L40S / A6000) ajunge pentru poze; RTX PRO 6000 doar dacă vrei mai repede.
-- **Active workers: 0**, **Max workers: 1**, Idle timeout: 5 s, FlashBoot pornit.
-- Advanced → **Network Volume**: volumul de la pasul 1. Container disk: 20 GB.
-- Notezi **Endpoint ID**.
+Runpod → **Serverless → New Endpoint → Deploy from a GitHub repository**:
+- Repository `nocoderesult/No.code.Vvs`, branch `comfy-ui-rr`, Dockerfile `serverless/Dockerfile`, build context `serverless`. Prima dată Runpod cere legarea contului GitHub.
+- **Compute type: GPU**. Plăci de 48 GB (L40S / A6000) sau 32 GB; bifează mai multe tipuri, ca să găsească repede una liberă.
+- **Active workers: 0**, **Max workers: 1** (sau 2 dacă generează mai mulți deodată), Idle timeout: 5 s, FlashBoot pornit.
+- **Advanced → Global volume:** volumul tău global. Câmpul Network volumes rămâne gol (nu merg amândouă).
+- Container disk: 20 GB. Notezi **Endpoint ID**.
 
-### 3. Cheia pentru Claude
-Cheia RunPod (Settings → API Keys) se pune în setările mediului din Claude, la **Network secrets**, tip Bearer, pentru `rest.runpod.io` și `api.runpod.ai`. Niciodată în chat sau în repo.
+Volumul global nu leagă endpoint-ul de un centru de date, deci Runpod caută plăci libere peste tot.
+
+### 3. Cheia Runpod
+Cheia (Settings → API Keys) nu se pune niciodată în chat, în repo sau într-o pagină publică.
+- Pentru Claude: în setările mediului, la **Network secrets**, tip Bearer, pentru `rest.runpod.io` și `api.runpod.ai`.
+- Pentru o pagină folosită de alte persoane: cheia stă pe un server intermediar (de exemplu un Cloudflare Worker cu secret), iar pagina vorbește doar cu el.
 
 ## Folosire
 ```
 python3 serverless/genereaza.py info
-python3 serverless/genereaza.py poza --endpoint ENDPOINT_ID --lora NUME_LORA.safetensors "sitting in a sunny cafe, morning light"
+python3 serverless/genereaza.py poza --endpoint ENDPOINT_ID --lora d4ria_v2.safetensors "sitting in a sunny cafe, morning light"
+python3 serverless/genereaza.py poza --endpoint ENDPOINT_ID --lora none "test fără LoRA"
 ```
-Prima cerere după o pauză durează câteva minute (încarcă modelul de 24 GB). Dacă numele LoRA-ului e greșit, eroarea worker-ului listează LoRA-urile pe care le vede: îl alegi de acolo.
+Prima cerere după o pauză durează câteva minute (încarcă modelul de pe volumul global). Dacă numele LoRA-ului e greșit, eroarea worker-ului listează LoRA-urile pe care le vede: îl alegi de acolo.
 
 ## De știut
-- `krea2_turbo_fp8` a fost șters de pe volum (30.10.2026), deci workflow-ul folosește **Krea 2 raw**. Pașii (28) și CFG (3,5) sunt valori de pornire, de reglat la primele teste.
 - Worker-ul întoarce doar **poze** (`output.images`); clipurile nu sunt acoperite aici.
+- Volumul global e citit bine, scris mai încet. E potrivit pentru modele, nu pentru fișiere care se schimbă des.
+- Dacă soldul Runpod ajunge la 0 $, volumul global se șterge după 15 zile. Pune alertă de sold mic.
+- Krea 2 are licența proprie (Krea 2 Community License). Înainte să oferi generări altor persoane sau clienților, verifică ce permite pentru folosire comercială.
 - Doar Krea 2, Wan, LTX sau alte modele cu licență valabilă în UE. MiniMax H3 nu (vezi `plan/wayfinder/iness-30/issues/13-licenta-minimax-h3.md`).

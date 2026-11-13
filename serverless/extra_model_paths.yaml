@@ -1,4 +1,4 @@
-# Unde caută ComfyUI modelele pe Network Volume (montat la /runpod-volume pe Serverless).
+# Unde caută ComfyUI modelele pe volum (global sau de rețea, montat la /runpod-volume pe Serverless).
 # 1) Volumul pod-ului de acum, dacă e Network Volume: ComfyUI stă în runpod-slim/ComfyUI.
 volum_pod:
   base_path: /runpod-volume/runpod-slim/ComfyUI
@@ -14,7 +14,8 @@ volum_pod:
   ultralytics: models/ultralytics/
   ultralytics_bbox: models/ultralytics/bbox/
   ultralytics_segm: models/ultralytics/segm/
-# 2) Un Network Volume nou, cu modelele direct în models/.
+# 2) Volumul global (sau un volum nou), cu modelele direct în models/.
+#    Pe pod e la /workspace-global/models, pe Serverless la /runpod-volume/models.
 volum_nou:
   base_path: /runpod-volume
   checkpoints: models/checkpoints/
