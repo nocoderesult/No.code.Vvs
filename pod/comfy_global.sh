@@ -86,7 +86,12 @@ done < "$LISTA"
 ( while sleep 600; do noteaza_noduri; done ) >/dev/null 2>&1 &
 echo "✓ Noduri instalate din lista de pe global."
 
-# 3. Repornesc ComfyUI ca să vadă totul
+# 3. Instalări suplimentare de pe global (de ex. workflow-ul MATRIX Krea 2)
+for s in "$G"/la_pornire/*.sh; do
+  [ -f "$s" ] && { echo "Rulez $(basename "$s")..."; bash "$s"; }
+done
+
+# 4. Repornesc ComfyUI ca să vadă totul
 [ -n "$NO_RESTART" ] && { echo "(fără repornire)"; exit 0; }
 echo "Repornesc ComfyUI..."
 pkill -f "python main.py" 2>/dev/null; sleep 3
