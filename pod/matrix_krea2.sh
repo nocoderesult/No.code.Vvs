@@ -32,17 +32,17 @@ done
 echo "== Workflow și noduri"
 Z="$G/instalari/MATRIX-Krea2-V1.zip"
 mkdir -p "$G/instalari"
-[ -s "$Z" ] || curl -fsSL --retry 5 -o "$Z" "$REL"
-T="$(mktemp -d)"; unzip -q -o "$Z" -d "$T"
+[ -s "$Z" ] || curl -fsSL --retry 5 -o "$Z" "$REL" || { echo "❌ nu pot descărca $REL"; exit 1; }
+T="$(mktemp -d)"; python3 -m zipfile -e "$Z" "$T"   # unzip nu e în imagine
 R="$T/MATRIX-Krea2-V1"
 mkdir -p "$G/comfyui/workflows"
 cp "$R/MATRIX-Krea2-V1.json" "$G/comfyui/workflows/MATRIX-Krea2-V1.json"
 cp "$R/API/MATRIX-Krea2-V1.api.json" "$G/instalari/MATRIX-Krea2-V1.api.json"
 
 if [ ! -f "$C/custom_nodes/MATRIX-LAB-Nodes/MANIFEST.json" ]; then
-  mkdir -p "$T/n" && unzip -q -o "$R/Custom-Nodes/MATRIX-LAB-Nodes-0.4.0.zip" -d "$T/n"
-  cp -r "$T/n/MATRIX-LAB-Nodes" "$C/custom_nodes/MATRIX-LAB-Nodes"
-  echo "✓ MATRIX-LAB-Nodes 0.4.0"
+  mkdir -p "$T/n" && python3 -m zipfile -e "$R/Custom-Nodes/MATRIX-LAB-Nodes-0.4.0.zip" "$T/n"
+  cp -r "$T/n/MATRIX-LAB-Nodes" "$C/custom_nodes/MATRIX-LAB-Nodes" && echo "✓ MATRIX-LAB-Nodes 0.4.0" \
+    || echo "❌ MATRIX-LAB-Nodes nu s-a putut copia"
 fi
 if [ ! -d "$C/custom_nodes/rgthree-comfy" ]; then
   git clone -q https://github.com/rgthree/rgthree-comfy "$C/custom_nodes/rgthree-comfy" \
