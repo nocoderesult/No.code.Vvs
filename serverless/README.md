@@ -18,12 +18,12 @@ Pe un pod cu volumul global montat la `/workspace-global`, în terminal:
 curl -fsSL https://raw.githubusercontent.com/nocoderesult/No.code.Vvs/comfy-ui-rr/serverless/descarca_modele.sh -o /workspace/descarca_modele.sh
 bash /workspace/descarca_modele.sh
 ```
-Modelele ajung în `/workspace-global/models/{diffusion_models,text_encoders,vae}`. LoRA-urile tale (de exemplu `d4ria`) le pui în `/workspace-global/models/loras/`.
+Modelele ajung în `/workspace-global/models/{unet,clip,vae}`: folderele pe care le citește și worker-ul oficial `runpod/worker-comfyui`, fără imagine proprie. LoRA-urile tale (de exemplu `d4ria`) le pui în `/workspace-global/models/loras/`.
 
 | Fișier | Folder pe volumul global | Mărime |
 |---|---|---|
-| `krea2_raw_fp8_scaled.safetensors` | `models/diffusion_models/` | 13,1 GB |
-| `qwen3vl_4b_fp8_scaled.safetensors` | `models/text_encoders/` | 5,2 GB |
+| `krea2_raw_fp8_scaled.safetensors` | `models/unet/` | 13,1 GB |
+| `qwen3vl_4b_fp8_scaled.safetensors` | `models/clip/` | 5,2 GB |
 | `qwen_image_vae.safetensors` | `models/vae/` | 0,25 GB |
 
 Folosim varianta fp8 a lui Krea 2 raw (13 GB, nu 26 GB): pornire la rece mai scurtă și jumătate din stocare, cu diferențe mici de calitate.
