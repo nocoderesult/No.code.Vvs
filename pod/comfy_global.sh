@@ -64,13 +64,15 @@ noteaza_noduri() {
   for d in "$C"/custom_nodes/*/; do
     n="$(basename "$d")"
     case " $BAKED " in *" $n "*) continue ;; esac
+    [ -e "$d/.git" ] || continue   # doar noduri care sunt ele însele depozite git
     url="$(git -C "$d" remote get-url origin 2>/dev/null)" || continue
+    case "$url" in *comfyanonymous/ComfyUI*|*Comfy-Org/ComfyUI.git) continue ;; esac
     grep -qxF "$url" "$LISTA" || echo "$url" >> "$LISTA"
   done
 }
 noteaza_noduri
 while read -r url; do
-  case "$url" in ""|\#*) continue ;; esac
+  case "$url" in ""|\#*|*comfyanonymous/ComfyUI*|*Comfy-Org/ComfyUI.git) continue ;; esac
   n="$(basename "$url" .git)"
   if [ ! -d "$C/custom_nodes/$n" ]; then
     echo "Instalez nodul $n..."
