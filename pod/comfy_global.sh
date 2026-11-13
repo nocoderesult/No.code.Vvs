@@ -44,7 +44,11 @@ leaga() {  # leaga <cale locală> <cale pe global>
   ln -s "$glob" "$loc"
 }
 leaga "$C/models"                       "$G/models"
-leaga "$C/output"                       "$G/comfyui/output"
+# Pozele generate se scriu întâi pe discul pod-ului (unele noduri, ca MATRIX Metadata Killer,
+# folosesc legături de fișiere pe care volumul global nu le suportă), apoi se copiază pe global.
+[ -L "$C/output" ] && rm -f "$C/output"
+mkdir -p "$C/output" "$G/comfyui/output"
+( while sleep 60; do cp -rn "$C/output/." "$G/comfyui/output/" 2>/dev/null; done ) >/dev/null 2>&1 &
 leaga "$C/input"                        "$G/comfyui/input"
 leaga "$C/user/default/workflows"       "$G/comfyui/workflows"
 
@@ -55,7 +59,7 @@ if [ ! -L "$S_LOC" ]; then
   [ -f "$S_GLOB" ] || { [ -f "$S_LOC" ] && cp "$S_LOC" "$S_GLOB" || echo "{}" > "$S_GLOB"; }
   rm -f "$S_LOC"; ln -s "$S_GLOB" "$S_LOC"
 fi
-echo "✓ Modele, poze, workflow-uri și setări legate de volumul global."
+echo "✓ Modele, workflow-uri și setări legate de volumul global; pozele se copiază pe global la fiecare minut."
 
 # 2. Nodurile: lista stă pe global, nodurile se reinstalează pe fiecare pod
 LISTA="$G/noduri.txt"
