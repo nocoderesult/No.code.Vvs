@@ -14,6 +14,7 @@
 - `static/`: stilul, scripturile, fonturile găzduite local, pozele lui Iness, favicon-ul.
 - `worker.js` și `functions/api/`: cele 5 zone de generare (idei, imagine, prompt, text, caracter), care rulează pe Cloudflare cu Workers AI.
 - `lib/ai.js`: verificările de siguranță, modelele folosite și marcajul AI din imagini.
+- `static/generator/` și `functions/api/runpod.js`: generatorul Krea 2 de la `/generator/` (nelistat pe site, noindex). Pagina trimite cererile la `/api/runpod/*`, iar Worker-ul le duce la endpoint-ul Runpod `musqai-matrix-pro6000`, cu cheia restricționată a celui care generează. Pagina e făcută din `serverless/generator_krea2.html`, cu scriptul în fișier separat, cum cere politica de securitate a site-ului.
 - `tools/assets.py` și `tools/og.py`: refac fonturile, pozele și imaginea de distribuire.
 
 După orice schimbare în `content.mjs` sau `static/`, rulezi `node musqai/web/build.mjs` și faci commit și la `public/`.

@@ -57,3 +57,8 @@ Prima cerere după o pauză durează câteva minute (încarcă modelul de pe vol
 - Dacă soldul Runpod ajunge la 0 $, volumul global se șterge după 15 zile. Pune alertă de sold mic.
 - Krea 2 are licența proprie (Krea 2 Community License). Înainte să oferi generări altor persoane sau clienților, verifică ce permite pentru folosire comercială.
 - Doar Krea 2, Wan, LTX sau alte modele cu licență valabilă în UE. MiniMax H3 nu (vezi `plan/wayfinder/iness-30/issues/13-licenta-minimax-h3.md`).
+
+## Pagina de generare
+- Pe site: `https://musqai.tavit5050.workers.dev/generator/` (din `musqai/web/static/generator/`, cererile trec prin Worker-ul site-ului).
+- Fișier de sine stătător: `serverless/generator_krea2.html`, se deschide direct în browser și vorbește direct cu `api.runpod.ai`.
+- Amândouă cer o cheie Runpod **restricționată** doar la endpoint-ul `musqai-matrix-pro6000` (Read/Write). Cheia nu stă niciodată în pagină sau în repo.
