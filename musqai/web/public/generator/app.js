@@ -72,8 +72,8 @@ async function poll(){
   try {
     const st = await api("/status/" + job.id);
     const s = st.status;
-    if (s === "IN_QUEUE") setStatus("Pornește placa video…", "Dacă nu a mai generat nimeni de mult, prima pornire durează 5–8 minute. Următoarele poze ies mult mai repede.");
-    else if (s === "IN_PROGRESS") setStatus("Se generează poza…", "Placa a pornit. Durează de obicei sub un minut.");
+    if (s === "IN_QUEUE") setStatus("Pornește placa video…", "După o pauză, o poză durează în total 7–8 minute: placa pornește și încarcă modelele. Lasă pagina deschisă.");
+    else if (s === "IN_PROGRESS") setStatus("Se încarcă modelele și se generează poza…", "Placa a pornit. Încărcarea modelelor ține câteva minute, apoi poza iese în sub un minut. Nu anula, plătești oricum timpul folosit.");
     else if (s === "COMPLETED") return done(st);
     else { stopTimers(); return setStatus("Generarea nu a reușit (" + s + ").", errText(st), "err"); }
   } catch (e) {
