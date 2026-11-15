@@ -2,187 +2,150 @@
 <html lang="ro">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>S&amp;T Advertising | Real + AI pentru arhitectură și mobilier</title>
-<meta name="description" content="Poze, video și reclame pentru arhitectură, construcții, design interior și mobilier. Filmăm real și folosim AI ca să obții mai mult conținut din același material.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>S&amp;T Advertising | Hybrid Cinema</title>
+<meta name="description" content="S&amp;T Advertising face reclame hibride: filmare reală, AI și regie de cinema. Din clipul tău obișnuit, o reclamă care se ține minte.">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#f3efe8" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#151412" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#07090c">
 <meta property="og:type" content="website">
-<meta property="og:title" content="S&amp;T Advertising | Real + AI">
-<meta property="og:description" content="Poze, video și reclame pentru arhitectură, construcții și mobilier. Filmăm real, apoi ducem materialul mai departe cu AI.">
-<meta property="og:image" content="https://musqai.tavit5050.workers.dev/st/img/casa-apus-1024.jpg">
+<meta property="og:title" content="S&amp;T Advertising | Hybrid Cinema">
+<meta property="og:description" content="Din clipul tău obișnuit, o reclamă de cinema. Filmare reală, AI și regie.">
+<meta property="og:image" content="https://musqai.tavit5050.workers.dev/st/media/og-st.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:locale" content="ro_RO">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="preload" href="fonts/InstrumentSerif-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/BodoniModa-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/Manrope-normal-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="st.css">
+<script src="st.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#continut">Sari la conținut</a>
 
 <header class="top">
-  <div class="wrap top-row">
-    <a class="logo" href="#" aria-label="S&amp;T Advertising, începutul paginii">
-      <span class="mono">S<em>&amp;</em>T</span><span class="word">Advertising</span>
-    </a>
-    <nav class="nav" aria-label="Secțiuni">
-      <a href="#servicii">Servicii</a>
-      <a href="#proces">Cum lucrăm</a>
-      <a href="#exemple">Exemple</a>
-      <a href="#noi">Cine suntem</a>
-    </nav>
-    <a class="btn btn-small" href="#contact">Cere o ofertă</a>
-  </div>
+  <a class="brand" href="#top" aria-label="S&amp;T Advertising, începutul paginii">
+    <span class="mono gold">S<i>&amp;</i>T</span><span class="brand-word">Advertising</span>
+  </a>
+  <nav class="nav" aria-label="Secțiuni">
+    <a href="#metoda">Metoda</a>
+    <a href="#teaser">Teaserul</a>
+    <a href="#formate">Formate</a>
+    <a href="#noi">Cine suntem</a>
+  </nav>
+  <a class="nav-cta" href="#contact">În curând</a>
 </header>
 
 <main id="continut">
 
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div class="hero-text">
-        <p class="eyebrow">Arhitectură · Construcții · Design interior · Mobilier</p>
-        <h1>Spații și mobilier filmate real. <em>Duse mai departe cu AI.</em></h1>
-        <p class="lead">S&amp;T Advertising face poze, video și reclame pentru firmele din arhitectură, construcții și mobilier. Pornim de la ce există cu adevărat, iar AI-ul ne ajută să scoatem din aceeași filmare mai mult conținut, mai repede.</p>
-        <div class="actions">
-          <a class="btn" href="#contact">Cere o ofertă</a>
-          <a class="btn btn-ghost" href="#proces">Vezi cum lucrăm</a>
-        </div>
-      </div>
-      <figure class="hero-img">
-        <img src="img/casa-apus-1024.jpg" srcset="img/casa-apus-640.jpg 640w, img/casa-apus-1024.jpg 1024w" sizes="(min-width: 900px) 46vw, 100vw" width="1024" height="1024" fetchpriority="high" alt="Casă modernă cu fațadă din beton și lemn de cedru, la apus, cu luminile aprinse înăuntru. Imagine generată cu AI.">
-        <figcaption><span class="tag">AI</span> Exemplu generat cu AI</figcaption>
-      </figure>
+  <section class="hero" id="top">
+    <div class="hero-media">
+      <video id="teaser" class="hero-video" autoplay muted loop playsinline preload="auto" poster="media/teaser-poster.webp" aria-label="Teaserul S&amp;T Advertising: o schiță pe planșă devine un oraș alb, sub un spot de lumină.">
+        <source src="video/teaser-540.mp4" type="video/mp4" media="(max-width: 700px)">
+        <source src="video/teaser-720.mp4" type="video/mp4">
+      </video>
+      <button class="sound" id="sound" type="button" aria-pressed="false" aria-controls="teaser">
+        <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="sound-label">Pornește sunetul</span>
+      </button>
     </div>
-  </section>
-
-  <section class="band" id="real-ai" aria-labelledby="t-real-ai">
-    <div class="wrap">
-      <p class="eyebrow">Real + AI</p>
-      <h2 id="t-real-ai">Ce filmăm noi și ce face AI-ul</h2>
-      <div class="duo">
-        <article class="duo-card">
-          <p class="duo-label">Real</p>
-          <h3>Filmăm și fotografiem la fața locului</h3>
-          <ul>
-            <li>Proiectul finalizat, la interior și la exterior</li>
-            <li>Materialele și detaliile de execuție</li>
-            <li>Mobilierul, în showroom sau la client acasă</li>
-            <li>Oamenii din spatele proiectului, dacă vor să apară</li>
-          </ul>
-        </article>
-        <div class="duo-plus" aria-hidden="true">+</div>
-        <article class="duo-card duo-ai">
-          <p class="duo-label">AI</p>
-          <h3>Din materialul real facem variante</h3>
-          <ul>
-            <li>Aceeași casă dimineața, la apus sau iarna</li>
-            <li>Camere goale mobilate virtual</li>
-            <li>Mobilierul în culorile și materialele pe care le ai în ofertă</li>
-            <li>Clipuri video din poze și reclame verticale</li>
-          </ul>
-        </article>
+    <div class="hero-copy">
+      <p class="kicker">S&amp;T Advertising · Hybrid Cinema</p>
+      <h1>Din clipul tău obișnuit, <em class="gold">o reclamă de cinema.</em></h1>
+      <p class="lead">Filmare reală, AI și regie. Păstrăm ce e adevărat în clipul tău și construim restul: lumea, lumina și ritmul pe care camera nu le poate prinde.</p>
+      <div class="actions">
+        <a class="btn btn-gold" href="#metoda">Vezi metoda</a>
+        <a class="btn btn-line" href="#teaser">Teaserul, cadru cu cadru</a>
       </div>
     </div>
   </section>
 
-  <section id="servicii" aria-labelledby="t-servicii">
+  <section class="manifest" aria-label="Manifest">
     <div class="wrap">
-      <p class="eyebrow">Servicii</p>
-      <h2 id="t-servicii">Ce putem face pentru tine</h2>
-      <div class="cards">
-        <article class="card"><span class="num">01</span><h3>Foto și video la proiecte</h3><p>Case, apartamente, birouri și spații comerciale. Cadre de ansamblu și detalii de execuție, pentru portofoliu și pentru rețele.</p></article>
-        <article class="card"><span class="num">02</span><h3>Mobilier și showroom</h3><p>Poze de catalog, produse puse în context și clipuri scurte care arată materialul de aproape.</p></article>
-        <article class="card"><span class="num">03</span><h3>Variante cu AI</h3><p>Altă lumină, alt anotimp sau alt stil de amenajare, din aceleași poze. Mobilare virtuală pentru spațiile goale.</p></article>
-        <article class="card"><span class="num">04</span><h3>Video AI și reclame</h3><p>Clipuri verticale de 8–30 de secunde pentru Instagram, TikTok și Facebook, din filmări reale și scene generate.</p></article>
-        <article class="card"><span class="num">05</span><h3>Conținut lunar</h3><p>Un plan pe lună cu reels, carusele și postări, gata de publicat, cu textele scrise.</p></article>
-      </div>
+      <p class="manifest-line">Cele mai multe reclame nu sunt proaste. Sunt <span class="circled">plictisitoare<svg viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M24 58 C18 26 120 8 214 12 C286 16 300 52 262 74 C214 100 70 98 30 78 C6 66 18 34 92 20"/></svg></span>.</p>
+      <p class="manifest-sub">Noi luăm ce ai filmat deja și îi dăm regie, lumină și lumi pe care nicio cameră nu le poate filma.</p>
     </div>
   </section>
 
-  <section class="band" id="pentru-cine" aria-labelledby="t-cine">
+  <section class="metoda" id="metoda" aria-labelledby="t-metoda">
     <div class="wrap">
-      <p class="eyebrow">Pentru cine</p>
-      <h2 id="t-cine">Lucrăm cu firmele care construiesc și amenajează</h2>
-      <ul class="chips">
-        <li>Arhitecți și birouri de arhitectură</li>
-        <li>Firme de construcții</li>
-        <li>Dezvoltatori imobiliari</li>
-        <li>Designeri de interior</li>
-        <li>Producători de mobilier</li>
-        <li>Showroom-uri și magazine de mobilier</li>
-        <li>Agenții imobiliare</li>
-      </ul>
-    </div>
-  </section>
-
-  <section id="proces" aria-labelledby="t-proces">
-    <div class="wrap">
-      <p class="eyebrow">Cum lucrăm</p>
-      <h2 id="t-proces">Patru pași, de la discuție la postare</h2>
-      <ol class="steps">
-        <li><h3>Discutăm</h3><p>Ne spui ce vrei să vinzi, cui și unde postezi. Pleci cu o ofertă clară, pe puncte.</p></li>
-        <li><h3>Filmăm real</h3><p>Venim la proiect sau în showroom și facem pozele și filmările de bază.</p></li>
-        <li><h3>Adăugăm AI</h3><p>Facem variantele, video-urile și reclamele. Verificăm fiecare cadru, ca produsul să arate exact ca în realitate.</p></li>
-        <li><h3>Primești materialele</h3><p>În formatele potrivite pentru fiecare rețea, cu textele pentru postare, dacă vrei.</p></li>
+      <p class="kicker">Metoda</p>
+      <h2 id="t-metoda">Hybrid Cinema, în trei acte</h2>
+      <ol class="acts">
+        <li><span class="act-n gold">I</span><h3>Realul</h3><p>Pornim de la ce există: produsul, oamenii, locul, filmările tale. Ce e real rămâne real.</p></li>
+        <li><span class="act-n gold">II</span><h3>Hibridul</h3><p>AI-ul construiește ce nu se poate filma: lumi întregi, transformări, mișcări de cameră imposibile.</p></li>
+        <li><span class="act-n gold">III</span><h3>Cinema</h3><p>Regie, montaj pe ritm, culoare și sunet. Finisajul face din clip o reclamă care se ține minte.</p></li>
       </ol>
     </div>
   </section>
 
-  <section class="band" id="exemple" aria-labelledby="t-exemple">
+  <section class="teaser" id="teaser" aria-labelledby="t-teaser">
     <div class="wrap">
-      <p class="eyebrow">Exemple</p>
-      <h2 id="t-exemple">Direcția vizuală</h2>
-      <p class="note">Toate imaginile de pe această pagină sunt generate cu AI, ca exemple de stil. Proiectele reale pe care le facem apar aici pe măsură ce le terminăm.</p>
-      <div class="gallery">
-        <figure class="g-wide"><img src="img/bucatarie-stejar-1024.jpg" srcset="img/bucatarie-stejar-640.jpg 640w, img/bucatarie-stejar-1024.jpg 1024w" sizes="(min-width: 900px) 40vw, 100vw" width="1024" height="1024" loading="lazy" alt="Bucătărie cu insulă din piatră albă și fronturi din stejar, în lumină de dimineață. Imagine generată cu AI."><figcaption><span class="tag">AI</span> Bucătărie din stejar și piatră</figcaption></figure>
-        <figure><img src="img/fotoliu-nuc-1024.jpg" srcset="img/fotoliu-nuc-640.jpg 640w, img/fotoliu-nuc-1024.jpg 1024w" sizes="(min-width: 900px) 28vw, 100vw" width="1024" height="1024" loading="lazy" alt="Fotoliu din lemn de nuc cu tapițerie din piele coniac, lângă un perete de tencuială. Imagine generată cu AI."><figcaption><span class="tag">AI</span> Fotoliu din nuc și piele</figcaption></figure>
-        <figure><img src="img/scara-beton-1024.jpg" srcset="img/scara-beton-640.jpg 640w, img/scara-beton-1024.jpg 1024w" sizes="(min-width: 900px) 28vw, 100vw" width="1024" height="1024" loading="lazy" alt="Scară din beton cu trepte din stejar, luminată natural de sus. Imagine generată cu AI."><figcaption><span class="tag">AI</span> Scară din beton și stejar</figcaption></figure>
-        <figure><img src="img/living-in-1024.jpg" srcset="img/living-in-640.jpg 640w, img/living-in-1024.jpg 1024w" sizes="(min-width: 900px) 28vw, 100vw" width="1024" height="1024" loading="lazy" alt="Living cu canapele din in bej și masă joasă din stejar, cu ferestre mari spre grădină. Imagine generată cu AI."><figcaption><span class="tag">AI</span> Living cu ferestre spre grădină</figcaption></figure>
-        <figure><img src="img/dormitor-in-1024.jpg" srcset="img/dormitor-in-640.jpg 640w, img/dormitor-in-1024.jpg 1024w" sizes="(min-width: 900px) 28vw, 100vw" width="1024" height="1024" loading="lazy" alt="Dormitor cu pat tapițat gri și noptiere din stejar, în lumină de dimineață. Imagine generată cu AI."><figcaption><span class="tag">AI</span> Dormitor în lumină de dimineață</figcaption></figure>
-      </div>
+      <p class="kicker">Dovada</p>
+      <h2 id="t-teaser">Teaserul nostru, cadru cu cadru</h2>
+      <p class="intro">Douăzeci și nouă de secunde: de la o schiță pe hârtie la un oraș întreg. Așa arată metoda aplicată.</p>
+    </div>
+    <ol class="strip" aria-label="Cadre din teaser">
+      <li><figure><img src="media/cadru-schita.webp" width="540" height="960" loading="lazy" alt="O mână desenează cu creionul și rigla pe o planșă."><figcaption><span class="tc">00:03</span><b>Schița</b>Totul începe pe hârtie.</figcaption></figure></li>
+      <li><figure><img src="media/cadru-decizia.webp" width="540" height="960" loading="lazy" alt="Un marker roșu încercuiește un punct de pe planșă."><figcaption><span class="tc">00:06</span><b>Decizia</b>Un cerc roșu: aici e povestea.</figcaption></figure></li>
+      <li><figure><img src="media/cadru-orasul.webp" width="540" height="960" loading="lazy" alt="Din planșă se ridică un oraș alb de machete, cu macarale."><figcaption><span class="tc">00:12</span><b>Orașul</b>Planul devine volum.</figcaption></figure></li>
+      <li><figure><img src="media/cadru-zborul.webp" width="540" height="960" loading="lazy" alt="Camera zboară printre clădirile albe ale machetei."><figcaption><span class="tc">00:16</span><b>Zborul</b>Camera intră unde nu poate intra.</figcaption></figure></li>
+      <li><figure><img src="media/cadru-turnul.webp" width="540" height="960" loading="lazy" alt="Un turn alb se ridică în lumina spotului."><figcaption><span class="tc">00:20</span><b>Turnul</b>Momentul pe care îl ține minte privitorul.</figcaption></figure></li>
+      <li><figure><img src="media/cadru-semnatura.webp" width="540" height="960" loading="lazy" alt="Monograma aurie S&amp;T pe fundal negru."><figcaption><span class="tc">00:26</span><b>Semnătura</b>S&amp;T.</figcaption></figure></li>
+    </ol>
+    <div class="wrap teaser-actions">
+      <a class="btn btn-line" href="#top" data-play-sound>Privește-l cu sunet</a>
     </div>
   </section>
 
-  <section id="reguli" aria-labelledby="t-reguli">
+  <section class="formate" id="formate" aria-labelledby="t-formate">
     <div class="wrap">
-      <p class="eyebrow">Ce promitem</p>
-      <h2 id="t-reguli">AI-ul ajută, nu păcălește</h2>
+      <p class="kicker">Formate</p>
+      <h2 id="t-formate">Trei moduri de a lucra cu noi</h2>
+      <div class="formats">
+        <article><p class="f-meta">15–30 de secunde</p><h3>Teaser de lansare</h3><p>Pentru o lansare, un proiect sau o deschidere. Ca teaserul de mai sus.</p></article>
+        <article><p class="f-meta">Filmare + AI</p><h3>Reclamă hibridă</h3><p>Filmăm ce e real, construim cu AI ce nu se poate filma și terminăm totul ca la cinema. Primești 9:16, 1:1 și 16:9.</p></article>
+        <article><p class="f-meta">Clipul tău</p><h3>Upgrade cinematic</h3><p>Ai deja un clip care nu spune destul? Ni-l trimiți. Aceeași poveste, alt nivel.</p></article>
+      </div>
+      <p class="note">Fiecare proiect primește o ofertă după un brief de 15 minute.</p>
+    </div>
+  </section>
+
+  <section class="reguli" aria-labelledby="t-reguli">
+    <div class="wrap">
+      <p class="kicker">Regulile noastre</p>
+      <h2 id="t-reguli" class="sr-only">Regulile noastre</h2>
       <div class="rules">
-        <article><h3>Produsul rămâne cel real</h3><p>AI-ul schimbă lumina, decorul și mișcarea. Variantele de culoare și de material sunt doar cele pe care le ai cu adevărat în ofertă.</p></article>
-        <article><h3>Spunem ce e făcut cu AI</h3><p>Marcăm conținutul generat acolo unde platformele sau legea o cer. La imobiliare, camerele mobilate virtual sunt semnalate ca atare.</p></article>
-        <article><h3>Lucrăm doar cu acord</h3><p>Folosim pozele și filmările tale, iar în clipuri apar doar oamenii care au spus da.</p></article>
+        <article><h3>Ce e real rămâne real.</h3><p>Produsul, spațiul și oamenii nu se deformează. Verificăm fiecare cadru.</p></article>
+        <article><h3>Spunem unde e AI.</h3><p>Marcăm conținutul generat cum cer platformele și legea.</p></article>
+        <article><h3>Nicio față fără acord.</h3><p>Pe cineva real îl punem într-o scenă doar dacă a spus da.</p></article>
       </div>
     </div>
   </section>
 
-  <section class="band" id="noi" aria-labelledby="t-noi">
-    <div class="wrap narrow">
-      <p class="eyebrow">Cine suntem</p>
-      <h2 id="t-noi">Suntem doi prieteni, cu două meserii</h2>
-      <p class="big">Unul dintre noi vine din AI și din producția de conținut: generează imagini și video, montează și știe ce merge pe rețele. Celălalt lucrează în domeniu și știe ce vrea să vadă un client înainte să aleagă un proiect sau o piesă de mobilier.</p>
-      <p class="big">Împreună facem conținut care arată bine și spune adevărul despre produs.</p>
-    </div>
-  </section>
-
-  <section id="intrebari" aria-labelledby="t-intrebari">
-    <div class="wrap narrow">
-      <p class="eyebrow">Întrebări</p>
-      <h2 id="t-intrebari">Ce ne întreabă lumea</h2>
-      <div class="faq">
-        <details><summary>Folosiți AI pentru tot?</summary><p>Nu. Pornim de la poze și filmări reale. AI-ul vine după, ca să facem variante, video și reclame din același material.</p></details>
-        <details><summary>Cât costă?</summary><p>Depinde de câte locații filmăm, câte materiale vrei și cât de des postezi. După prima discuție primești o ofertă pe puncte.</p></details>
-        <details><summary>Pot folosi imaginile făcute cu AI în reclame?</summary><p>Da. Le marcăm cum cer platformele. Dacă o imagine arată un spațiu mobilat virtual, spunem clar asta, ca să nu inducă în eroare cumpărătorii.</p></details>
+  <section class="noi" id="noi" aria-labelledby="t-noi">
+    <div class="wrap noi-grid">
+      <figure class="noi-photo">
+        <img src="media/duo-masa-1080.webp" srcset="media/duo-masa-720.webp 720w, media/duo-masa-1080.webp 1080w" sizes="(min-width: 900px) 42vw, 100vw" width="1080" height="1913" loading="lazy" alt="Cei doi parteneri S&amp;T, în negru, în spatele unei machete albe de oraș, sub un spot de lumină.">
+        <figcaption>Portret realizat cu ajutorul AI</figcaption>
+      </figure>
+      <div class="noi-copy">
+        <p class="kicker">Cine suntem</p>
+        <h2 id="t-noi" class="noi-title"><span class="gold">S</span> <i class="gold">&amp;</i> <span class="gold">T</span></h2>
+        <p>Doi parteneri, două meserii. Unul vine din AI și regie de conținut. Celălalt lucrează în domeniu și știe ce trebuie să vadă un client înainte să aleagă.</p>
+        <p>Fiecare proiect trece prin mâinile amândurora, de la primul cadru la semnătură.</p>
       </div>
     </div>
   </section>
 
-  <section class="contact" id="contact" aria-labelledby="t-contact">
-    <div class="wrap narrow">
-      <p class="eyebrow">Contact</p>
-      <h2 id="t-contact">Hai să vorbim despre proiectul tău</h2>
-      <p class="big">Spune-ne în două rânduri ce faci și ce vrei să arăți. Îți răspundem cu o propunere.</p>
-      <p class="soon">Telefonul, emailul și conturile S&amp;T Advertising apar aici în curând.</p>
+  <section class="final" id="contact" aria-labelledby="t-final">
+    <div class="final-bg" aria-hidden="true"><img src="media/duo-portret-1080.webp" srcset="media/duo-portret-720.webp 720w, media/duo-portret-1080.webp 1080w" sizes="100vw" width="1080" height="1913" loading="lazy" alt=""></div>
+    <div class="wrap final-inner">
+      <img class="final-logo" src="media/semnatura.webp" width="720" height="720" loading="lazy" alt="Monograma S&amp;T Advertising">
+      <p class="kicker">În curând</p>
+      <h2 id="t-final">Primele proiecte încep în curând.</h2>
+      <p class="final-note">Telefonul, emailul și conturile S&amp;T apar aici odată cu lansarea.</p>
     </div>
   </section>
 
@@ -190,9 +153,9 @@
 
 <footer class="foot">
   <div class="wrap foot-row">
-    <p class="logo logo-foot"><span class="mono">S<em>&amp;</em>T</span><span class="word">Advertising</span></p>
-    <p>Real + AI pentru arhitectură și mobilier</p>
-    <p class="muted">© 2026 S&amp;T Advertising · Imaginile de pe pagină sunt generate cu AI.</p>
+    <p class="brand"><span class="mono gold">S<i>&amp;</i>T</span><span class="brand-word">Advertising</span></p>
+    <p>Hybrid Cinema · © 2026</p>
+    <p class="muted">Teaserul și portretele sunt realizate cu ajutorul AI.</p>
   </div>
 </footer>
 </body>

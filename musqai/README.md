@@ -14,7 +14,7 @@
 - `static/`: stilul, scripturile, fonturile găzduite local, pozele lui Iness, favicon-ul.
 - `worker.js` și `functions/api/`: cele 5 zone de generare (idei, imagine, prompt, text, caracter), care rulează pe Cloudflare cu Workers AI.
 - `lib/ai.js`: verificările de siguranță, modelele folosite și marcajul AI din imagini.
-- `static/st/`: site-ul S&T Advertising (Real + AI pentru arhitectură și mobilier), servit temporar la `/st/`, cu noindex. E o pagină de sine stătătoare, cu căi relative (fonturi, stil, imagini), ca să poată fi mutată pe domeniul ei fără schimbări. Imaginile sunt exemple generate cu FLUX prin zona `/api/imagine` și au marcajul AI în XMP.
+- `static/st/` și `functions/video.js`: site-ul S&T Advertising (Hybrid Cinema), servit temporar la `/st/`, cu noindex. Pagină de sine stătătoare, cu căi relative. Teaserul stă în `static/st/media/_v/` și se servește prin Worker la `/st/video/<nume>.mp4`, pe bucăți (HTTP Range), pentru că fișierele statice vin mereu întregi și Safari pe iPhone nu pornește altfel un video. Brief-ul S&T e în `.claude/skills/st-advertising/SKILL.md`, concurența în `st/CONCURENTA.md`.
 - `static/generator/` și `functions/api/runpod.js`: generatorul Krea 2 de la `/generator/` (nelistat pe site, noindex). Pagina trimite cererile la `/api/runpod/*`, iar Worker-ul le duce la endpoint-ul Runpod `musqai-matrix-pro6000`, cu cheia restricționată a celui care generează. Pagina e făcută din `serverless/generator_krea2.html`, cu scriptul în fișier separat, cum cere politica de securitate a site-ului.
 - `tools/assets.py` și `tools/og.py`: refac fonturile, pozele și imaginea de distribuire.
 
