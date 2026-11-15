@@ -1,11 +1,13 @@
-/* Videoclipurile S&T, servite pe bucăți (HTTP Range).
-   Fișierele statice de pe Cloudflare vin mereu întregi, iar Safari pe iPhone nu pornește
-   un video fără răspunsuri 206. Pagina cere /st/video/<nume>.mp4; aici citim fișierul din
-   /st/media/_v/ și trimitem doar intervalul cerut. */
+/* Videoclipurile S&T: /st/video/<nume> citește fișierul din /st/media/_v/.
+   Safari (iPhone și Mac) primește HLS: o listă .m3u8 și bucăți .ts, cu tipurile corecte,
+   pentru că nu are nevoie de cereri pe intervale. Celelalte browsere primesc MP4;
+   dacă cererea vine cu Range, trimitem doar intervalul cerut (206). */
 
 const VIDEOS = new Set(["teaser-720.mp4", "teaser-540.mp4"]);
+const HLS = /^hls\/(?:teaser|t720|t540)\.m3u8$|^hls\/t(?:720|540)_\d{2}\.ts$/;
 
 export async function serveVideo(request, env, name) {
+  if (HLS.test(name)) return serveHls(request, env, name);
   if (!VIDEOS.has(name)) return env.ASSETS.fetch(request);
   if (request.method !== "GET" && request.method !== "HEAD") {
     return new Response(null, { status: 405, headers: { Allow: "GET, HEAD" } });
@@ -43,6 +45,26 @@ export async function serveVideo(request, env, name) {
     status: 206,
     headers: { ...base, "Content-Range": `bytes ${start}-${end}/${size}`, "Content-Length": String(end - start + 1) }
   });
+}
+
+async function serveHls(request, env, name) {
+  if (request.method !== "GET" && request.method !== "HEAD") {
+    return new Response(null, { status: 405, headers: { Allow: "GET, HEAD" } });
+  }
+  const src = new URL(request.url);
+  src.pathname = "/st/media/_v/" + name;
+  src.search = "";
+  const file = await env.ASSETS.fetch(new Request(src.toString(), { method: "GET" }));
+  if (!file.ok) return file;
+  const playlist = name.endsWith(".m3u8");
+  const headers = {
+    "Content-Type": playlist ? "application/vnd.apple.mpegurl" : "video/mp2t",
+    "Cache-Control": playlist ? "public, max-age=300" : "public, max-age=86400"
+  };
+  const length = file.headers.get("Content-Length");
+  if (length) headers["Content-Length"] = length;
+  if (request.method === "HEAD" && file.body) file.body.cancel();
+  return new Response(request.method === "HEAD" ? null : file.body, { status: 200, headers });
 }
 
 /* Trece prin flux doar octeții start..end (inclusiv), fără să țină tot fișierul în memorie. */

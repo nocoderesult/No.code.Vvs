@@ -17,7 +17,7 @@ export default {
     const url = new URL(request.url);
     const rp = url.pathname.match(/^\/api\/runpod\/(.+)$/);
     if (rp) return handleRunpod(request, env, rp[1]);
-    const sv = url.pathname.match(/^\/st\/video\/([a-z0-9-]+\.mp4)$/);
+    const sv = url.pathname.match(/^\/st\/video\/((?:hls\/)?[a-z0-9_-]+\.(?:mp4|m3u8|ts))$/);
     if (sv) return serveVideo(request, env, sv[1]);
     const m = url.pathname.match(/^\/api\/([a-z]+)\/?$/);
     if (m && ZONES[m[1]]) {
